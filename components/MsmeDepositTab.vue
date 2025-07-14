@@ -5,24 +5,16 @@
 			<div class="bg-white p-6 rounded-lg shadow">
 				<div class="flex items-center justify-between">
 					<p class="text-2xl font-medium">MSME deposits</p>
-					<p class="text-3xl font-medium">410</p>
+					<p class="text-3xl font-medium">
+						{{ formatNumber(deposit.total_count) }}
+					</p>
 				</div>
 				<div class="mt-8">
-					<div class="w-full bg-gray-200 h-4 rounded mt-1">
-						<div class="h-4 rounded gradient-bar" style="width: 27%"></div>
-					</div>
-					<div class="flex items-center justify-between mt-4">
-						<p class="text-3xl text-[#1E1B39] font-bold">27%</p>
-						<p class="text-3xl text-[#1E1B39] font-bold">3,348 mlrd</p>
-					</div>
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">By gender</p>
 						</div>
-						<VChart
-							:option="businessSizeChart"
-							class="!w-[450px] !h-[110px] z-50"
-						/>
+						<VChart :option="genderChart" class="!w-[450px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
 							<div
 								class="flex items-center w-full justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
@@ -31,7 +23,9 @@
 									<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
-								<p class="text-xl text-[#615E83]">38%</p>
+								<p class="text-xl text-[#615E83]">
+									{{ deposit.women_percent || 0 }}%
+								</p>
 							</div>
 
 							<div
@@ -41,7 +35,7 @@
 									<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
-								<p class="text-xl text-[#615E83]">38%</p>
+								<p class="text-xl text-[#615E83]">{{ deposit.men_percent || 0 }}%</p>
 							</div>
 						</div>
 					</div>
@@ -56,11 +50,11 @@
 					<div class="flex items-center justify-between mt-4 -mb-4">
 						<p class="text-gray-400">Individual entrepreneurs</p>
 						<p class="text-gray-400 text-xl">
-							<span class="text-black">410</span>/740
+							<!-- <span class="text-black">410</span>/740 -->
 						</p>
 					</div>
 					<VChart
-						:option="businessSizeChart"
+						:option="individualChart"
 						class="!w-[450px] !h-[110px] z-50"
 					/>
 					<div class="flex items-center gap-2 -mt-8">
@@ -71,7 +65,9 @@
 								<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
-							<p class="text-xl text-[#615E83]">38%</p>
+							<p class="text-xl text-[#615E83]">
+								{{ deposit.individual_women_pct || 0 }}%
+							</p>
 						</div>
 
 						<div
@@ -81,22 +77,21 @@
 								<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
-							<p class="text-xl text-[#615E83]">38%</p>
+							<p class="text-xl text-[#615E83]">
+								{{ deposit.individual_men_pct || 0 }}%
+							</p>
 						</div>
 					</div>
 				</div>
 
 				<div>
-					<div class="flex items-center justify-between mt-4 -mb-4">
+					<div class="flex items-center justify-between mt-10 -mb-4">
 						<p class="text-gray-400">Legal entities</p>
 						<p class="text-gray-400 text-xl">
-							<span class="text-black">410</span>/740
+							<!-- <span class="text-black">410</span>/740 -->
 						</p>
 					</div>
-					<VChart
-						:option="businessSizeChart"
-						class="!w-[450px] !h-[110px] z-50"
-					/>
+					<VChart :option="legalChart" class="!w-[450px] !h-[110px] z-50" />
 					<div class="flex items-center gap-2 -mt-8">
 						<div
 							class="flex items-center w-full justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
@@ -105,7 +100,7 @@
 								<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
-							<p class="text-xl text-[#615E83]">38%</p>
+							<p class="text-xl text-[#615E83]">{{ deposit.legal_men_pct || 0 }}%</p>
 						</div>
 
 						<div
@@ -115,7 +110,9 @@
 								<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
-							<p class="text-xl text-[#615E83]">38%</p>
+							<p class="text-xl text-[#615E83]">
+								{{ deposit.legal_women_pct || 0 }}%
+							</p>
 						</div>
 					</div>
 				</div>
@@ -186,9 +183,18 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">1,230</p>
+							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.micro_count) }}</p>
 						</div>
-						<VChart :option="gaugeOption(48, 12)" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									deposit.micro_men_pct ?? 0,
+									deposit.micro_women_pct ?? 0,
+									deposit.micro_sum_pct ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
@@ -198,9 +204,18 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">1,230</p>
+							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.small_count) }}</p>
 						</div>
-						<VChart :option="gaugeOption(40, 23)" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									deposit.small_men_pct ?? 0,
+									deposit.small_women_pct ?? 0,
+									deposit.small_sum_pct ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
@@ -210,9 +225,18 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">1,230</p>
+							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.medium_count) }}</p>
 						</div>
-						<VChart :option="gaugeOption(50, 30)" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									deposit.medium_men_pct ?? 0,
+									deposit.medium_women_pct ?? 0,
+									deposit.medium_sum_pct ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
 				</div>
 			</div>
@@ -223,9 +247,14 @@
 <script setup>
 import 'echarts'
 const { generate } = useStackedChart()
-
+const props = defineProps({
+	deposit: {
+		type: Array,
+		default: () => [],
+	},
+})
 const value = ref('')
-
+const { formatNumber } = useFormatNumber()
 const options = [
 	{
 		value: 'Option1',
@@ -248,55 +277,6 @@ const options = [
 		label: 'Option5',
 	},
 ]
-
-const pieOption = {
-	color: ['#4A3AFF', '#018E20'],
-	title: {
-		text: '1,390\nTotal',
-		left: 'center',
-		top: 'center',
-		textStyle: {
-			fontSize: 18,
-			fontWeight: 'bold',
-			color: '#111827',
-			align: 'center',
-		},
-	},
-	tooltip: {
-		trigger: 'item',
-		formatter: '{b}: {c}',
-	},
-	series: [
-		{
-			name: 'Business Type',
-			type: 'pie',
-			radius: ['40%', '70%'],
-			avoidLabelOverlap: false,
-			label: {
-				show: true,
-				position: 'outside',
-				formatter: params => `${Math.round(params.percent)}%`,
-				textStyle: {
-					fontSize: 16,
-					fontWeight: 'bold',
-					color: '#111827',
-				},
-			},
-			padAngle: 5,
-			itemStyle: {
-				borderRadius: 10,
-			},
-			labelLine: {
-				show: true,
-				smooth: 0.2,
-			},
-			data: [
-				{ value: 410, name: 'Individual entrepreneurs' },
-				{ value: 142, name: 'Legal entities' },
-			],
-		},
-	],
-}
 
 const statsOption = {
 	tooltip: {
@@ -382,22 +362,23 @@ const statsOption = {
 	],
 }
 
-const gaugeOption = (menValue, womenValue) => {
-	let total = menValue + womenValue
+const gaugeOption = (menPct, womenPct, sumPct) => {
+	let totalShare = menPct + womenPct
+	if (totalShare === 0) totalShare = 1
 
-	if (total > 100) {
-		const scale = 100 / total
-		menValue = menValue * scale
-		womenValue = womenValue * scale
-		total = 100
-	}
+	const menValue = (menPct / totalShare) * sumPct
+	const womenValue = (womenPct / totalShare) * sumPct
 
 	return {
+		animationDuration: 1000,
+		animationEasing: 'cubicOut',
 		tooltip: {
 			trigger: 'item',
 			formatter: params => {
-				const emoji = params.seriesName === 'Men' ? '👨' : '👩'
-				return `${emoji} ${params.seriesName}: ${params.value.toFixed(1)}%`
+				const originalValue = params.seriesName === 'Men' ? menPct : womenPct
+				const color = params.seriesName === 'Men' ? '#018E20' : '#4A3AFF'
+
+				return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>${params.seriesName}: ${originalValue.toFixed(1)}%`
 			},
 		},
 		series: [
@@ -470,9 +451,7 @@ const gaugeOption = (menValue, womenValue) => {
 				detail: {
 					valueAnimation: true,
 					formatter: () =>
-						`{value|${(menValue + womenValue).toFixed(
-							1
-						)}%}\n{label|Total Participants}`,
+						`{value|${sumPct?.toFixed(1) ?? 0}%}\n{label|Total Participants}`,
 					offsetCenter: [0, '-20%'],
 					rich: {
 						value: {
@@ -495,24 +474,96 @@ const gaugeOption = (menValue, womenValue) => {
 }
 
 // BUSINES SIZE CHART
-const menData = [{ value: 65.3, name: 'Micro' }]
 
-const womenData = [{ value: 20.3, name: 'Micro' }]
+const genderChart = computed(() =>
+	generate({
+		seriesData: [
+			{
+				name: 'Women',
+				data: [
+					{
+						value: props.deposit.women_percent ?? 0,
+						name: 'women',
+					},
+				],
+				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+			},
+			{
+				name: 'Men',
+				data: [
+					{
+						value: props.deposit.men_percent ?? 0,
+						name: 'men',
+					},
+				],
+				style: { color: '#018E20' },
+			},
+		],
+		barWidth: 40,
+		addGraphic: false,
+		hideYAxisLabels: true,
+	})
+)
 
-const businessSizeChart = generate({
-	seriesData: [
-		{
-			name: 'Men',
-			data: menData,
-			style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
-		},
-		{ name: 'Women', data: womenData, style: { color: '#018E20' } },
-	],
-	barWidth: 40,
-	addGraphic: false,
-	hideYAxisLabels: true,
-	addRemaining: false,
-})
+const individualChart = computed(() =>
+	generate({
+		seriesData: [
+			{
+				name: 'Women',
+				data: [
+					{
+						value: props.deposit.individual_women_pct ?? 0,
+						name: 'women',
+					},
+				],
+				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+			},
+			{
+				name: 'Men',
+				data: [
+					{
+						value: props.deposit.individual_men_pct ?? 0,
+						name: 'men',
+					},
+				],
+				style: { color: '#018E20' },
+			},
+		],
+		barWidth: 40,
+		addGraphic: false,
+		hideYAxisLabels: true,
+	})
+)
+
+const legalChart = computed(() =>
+	generate({
+		seriesData: [
+			{
+				name: 'Women',
+				data: [
+					{
+						value: props.deposit.legal_women_pct ?? 0,
+						name: 'women',
+					},
+				],
+				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+			},
+			{
+				name: 'Men',
+				data: [
+					{
+						value: props.deposit.legal_men_pct ?? 0,
+						name: 'men',
+					},
+				],
+				style: { color: '#018E20' },
+			},
+		],
+		barWidth: 40,
+		addGraphic: false,
+		hideYAxisLabels: true,
+	})
+)
 </script>
 
 <style scoped>

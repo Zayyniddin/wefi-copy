@@ -5,6 +5,7 @@
 	<GenderStats />
 	<MainForm />
 	<Blogs />
+	<TeamMembers />
 	<Questionary />
 	<Partners />
 	<Footer />

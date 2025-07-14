@@ -27,10 +27,10 @@
 				<MarketTab :customers='data.customers' :orgMonthly='data.org_monthly' />
 			</el-tab-pane>
 			<el-tab-pane label="MSME Credit" name="second" lazy>
-				<MsmeCreditTab :creditDebit='data.credit_debit' :npl='data.npl' />
+				<MsmeCreditTab :creditDebit='data.credit_debit' :npl='data.npl' :creditLoan='data.credit_loan' />
 			</el-tab-pane>
 			<el-tab-pane label="MSME Deposit" name="third" lazy>
-				<MsmeDepositTab />
+				<MsmeDepositTab :deposit='data.deposit' />
 			</el-tab-pane>
 		</el-tabs>
 	</div>

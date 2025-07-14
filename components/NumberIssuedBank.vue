@@ -60,7 +60,7 @@
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(data.men_count) }}
+								{{ formatNumber(selectedData.men_count) }}
 							</p>
 						</div>
 						<div class="flex items-center justify-between">
@@ -69,7 +69,7 @@
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(data.women_count) }}
+								{{ formatNumber(selectedData.women_count) }}
 							</p>
 						</div>
 					</div>
@@ -128,16 +128,24 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	creditLoan: {
+		type: Array,
+		default: () => [],
+	},
 })
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
-const activeTab = ref('number_issued') // по умолчанию активный — первый
+const activeTab = ref('number_issued') 
+
+const selectedData = computed(() => {
+	return activeTab.value === 'number_issued' ? props.creditLoan : props.data
+})
 
 const pieOption = computed(() => ({
 	color: ['#018E20', '#4A3AFF'],
 	title: {
 		text: `{value|${formatNumber(
-			(props.data?.women_count ?? 0) + (props.data?.men_count ?? 0)
+			(selectedData.value?.women_count ?? 0) + (selectedData.value?.men_count ?? 0)
 		)}}\n{label|Billion}`,
 		left: 'center',
 		top: 'center',
@@ -200,10 +208,10 @@ const pieOption = computed(() => ({
 			},
 			data: [
 				{
-					value: Math.round(props.data?.men_count ?? 0),
+					value: Math.round(selectedData.value?.men_count ?? 0),
 					name: 'Men',
 				},
-				{ value: Math.round(props.data?.women_count ?? 0), name: 'Women' },
+				{ value: Math.round(selectedData.value?.women_count ?? 0), name: 'Women' },
 			],
 		},
 	],
@@ -217,11 +225,11 @@ const businessTypeChart = computed(() =>
 				name: 'Women',
 				data: [
 					{
-						value: props.data?.legal_women_count_percent ?? 0,
+						value: selectedData.value?.legal_women_count_percent ?? 0,
 						name: 'Legal en.',
 					},
 					{
-						value: props.data?.individual_women_count_percent ?? 0,
+						value: selectedData.value?.individual_women_count_percent ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -231,11 +239,11 @@ const businessTypeChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: props.data?.legal_men_count_percent ?? 0,
+						value: selectedData.value?.legal_men_count_percent ?? 0,
 						name: 'Legal en.',
 					},
 					{
-						value: props.data?.individual_men_count_percent ?? 0,
+						value: selectedData.value?.individual_men_count_percent ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -243,8 +251,8 @@ const businessTypeChart = computed(() =>
 			},
 		],
 		totalsPercent: [
-			props.data?.individual_count_percent ?? 0,
-			props.data?.legal_count_percent ?? 0,
+			selectedData.value?.individual_count_percent ?? 0,
+			selectedData.value?.legal_count_percent ?? 0,
 		],
 	})
 )
@@ -288,10 +296,10 @@ const businessSizeChart = computed(() =>
 			{
 				name: 'Women',
 				data: [
-					{ value: props.data?.micro_women_count_percent ?? 0, name: 'Micro' },
-					{ value: props.data?.small_women_count_percent ?? 0, name: 'Small' },
+					{ value: selectedData.value?.micro_women_count_percent ?? 0, name: 'Micro' },
+					{ value: selectedData.value?.small_women_count_percent ?? 0, name: 'Small' },
 					{
-						value: props.data?.medium_women_count_percent ?? 0,
+						value: selectedData.value?.medium_women_count_percent ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -300,17 +308,17 @@ const businessSizeChart = computed(() =>
 			{
 				name: 'Men',
 				data: [
-					{ value: props.data?.micro_men_count_percent ?? 0, name: 'Micro' },
-					{ value: props.data?.small_men_count_percent ?? 0, name: 'Small' },
-					{ value: props.data?.medium_men_count_percent ?? 0, name: 'Medium' },
+					{ value: selectedData.value?.micro_men_count_percent ?? 0, name: 'Micro' },
+					{ value: selectedData.value?.small_men_count_percent ?? 0, name: 'Small' },
+					{ value: selectedData.value?.medium_men_count_percent ?? 0, name: 'Medium' },
 				],
 				style: { color: '#018E20' },
 			},
 		],
 		totalsPercent: [
-			props.data?.medium_count_percent ?? 0,
-			props.data?.small_count_percent ?? 0,
-			props.data?.micro_count_percent ?? 0,
+			selectedData.value?.medium_count_percent ?? 0,
+			selectedData.value?.small_count_percent ?? 0,
+			selectedData.value?.micro_count_percent ?? 0,
 		],
 	})
 )
