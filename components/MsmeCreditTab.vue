@@ -95,8 +95,14 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-4">
-			<ValueIssuedBank :data="creditDebit" :creditLoan="creditLoan" />
-			<NumberIssuedBank :data="creditDebit" :creditLoan="creditLoan" />
+			<ValueIssuedBank
+				:data="creditDebit"
+				:creditLoan="creditLoan"
+				:outstandingGraph="outstandingGraph"
+				:loanGraph="loanGraph"
+				:outstandingGraphSum='outstandingGraphSum'
+			/>
+			<NumberIssuedBank :data="creditDebit" :creditLoan="creditLoan" :countGraph='countGraph' :outstandingGraphCount='outstandingGraphCount' />
 			<div class="bg-white p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">Statistics</p>
 				<p
@@ -208,6 +214,26 @@ const props = defineProps({
 		default: () => [],
 	},
 	npl: {
+		type: Object,
+		default: () => ({}),
+	},
+	outstandingGraph: {
+		type: Object,
+		default: () => ({}),
+	},
+	loanGraph: {
+		type: Object,
+		default: () => ({}),
+	},
+	outstandingGraphSum: {
+		type: Object,
+		default: () => ({}),
+	},
+	countGraph: {
+		type: Object,
+		default: () => ({}),
+	},
+	outstandingGraphCount: {
 		type: Object,
 		default: () => ({}),
 	},

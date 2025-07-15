@@ -132,6 +132,14 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
+	outstandingGraphCount: {
+		type: Array,
+		default: () => [],
+	},
+	countGraph: {
+		type: Array,
+		default: () => [],
+	},
 })
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
@@ -343,87 +351,101 @@ const businessSizeChart = computed(() =>
 )
 
 //CREDIT STATISTICS
-const statsOption = {
-	tooltip: {
-		trigger: 'axis',
-		formatter: params => {
-			const point = params[0]
-			return `${point.axisValue}<br/>$${point.value.toLocaleString()}`
-		},
-		backgroundColor: '#2D2E54',
-		borderRadius: 6,
-		padding: 10,
-		textStyle: {
-			color: '#fff',
-			fontSize: 12,
-		},
-	},
-	xAxis: {
-		type: 'category',
-		data: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-		axisLine: { show: false },
-		axisTick: { show: false },
-		axisLabel: {
-			color: '#6B7280',
-			fontWeight: 500,
-		},
-	},
-	yAxis: {
-		type: 'log',
-		logBase: 10,
-		axisLine: { show: false },
-		axisTick: { show: false },
-		axisLabel: {
-			color: '#6B7280',
-		},
-		splitLine: {
-			lineStyle: {
-				type: 'dashed',
-				color: '#E5E7EB',
+const statsOption = computed(() => {
+	const filtered = props.outstandingGraphCount.filter(item => item.year !== null)
+
+	const years = filtered.map(item => item.year.toString())
+	const womenData = filtered.map(item => item.women_asum ?? 0)
+	const menData = filtered.map(item => item.men_asum ?? 0)
+
+	return {
+		tooltip: {
+			trigger: 'axis',
+			formatter: params => {
+				const lines = params
+					.map(p => `${p.seriesName}: ${p.value.toLocaleString()} sum`)
+					.join('<br/>')
+				return `${params[0].axisValue}<br/>${lines}`
+			},
+			backgroundColor: '#2D2E54',
+			borderRadius: 6,
+			padding: 10,
+			textStyle: {
+				color: '#fff',
+				fontSize: 12,
 			},
 		},
-	},
-	grid: {
-		left: 40,
-		right: 30,
-		top: 60,
-		bottom: 40,
-	},
-	series: [
-		{
-			name: 'Series A',
-			type: 'line',
-			data: [120000, 540000, 200000, 100000, 80000, 130000, 500000],
-			smooth: true,
-			lineStyle: {
-				color: '#F29F67', // зелёный
-				width: 3,
-				type: 'dashed',
-			},
-			itemStyle: {
-				color: '#F29F67',
-			},
-			symbol: 'circle',
-			symbolSize: 6,
-			emphasis: {
-				scale: true,
+		xAxis: {
+			type: 'category',
+			data: years,
+			axisLine: { show: false },
+			axisTick: { show: false },
+			axisLabel: {
+				color: '#6B7280',
+				fontWeight: 500,
 			},
 		},
-		{
-			name: 'Series B',
-			type: 'line',
-			data: [300000, 11000000, 1000000, 600000, 1200000, 800000, 2000000],
-			smooth: true,
-			lineStyle: {
-				color: '#3B8FF3', // синий
-				width: 3,
-				type: 'dashed',
+		yAxis: {
+			type: 'log',
+			logBase: 10,
+			axisLine: { show: false },
+			axisTick: { show: false },
+			axisLabel: {
+				color: '#6B7280',
 			},
-			itemStyle: {
-				color: '#3B8FF3',
+			splitLine: {
+				lineStyle: {
+					type: 'dashed',
+					color: '#E5E7EB',
+				},
 			},
-			symbol: 'none',
 		},
-	],
-}
+		grid: {
+			left: 40,
+			right: 30,
+			top: 60,
+			bottom: 40,
+		},
+		series: [
+			{
+				name: 'Women',
+				type: 'line',
+				data: womenData,
+				smooth: true,
+				lineStyle: {
+					color: '#F29F67', // оранжевый
+					width: 3,
+					type: 'dashed',
+				},
+				itemStyle: {
+					color: '#F29F67',
+				},
+				symbol: 'circle',
+				symbolSize: 6,
+				emphasis: {
+					scale: true,
+				},
+			},
+			{
+				name: 'Men',
+				type: 'line',
+				data: menData,
+				smooth: true,
+				lineStyle: {
+					color: '#3B8FF3', // синий
+					width: 3,
+					type: 'dashed',
+				},
+				itemStyle: {
+					color: '#3B8FF3',
+				},
+				symbol: 'circle',
+				symbolSize: 6,
+				emphasis: {
+					scale: true,
+				},
+			},
+		],
+	}
+})
 </script>
