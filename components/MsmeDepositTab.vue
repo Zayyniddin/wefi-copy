@@ -20,7 +20,7 @@
 								class="flex items-center w-full justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-xl text-[#615E83]">
@@ -32,10 +32,12 @@
 								class="flex items-center gap-2 w-full justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
-								<p class="text-xl text-[#615E83]">{{ deposit.men_percent || 0 }}%</p>
+								<p class="text-xl text-[#615E83]">
+									{{ deposit.men_percent || 0 }}%
+								</p>
 							</div>
 						</div>
 					</div>
@@ -62,7 +64,7 @@
 							class="flex items-center w-full justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 						>
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
@@ -74,7 +76,7 @@
 							class="flex items-center gap-2 w-full justify-between rounded-lg border-[#E5E5EF] border p-2"
 						>
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
@@ -97,17 +99,19 @@
 							class="flex items-center w-full justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 						>
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
-							<p class="text-xl text-[#615E83]">{{ deposit.legal_men_pct || 0 }}%</p>
+							<p class="text-xl text-[#615E83]">
+								{{ deposit.legal_men_pct || 0 }}%
+							</p>
 						</div>
 
 						<div
 							class="flex items-center gap-2 w-full justify-between rounded-lg border-[#E5E5EF] border p-2"
 						>
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
@@ -183,7 +187,9 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.micro_count) }}</p>
+							<p class="text-2xl font-bold mt-1">
+								{{ formatNumber(deposit.micro_count) }}
+							</p>
 						</div>
 						<VChart
 							:option="
@@ -204,7 +210,9 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.small_count) }}</p>
+							<p class="text-2xl font-bold mt-1">
+								{{ formatNumber(deposit.small_count) }}
+							</p>
 						</div>
 						<VChart
 							:option="
@@ -225,7 +233,9 @@
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
-							<p class="text-2xl font-bold mt-1">{{ formatNumber(deposit.medium_count) }}</p>
+							<p class="text-2xl font-bold mt-1">
+								{{ formatNumber(deposit.medium_count) }}
+							</p>
 						</div>
 						<VChart
 							:option="
@@ -331,12 +341,12 @@ const statsOption = {
 			data: [120000, 540000, 200000, 100000, 80000, 130000, 500000],
 			smooth: true,
 			lineStyle: {
-				color: '#10B981', // зелёный
+				color: '#F29F67', // зелёный
 				width: 3,
 				type: 'dashed',
 			},
 			itemStyle: {
-				color: '#10B981',
+				color: '#F29F67',
 			},
 			symbol: 'circle',
 			symbolSize: 6,
@@ -350,12 +360,12 @@ const statsOption = {
 			data: [300000, 11000000, 1000000, 600000, 1200000, 800000, 2000000],
 			smooth: true,
 			lineStyle: {
-				color: '#6366F1', // синий
+				color: '#3B8FF3', // синий
 				width: 3,
 				type: 'dashed',
 			},
 			itemStyle: {
-				color: '#6366F1',
+				color: '#3B8FF3',
 			},
 			symbol: 'none',
 		},
@@ -376,9 +386,11 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 			trigger: 'item',
 			formatter: params => {
 				const originalValue = params.seriesName === 'Men' ? menPct : womenPct
-				const color = params.seriesName === 'Men' ? '#018E20' : '#4A3AFF'
+				const color = params.seriesName === 'Men' ? '#3B8FF3' : '#F29F67'
 
-				return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>${params.seriesName}: ${originalValue.toFixed(1)}%`
+				return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>${
+					params.seriesName
+				}: ${originalValue.toFixed(1)}%`
 			},
 		},
 		series: [
@@ -415,7 +427,7 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 					show: true,
 					width: 18,
 					roundCap: true,
-					itemStyle: { color: '#018E20' },
+					itemStyle: { color: '#3B8FF3' },
 				},
 				axisLine: { show: false },
 				axisTick: { show: false },
@@ -439,7 +451,7 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 					show: true,
 					width: 18,
 					roundCap: true,
-					itemStyle: { color: '#4A3AFF' },
+					itemStyle: { color: '#F29F67' },
 				},
 				axisLine: { show: false },
 				axisTick: { show: false },
@@ -486,7 +498,7 @@ const genderChart = computed(() =>
 						name: 'women',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -496,7 +508,7 @@ const genderChart = computed(() =>
 						name: 'men',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
@@ -516,7 +528,7 @@ const individualChart = computed(() =>
 						name: 'women',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -526,7 +538,7 @@ const individualChart = computed(() =>
 						name: 'men',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
@@ -546,7 +558,7 @@ const legalChart = computed(() =>
 						name: 'women',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -556,7 +568,7 @@ const legalChart = computed(() =>
 						name: 'men',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
@@ -568,6 +580,6 @@ const legalChart = computed(() =>
 
 <style scoped>
 .gradient-bar {
-	background: linear-gradient(90deg, #018e20 0%, #007219 100%);
+	background: linear-gradient(90deg, #018E20 0%, #007219 100%);
 }
 </style>

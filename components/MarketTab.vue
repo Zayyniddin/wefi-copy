@@ -33,7 +33,7 @@
 				<div class="text-sm mt-4">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
-							<div class="w-4 h-4 bg-[#018E20] rounded-full"></div>
+							<div class="w-4 h-4 bg-[#3B8FF3] rounded-full"></div>
 							<p class="text-sm text-[#615E83]">Individual entrepreneurs</p>
 						</div>
 						<p class="text-xl font-bold">
@@ -42,7 +42,7 @@
 					</div>
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
-							<div class="w-4 h-4 bg-[#4A3AFF] rounded-full"></div>
+							<div class="w-4 h-4 bg-[#F29F67] rounded-full"></div>
 							<p class="text-sm text-[#615E83]">Legal entities</p>
 						</div>
 						<p class="text-xl font-bold">
@@ -233,7 +233,7 @@ const customers_total = computed(() => {
 	return props.customers?.individual_count + props.customers?.legal_count
 })
 const pieOption = computed(() => ({
-	color: ['#018E20', '#4A3AFF'],
+	color: ['#3B8FF3', '#F29F67'],
 	title: {
 		text: `{value|${formatNumber(
 			(props.customers?.individual_count ?? 0) +
@@ -355,7 +355,7 @@ const gaugeOption = (value, label) => ({
 				show: true,
 				width: 18,
 				roundCap: true,
-				itemStyle: { color: '#018E20' },
+				itemStyle: { color: '#3B8FF3' },
 			},
 			tooltip: {
 				show: true,
@@ -394,6 +394,6 @@ const gaugeOption = (value, label) => ({
 
 <style scoped>
 .gradient-bar {
-	background: linear-gradient(90deg, #018e20 0%, #007219 100%);
+	background: linear-gradient(90deg, #018E20 0%, #007219 100%);
 }
 </style>

@@ -32,13 +32,13 @@
 				<div
 					class="flex items-center gap-2 rounded-lg border-[#E5E5EF] border p-2"
 				>
-					<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+					<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 					<p class="text-sm text-[#615E83]">Men</p>
 				</div>
 				<div
 					class="flex items-center gap-2 rounded-lg border-[#E5E5EF] border p-2"
 				>
-					<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+					<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 					<p class="text-sm text-[#615E83]">Women</p>
 				</div>
 			</div>
@@ -56,7 +56,7 @@
 					<div class="text-sm mt-4">
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl font-bold">
@@ -65,7 +65,7 @@
 						</div>
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2">
-								<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
 							<p class="text-xl font-bold">
@@ -135,17 +135,18 @@ const props = defineProps({
 })
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
-const activeTab = ref('number_issued') 
+const activeTab = ref('number_issued')
 
 const selectedData = computed(() => {
 	return activeTab.value === 'number_issued' ? props.creditLoan : props.data
 })
 
 const pieOption = computed(() => ({
-	color: ['#018E20', '#4A3AFF'],
+	color: ['#3B8FF3', '#F29F67'],
 	title: {
 		text: `{value|${formatNumber(
-			(selectedData.value?.women_count ?? 0) + (selectedData.value?.men_count ?? 0)
+			(selectedData.value?.women_count ?? 0) +
+				(selectedData.value?.men_count ?? 0)
 		)}}\n{label|Billion}`,
 		left: 'center',
 		top: 'center',
@@ -211,7 +212,10 @@ const pieOption = computed(() => ({
 					value: Math.round(selectedData.value?.men_count ?? 0),
 					name: 'Men',
 				},
-				{ value: Math.round(selectedData.value?.women_count ?? 0), name: 'Women' },
+				{
+					value: Math.round(selectedData.value?.women_count ?? 0),
+					name: 'Women',
+				},
 			],
 		},
 	],
@@ -233,7 +237,7 @@ const businessTypeChart = computed(() =>
 						name: 'Individual',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -247,7 +251,7 @@ const businessTypeChart = computed(() =>
 						name: 'Individual',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		totalsPercent: [
@@ -283,9 +287,9 @@ const sectorsChart = generate({
 		{
 			name: 'All sectors',
 			data: sectorMenData,
-			style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+			style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 		},
-		{ name: 'Agriculture', data: sectorWomenData, style: { color: '#018E20' } },
+		{ name: 'Agriculture', data: sectorWomenData, style: { color: '#3B8FF3' } },
 	],
 })
 
@@ -296,23 +300,38 @@ const businessSizeChart = computed(() =>
 			{
 				name: 'Women',
 				data: [
-					{ value: selectedData.value?.micro_women_count_percent ?? 0, name: 'Micro' },
-					{ value: selectedData.value?.small_women_count_percent ?? 0, name: 'Small' },
+					{
+						value: selectedData.value?.micro_women_count_percent ?? 0,
+						name: 'Micro',
+					},
+					{
+						value: selectedData.value?.small_women_count_percent ?? 0,
+						name: 'Small',
+					},
 					{
 						value: selectedData.value?.medium_women_count_percent ?? 0,
 						name: 'Medium',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
 				data: [
-					{ value: selectedData.value?.micro_men_count_percent ?? 0, name: 'Micro' },
-					{ value: selectedData.value?.small_men_count_percent ?? 0, name: 'Small' },
-					{ value: selectedData.value?.medium_men_count_percent ?? 0, name: 'Medium' },
+					{
+						value: selectedData.value?.micro_men_count_percent ?? 0,
+						name: 'Micro',
+					},
+					{
+						value: selectedData.value?.small_men_count_percent ?? 0,
+						name: 'Small',
+					},
+					{
+						value: selectedData.value?.medium_men_count_percent ?? 0,
+						name: 'Medium',
+					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		totalsPercent: [
@@ -377,12 +396,12 @@ const statsOption = {
 			data: [120000, 540000, 200000, 100000, 80000, 130000, 500000],
 			smooth: true,
 			lineStyle: {
-				color: '#10B981', // зелёный
+				color: '#F29F67', // зелёный
 				width: 3,
 				type: 'dashed',
 			},
 			itemStyle: {
-				color: '#10B981',
+				color: '#F29F67',
 			},
 			symbol: 'circle',
 			symbolSize: 6,
@@ -396,12 +415,12 @@ const statsOption = {
 			data: [300000, 11000000, 1000000, 600000, 1200000, 800000, 2000000],
 			smooth: true,
 			lineStyle: {
-				color: '#6366F1', // синий
+				color: '#3B8FF3', // синий
 				width: 3,
 				type: 'dashed',
 			},
 			itemStyle: {
-				color: '#6366F1',
+				color: '#3B8FF3',
 			},
 			symbol: 'none',
 		},

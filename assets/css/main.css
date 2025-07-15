@@ -35,7 +35,7 @@ body {
 }
 
 .el-select__wrapper.is-focused {
-	box-shadow: 0 0 0 1px #018e20 !important;
+	box-shadow: 0 0 0 1px #3b8ff3 !important;
 }
 
 .el-tabs__nav-wrap:after {
@@ -57,7 +57,6 @@ body {
 	color: #ffffffcc !important;
 }
 
-
 .el-tabs__item.is-active {
 	color: white !important;
 }
@@ -67,12 +66,12 @@ body {
 }
 
 .el-checkbox__inner:hover {
-	border-color: #018e20 !important;
+	border-color: #3b8ff3 !important;
 }
 
 .el-checkbox__input.is-checked > .el-checkbox__inner {
-	border-color: #018e20 !important;
-	background-color: #018e20 !important;
+	border-color: #3b8ff3 !important;
+	background-color: #3b8ff3 !important;
 }
 
 .el-checkbox__label {
@@ -81,12 +80,12 @@ body {
 }
 
 .el-radio__input.is-checked > .el-radio__inner {
-	border-color: #018e20 !important;
+	border-color: #3b8ff3 !important;
 	background: #fff !important;
 }
 
 .el-radio__input.is-checked > .el-radio__inner:after {
-	background: #018e20 !important;
+	background: #3b8ff3 !important;
 	height: 10px !important;
 	width: 10px !important;
 }
@@ -100,7 +99,6 @@ body {
 	align-items: baseline !important;
 }
 
-
 @theme {
-	--color-primary: #018e20;
+	--color-primary: #018E20;
 }

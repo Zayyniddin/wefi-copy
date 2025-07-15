@@ -95,8 +95,8 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-4">
-			<ValueIssuedBank :data="creditDebit" :creditLoan='creditLoan' />
-			<NumberIssuedBank :data="creditDebit" :creditLoan='creditLoan' />
+			<ValueIssuedBank :data="creditDebit" :creditLoan="creditLoan" />
+			<NumberIssuedBank :data="creditDebit" :creditLoan="creditLoan" />
 			<div class="bg-white p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">Statistics</p>
 				<p
@@ -116,7 +116,7 @@
 								class="flex items-center justify-between w-[125px] gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ micro.women }} %</p>
@@ -126,7 +126,7 @@
 								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
@@ -145,7 +145,7 @@
 								class="flex items-center w-[125px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ small.women }} %</p>
@@ -155,7 +155,7 @@
 								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
@@ -174,7 +174,7 @@
 								class="flex items-center w-[125px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#4A3AFF] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ medium.women }} %</p>
@@ -184,7 +184,7 @@
 								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
-									<div class="w-3 h-3 bg-[#018E20] rounded-full"></div>
+									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
@@ -304,7 +304,7 @@ const microChart = computed(() =>
 						name: 'Micro',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -319,7 +319,7 @@ const microChart = computed(() =>
 						name: 'Micro',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
@@ -340,7 +340,7 @@ const smallChart = computed(() =>
 						name: 'Small',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -350,7 +350,7 @@ const smallChart = computed(() =>
 						name: 'Small',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
@@ -371,7 +371,7 @@ const mediumChart = computed(() =>
 						name: 'Medium',
 					},
 				],
-				style: { color: '#4A3AFF', borderRadius: [8, 0, 0, 8] },
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
@@ -381,7 +381,7 @@ const mediumChart = computed(() =>
 						name: 'Medium',
 					},
 				],
-				style: { color: '#018E20' },
+				style: { color: '#3B8FF3' },
 			},
 		],
 		barWidth: 40,
