@@ -34,22 +34,26 @@
 	>
 		<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 			<el-tab-pane label="Market size and Market share" name="first" lazy>
-				<MarketTab :customers="data.customers" :orgMonthly="data.org_monthly" />
+				<MarketTab
+					:customers="data.customers"
+					:orgMonthly="data.org_monthly"
+					@filter-change="onFilterChange"
+				/>
 			</el-tab-pane>
 			<el-tab-pane label="MSME Credit" name="second" lazy>
 				<MsmeCreditTab
 					:creditDebit="data.credit_debit"
 					:npl="data.npl"
 					:creditLoan="data.credit_loan"
-					:outstandingGraph="data.outstanding_graph"
+					:outstandingLoan="data.outstanding_loans"
 					:loanGraph="data.loan_graph"
-					:outstandingGraphSum='data.outstanding_graph_sum'
-					:countGraph='data.count_graph'
-					:outstandingGraphCount='data.outstanding_graph_count'
+					:outstandingGraphSum="data.outstanding_graph_sum"
+					:countGraph="data.count_graph"
+					:outstandingGraphCount="data.outstanding_graph_count"
 				/>
 			</el-tab-pane>
 			<el-tab-pane label="MSME Deposit" name="third" lazy>
-				<MsmeDepositTab :deposit="data.deposit" />
+				<MsmeDepositTab :deposit="data.deposit" :depositGraph='data.deposite_graph'/>
 			</el-tab-pane>
 		</el-tabs>
 	</div>
@@ -61,27 +65,22 @@ import banner2 from '@/assets/images/banner2.png'
 import banner3 from '@/assets/images/banner3.png'
 const route = useRoute()
 const $axios = useAxios()
-const data = ref([])
+
+const data = ref({})
 const activeName = ref('first')
 
-onMounted(() => {
-	getData()
+// Загружаем кеш и параллельно обновляем
+onMounted(async () => {
+	data.value = await useDashboardData($axios, updated => {
+		data.value = updated
+	})
 
+	// Чтение tab-параметра из URL
 	const tabParam = route.query.tab
 	if (tabParam === 'first' || tabParam === 'second' || tabParam === 'third') {
 		activeName.value = tabParam
 	}
 })
-
-function getData() {
-	$axios.get('api/v1/wefi/dashboard/').then(res => {
-		data.value = res.data.data
-	})
-}
-
-const handleClick = (tab, event) => {
-	// console.log(tab, event)
-}
 
 const bannerImage = computed(() => {
 	switch (activeName.value) {
@@ -93,6 +92,17 @@ const bannerImage = computed(() => {
 			return banner1
 	}
 })
+
+function onFilterChange({ year, region, business_type }) {
+	const params = {}
+	if (year) params.year = year
+	if (region) params.region = region
+	if (business_type) params.business_type = business_type
+
+	$axios.get('/api/v1/wefi/dashboard/', { params }).then(res => {
+		data.value = res.data.data
+	})
+}
 </script>
 
 <style scoped>

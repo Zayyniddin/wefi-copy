@@ -98,11 +98,17 @@
 			<ValueIssuedBank
 				:data="creditDebit"
 				:creditLoan="creditLoan"
-				:outstandingGraph="outstandingGraph"
+				:outstandingLoan="outstandingLoan"
 				:loanGraph="loanGraph"
-				:outstandingGraphSum='outstandingGraphSum'
+				:outstandingGraphSum="outstandingGraphSum"
 			/>
-			<NumberIssuedBank :data="creditDebit" :creditLoan="creditLoan" :countGraph='countGraph' :outstandingGraphCount='outstandingGraphCount' />
+			<NumberIssuedBank
+				:data="creditDebit"
+				:creditLoan="creditLoan"
+				:outstandingLoan="outstandingLoan"
+				:countGraph="countGraph"
+				:outstandingGraphCount="outstandingGraphCount"
+			/>
 			<div class="bg-white p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">Statistics</p>
 				<p
@@ -217,7 +223,7 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
-	outstandingGraph: {
+	outstandingLoan: {
 		type: Object,
 		default: () => ({}),
 	},

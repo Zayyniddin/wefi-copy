@@ -56,51 +56,53 @@
 		<div class="flex flex-col flex-1 h-full gap-4">
 			<!-- Line Chart -->
 			<div class="bg-white rounded-lg shadow">
-				<div class="flex items-start p-6 pb-0 justify-between">
-					<div>
-						<p class="text-gray-400 text-sm">Sales 2025</p>
-						<p class="text-xl font-bold">
-							$12.7k <span class="text-green-500 text-sm">▲ 1.3%</span>
-						</p>
-					</div>
+				<div class="flex items-start p-6 pb-0 justify-end">
 					<div class="flex items-center gap-2">
 						<el-select
-							v-model="value"
+							clearable
+							@change="emitFilter"
+							v-model="selectedRegion"
 							placeholder="Region"
 							size="small"
 							style="width: 160px"
 						>
 							<el-option
-								v-for="item in options"
+								v-for="item in regions"
+								:key="item.id"
+								:label="item.full_name"
+								:value="item.id"
+							/>
+						</el-select>
+
+						<el-select
+							clearable
+							@change="emitFilter"
+							v-model="selectedBusiness"
+							placeholder="Size"
+							size="small"
+							style="width: 160px"
+						>
+							<el-option
+								v-for="item in microOptions"
 								:key="item.value"
 								:label="item.label"
 								:value="item.value"
 							/>
 						</el-select>
+
 						<el-select
-							v-model="value"
-							placeholder="Micro"
+							clearable
+							@change="emitFilter"
+							v-model="selectedYear"
+							placeholder="Year"
 							size="small"
 							style="width: 160px"
 						>
 							<el-option
-								v-for="item in options"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value"
-							/>
-						</el-select>
-						<el-select
-							v-model="value"
-							placeholder="2025"
-							size="small"
-							style="width: 160px"
-						>
-							<el-option
-								v-for="item in options"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value"
+								v-for="item in yearOptions"
+								:key="item"
+								:label="item"
+								:value="item"
 							/>
 						</el-select>
 					</div>
@@ -193,6 +195,7 @@
 <script setup>
 import 'echarts'
 const { formatNumber } = useFormatNumber()
+// PROPS
 const props = defineProps({
 	customers: {
 		type: Array,
@@ -204,31 +207,58 @@ const props = defineProps({
 	},
 })
 
-const options = [
-	{
-		value: 'Option1',
-		label: 'Option1',
-	},
-	{
-		value: 'Option2',
-		label: 'Option2',
-	},
-	{
-		value: 'Option3',
-		label: 'Option3',
-	},
-	{
-		value: 'Option4',
-		label: 'Option4',
-	},
-	{
-		value: 'Option5',
-		label: 'Option5',
-	},
+// MOUNTED
+onMounted(() => {
+	getData()
+})
+
+// DATA
+const $axios = useAxios()
+const emit = defineEmits(['filter-change'])
+const regions = ref([])
+const selectedRegion = ref(null)
+const selectedYear = ref(null)
+const selectedBusiness = ref(null)
+
+const year = ref(null)
+const currentYear = new Date().getFullYear()
+const yearOptions = Array.from(
+	{ length: currentYear - 2019 },
+	(_, i) => 2020 + i
+)
+const microOptions = [
+	{ value: 1, label: 'MICRO' },
+	{ value: 2, label: 'SMALL' },
+	{ value: 3, label: 'MEDIUM' },
+	{ value: 4, label: 'LARGE' },
+	{ value: 5, label: 'SOLO' },
 ]
 
-const value = ref('')
+// METHODS
+function getData() {
+	$axios
+		.get('api/v1/resp/regions_lists', {
+			headers: {
+				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
+			},
+		})
+		.then(res => {
+			regions.value = res.data.data.region
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
 
+function emitFilter() {
+	emit('filter-change', {
+		year: selectedYear.value,
+		region: selectedRegion.value,
+		business_type: selectedBusiness.value,
+	})
+}
+
+// COMPUTED
 const customers_total = computed(() => {
 	return props.customers?.individual_count + props.customers?.legal_count
 })
@@ -343,7 +373,7 @@ const lineOption = computed(() => {
 	}
 })
 
-const gaugeOption = (value, label) => ({
+const gaugeOption = value => ({
 	series: [
 		{
 			type: 'gauge',
@@ -394,6 +424,6 @@ const gaugeOption = (value, label) => ({
 
 <style scoped>
 .gradient-bar {
-	background: linear-gradient(90deg, #018E20 0%, #007219 100%);
+	background: linear-gradient(90deg, #018e20 0%, #007219 100%);
 }
 </style>

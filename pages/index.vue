@@ -13,15 +13,11 @@
 
 <script setup>
 const $axios = useAxios()
-const data = ref([])
+const data = ref([]) 
 
-onMounted(() => {
-	getData()
-})
-
-function getData() {
-	$axios.get('api/v1/wefi/dashboard/').then(res => {
-		data.value = res.data.data
+onMounted(async () => {
+	data.value = await useDashboardData($axios, updated => {
+		data.value = updated
 	})
-}
+})
 </script>

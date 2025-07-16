@@ -132,13 +132,13 @@ const props = defineProps({
 		type: Array,
 		default: () => [],
 	},
-	outstandingGraph: {
+	outstandingLoan: {
 		type: Object,
 		default: () => ({}),
 	},
 	loanGraph: {
 		type: Object,
-		default: () => ({}),
+		default: () => [],
 	},
 	outstandingGraphSum: {
 		type: Object,
@@ -154,7 +154,15 @@ const selectedData = computed(() => {
 })
 
 const selectedSector = computed(() => {
-	return activeTab.value === 'value_issued' ? props.creditLoan : props.outstandingGraphSum
+	return activeTab.value === 'value_issued'
+		? props.creditLoan
+		: props.outstandingLoan
+})
+
+const selectedLine = computed(() => {
+	return activeTab.value === 'value_issued'
+		? props.loanGraph
+		: props.outstandingGraphSum
 })
 
 const pieOption = computed(() => ({
@@ -279,89 +287,89 @@ const businessTypeChart = computed(() =>
 // BY SECTOR CHART
 const sectorsChart = generate({
 	seriesData: [
-  {
-    name: 'Women',
-    data: [
-      {
-        value: selectedSector.value?.dir_others_women_percent ?? 0,
-        sum: selectedSector.value?.dir_others_women_sum ?? 0,
-        name: 'Other',
-      },
-      {
-        value: selectedSector.value?.dir_trade_women_percent ?? 0,
-        sum: selectedSector.value?.dir_trade_women_sum ?? 0,
-        name: 'Trade',
-      },
-      {
-        value: selectedSector.value?.dir_service_women_percent ?? 0,
-        sum: selectedSector.value?.dir_service_women_sum ?? 0,
-        name: 'Services',
-      },
-      {
-        value: selectedSector.value?.dir_man_women_percent ?? 0,
-        sum: selectedSector.value?.dir_man_women_sum ?? 0,
-        name: 'Manufacturing',
-      },
-      {
-        value: selectedSector.value?.dir_con_women_percent ?? 0,
-        sum: selectedSector.value?.dir_con_women_sum ?? 0,
-        name: 'Construction',
-      },
-      {
-        value: selectedSector.value?.dir_agro_women_percent ?? 0,
-        sum: selectedSector.value?.dir_agro_women_sum ?? 0,
-        name: 'Agriculture',
-      },
-      {
-        value: selectedSector.value?.dir_women_percent ?? 0,
-        sum: selectedSector.value?.dir_women_sum ?? 0,
-        name: 'All sectors',
-      },
-    ],
-    style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
-  },
-  {
-    name: 'Men',
-    data: [
-      {
-        value: selectedSector.value?.dir_others_men_percent ?? 0,
-        sum: selectedSector.value?.dir_others_men_sum ?? 0,
-        name: 'Other',
-      },
-      {
-        value: selectedSector.value?.dir_trade_men_percent ?? 0,
-        sum: selectedSector.value?.dir_trade_men_sum ?? 0,
-        name: 'Trade',
-      },
-      {
-        value: selectedSector.value?.dir_service_men_percent ?? 0,
-        sum: selectedSector.value?.dir_service_men_sum ?? 0,
-        name: 'Services',
-      },
-      {
-        value: selectedSector.value?.dir_man_men_percent ?? 0,
-        sum: selectedSector.value?.dir_man_men_sum ?? 0,
-        name: 'Manufacturing',
-      },
-      {
-        value: selectedSector.value?.dir_con_men_percent ?? 0,
-        sum: selectedSector.value?.dir_con_men_sum ?? 0,
-        name: 'Construction',
-      },
-      {
-        value: selectedSector.value?.dir_agro_men_percent ?? 0,
-        sum: selectedSector.value?.dir_agro_men_sum ?? 0,
-        name: 'Agriculture',
-      },
-      {
-        value: selectedSector.value?.dir_men_percent ?? 0,
-        sum: selectedSector.value?.dir_men_sum ?? 0,
-        name: 'All sectors',
-      },
-    ],
-    style: { color: '#3B8FF3' },
-  },
-],
+		{
+			name: 'Women',
+			data: [
+				{
+					value: selectedSector.value?.dir_others_women_percent ?? 0,
+					sum: selectedSector.value?.dir_others_women_sum ?? 0,
+					name: 'Other',
+				},
+				{
+					value: selectedSector.value?.dir_trade_women_percent ?? 0,
+					sum: selectedSector.value?.dir_trade_women_sum ?? 0,
+					name: 'Trade',
+				},
+				{
+					value: selectedSector.value?.dir_service_women_percent ?? 0,
+					sum: selectedSector.value?.dir_service_women_sum ?? 0,
+					name: 'Services',
+				},
+				{
+					value: selectedSector.value?.dir_man_women_percent ?? 0,
+					sum: selectedSector.value?.dir_man_women_sum ?? 0,
+					name: 'Manufacturing',
+				},
+				{
+					value: selectedSector.value?.dir_con_women_percent ?? 0,
+					sum: selectedSector.value?.dir_con_women_sum ?? 0,
+					name: 'Construction',
+				},
+				{
+					value: selectedSector.value?.dir_agro_women_percent ?? 0,
+					sum: selectedSector.value?.dir_agro_women_sum ?? 0,
+					name: 'Agriculture',
+				},
+				{
+					value: selectedSector.value?.dir_women_percent ?? 0,
+					sum: selectedSector.value?.dir_women_sum ?? 0,
+					name: 'All sectors',
+				},
+			],
+			style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
+		},
+		{
+			name: 'Men',
+			data: [
+				{
+					value: selectedSector.value?.dir_others_men_percent ?? 0,
+					sum: selectedSector.value?.dir_others_men_sum ?? 0,
+					name: 'Other',
+				},
+				{
+					value: selectedSector.value?.dir_trade_men_percent ?? 0,
+					sum: selectedSector.value?.dir_trade_men_sum ?? 0,
+					name: 'Trade',
+				},
+				{
+					value: selectedSector.value?.dir_service_men_percent ?? 0,
+					sum: selectedSector.value?.dir_service_men_sum ?? 0,
+					name: 'Services',
+				},
+				{
+					value: selectedSector.value?.dir_man_men_percent ?? 0,
+					sum: selectedSector.value?.dir_man_men_sum ?? 0,
+					name: 'Manufacturing',
+				},
+				{
+					value: selectedSector.value?.dir_con_men_percent ?? 0,
+					sum: selectedSector.value?.dir_con_men_sum ?? 0,
+					name: 'Construction',
+				},
+				{
+					value: selectedSector.value?.dir_agro_men_percent ?? 0,
+					sum: selectedSector.value?.dir_agro_men_sum ?? 0,
+					name: 'Agriculture',
+				},
+				{
+					value: selectedSector.value?.dir_men_percent ?? 0,
+					sum: selectedSector.value?.dir_men_sum ?? 0,
+					name: 'All sectors',
+				},
+			],
+			style: { color: '#3B8FF3' },
+		},
+	],
 	totalsPercent: [
 		selectedSector.value?.dir_others_percent ?? 0,
 		selectedSector.value?.dir_trade_percent ?? 0,
@@ -418,11 +426,15 @@ const businessSizeChart = computed(() =>
 
 //CREDIT STATISTICS
 const statsOption = computed(() => {
-	const filtered = props.loanGraph.filter(item => item.year !== null)
+	const filtered = Array.isArray(selectedLine.value)
+		? selectedLine.value.filter(
+				item => item?.year !== null && item?.year !== undefined
+		  )
+		: []
 
-	const years = filtered.map(item => item.year.toString())
-	const womenData = filtered.map(item => item.women_asum ?? 0)
-	const menData = filtered.map(item => item.men_asum ?? 0)
+	const years = filtered.map(item => item.year?.toString?.() ?? '')
+	const womenData = filtered.map(item => item?.women_asum ?? 0)
+	const menData = filtered.map(item => item?.men_asum ?? 0)
 
 	return {
 		tooltip: {
@@ -467,8 +479,8 @@ const statsOption = computed(() => {
 			},
 		},
 		grid: {
-			left: 40,
-			right: 30,
+			left: 120,
+			right: 10,
 			top: 60,
 			bottom: 40,
 		},
@@ -479,7 +491,7 @@ const statsOption = computed(() => {
 				data: womenData,
 				smooth: true,
 				lineStyle: {
-					color: '#F29F67', // оранжевый
+					color: '#F29F67',
 					width: 3,
 					type: 'dashed',
 				},
@@ -498,7 +510,7 @@ const statsOption = computed(() => {
 				data: menData,
 				smooth: true,
 				lineStyle: {
-					color: '#3B8FF3', // синий
+					color: '#3B8FF3',
 					width: 3,
 					type: 'dashed',
 				},

@@ -4,7 +4,7 @@
 			Regional overview of key financial inclusion <br />
 			indicators for WSME
 		</p>
-		<div class="w- justify-center flex items-center gap-16">
+		<div class="w-full justify-between flex items-start gap-16">
 			<VChart :option="option" class="!w-[915px] !h-[600px]" />
 			<div class="flex flex-col max-w-[400px] w-full gap-4">
 				<div class="rounded-lg shadow-lg p-4">
@@ -80,6 +80,36 @@
 				</div>
 			</div>
 		</div>
+		<div class="w-full mt-4">
+			<p class="text-sm text-gray-600 mb-2">NPL indicator</p>
+			<div class="relative w-full h-4 overflow-hidden bg-gray-200">
+				<div
+					class="absolute inset-0"
+					style="
+						background: linear-gradient(
+							to right,
+							#a90000 0%,
+							#915006 10%,
+							#ffbb00 30%,
+							#35c20a 50%,
+							#0dc900 70%,
+							#009e0a 90%,
+							#008029 100%
+						);
+					"
+				></div>
+				<div class="absolute inset-0 flex justify-between">
+					<span
+						v-for="i in 11"
+						:key="i"
+						class="w-[1px] h-full bg-white opacity-60"
+					></span>
+				</div>
+			</div>
+			<div class="flex justify-between text-xs text-gray-500 mt-1">
+				<span v-for="i in 11" :key="i">{{ (i - 1) * 10 }}%</span>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -136,6 +166,7 @@ onMounted(() => {
 			},
 		},
 		visualMap: {
+			show: false,
 			min: 0,
 			max: 10000,
 			text: ['NPL indicator'],
