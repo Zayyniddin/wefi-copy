@@ -63,6 +63,8 @@ body {
 
 .el-tabs__content {
 	margin-top: 30px !important;
+	overflow: visible !important;
+	margin-bottom: 45px;
 }
 
 .el-checkbox__inner:hover {

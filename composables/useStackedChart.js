@@ -89,36 +89,42 @@ export function useStackedChart() {
 			tooltip: {
 				trigger: 'item',
 				formatter: params => {
-					const color = params.color
-					const label = params.seriesName // "Men" or "Women"
-					const category = params.name // "Trade", "Other", etc.
-					const value =
-						typeof params.data?.__original === 'number'
-							? params.data.__original
-							: params.value
-					const sum = params.data?.sum ?? null
+	const color = params.color
+	const label = params.seriesName
+	const category = params.name
+	const value = typeof params.data?.__original === 'number'
+		? params.data.__original
+		: params.value
 
-					// Получаем текущий год и месяц
-					const now = new Date()
-					const monthName = now.toLocaleString('en-US', { month: 'long' })
-					const year = now.getFullYear()
+	// Получаем текущий год и месяц
+	const now = new Date()
+	const monthName = now.toLocaleString('en-US', { month: 'long' })
+	const year = now.getFullYear()
 
-					return `
-      <div style="padding: 2px;">
-        <div style="font-weight: bold; font-size: 13px; margin-bottom: 10px;">
-          ${monthName} ${year}
-        </div>
-        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
-          <div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
-          <b>${label}</b>
-        </div>
-        <div style="margin-left: 16px;">
-          <div><b>${category}</b></div>
-          <div>• Percentage: ${value.toFixed(1)}%</div>
-          ${sum !== null ? `<div>• Sum: ${sum.toLocaleString()}</div>` : ''}
-        </div>
-      </div>
-    `
+	// Генерируем список всех дополнительных полей, кроме стандартных
+	const extraFields = Object.entries(params.data || {})
+		.filter(([key]) =>
+			!['value', 'name', '__original', '__scaled'].includes(key)
+		)
+		.map(([key, val]) => {
+			const formatted =
+				typeof val === 'number' ? val.toLocaleString() : val
+			return `<div>• ${key[0].toUpperCase() + key.slice(1)}: ${formatted}</div>`
+		})
+		.join('')
+
+	return `
+		<div style="padding: 2px;">
+			<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+				<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+				<b>${label}</b>
+			</div>
+			<div style="margin-left: 16px;">
+				<div>• Percentage: ${value.toFixed(1)}%</div>
+				${extraFields}
+			</div>
+		</div>
+	`
 				},
 			},
 

@@ -30,7 +30,7 @@
 		</div>
 	</section>
 	<div
-		class="relative f-container mx-auto z-20 h-full -mt-40 pb-10 w-full px-4 overflow-x-auto max-w-full"
+		class="relative f-container mx-auto z-20 h-full -mt-40 pb-10 w-full px-4 max-w-full"
 	>
 		<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 			<el-tab-pane label="Market size and Market share" name="first" lazy>

@@ -7,12 +7,17 @@
 				<p class="text-sm font-medium text-[#013F21] mb-2">
 					Select period for analysis
 				</p>
-				<el-select v-model="value" placeholder="Micro" size="small">
+				<el-select
+					clearable
+					v-model="filtersStore.period"
+					placeholder="Year"
+					size="small"
+				>
 					<el-option
-						v-for="item in options"
-						:key="item.value"
-						:label="item.label"
-						:value="item.value"
+						v-for="item in yearOptions"
+						:key="item"
+						:label="item"
+						:value="item"
 					/>
 				</el-select>
 			</div>
@@ -22,9 +27,13 @@
 				<p class="text-sm font-medium text-[#013F21] mb-2">
 					Select business type for analysis
 				</p>
-				<el-checkbox-group v-model="businessTypes" class="flex flex-col gap-1">
-					<el-checkbox label="Individual entrepreneurs" />
-					<el-checkbox label="Legal entities" />
+				<el-checkbox-group
+					:model-value="filtersStore.businessTypes ?? allBusinessTypes"
+					@change="onBusinessTypeChange"
+					class="flex flex-col gap-1"
+				>
+					<el-checkbox :label="1">Individual entrepreneurs</el-checkbox>
+					<el-checkbox :label="2">Legal entities</el-checkbox>
 				</el-checkbox-group>
 			</div>
 
@@ -33,10 +42,14 @@
 				<p class="text-sm font-medium text-[#013F21] mb-2">
 					Select business size for analysis
 				</p>
-				<el-checkbox-group v-model="businessSizes" class="flex flex-col gap-1">
-					<el-checkbox label="Micro business" />
-					<el-checkbox label="Small business" />
-					<el-checkbox label="Medium business" />
+				<el-checkbox-group
+					:model-value="filtersStore.businessSizes ?? allBusinessSizes"
+					@change="onBusinessSizeChange"
+					class="flex flex-col gap-1"
+				>
+					<el-checkbox :label="1">Micro business</el-checkbox>
+					<el-checkbox :label="2">Small business</el-checkbox>
+					<el-checkbox :label="3">Medium business</el-checkbox>
 				</el-checkbox-group>
 			</div>
 
@@ -45,14 +58,18 @@
 				<p class="text-sm font-medium text-[#013F21] mb-2">
 					Select sector(s) for analysis
 				</p>
-				<el-radio-group v-model="sector" class="flex flex-col gap-1">
-					<el-radio label="All sectors" />
-					<el-radio label="Agriculture" />
-					<el-radio label="Construction" />
-					<el-radio label="Manufacturing" />
-					<el-radio label="Services" />
-					<el-radio label="Trade" />
-					<el-radio label="Other" />
+				<el-radio-group
+					:model-value="filtersStore.sector ?? 'all'"
+					@change="onSectorChange"
+					class="flex flex-col gap-1"
+				>
+					<el-radio label="all">All sectors</el-radio>
+					<el-radio :label="1">Agriculture</el-radio>
+					<el-radio :label="2">Construction</el-radio>
+					<el-radio :label="3">Manufacturing</el-radio>
+					<el-radio :label="4">Services</el-radio>
+					<el-radio :label="5">Trade</el-radio>
+					<el-radio :label="6">Other</el-radio>
 				</el-radio-group>
 			</div>
 
@@ -62,53 +79,24 @@
 					Select region(s) for analysis
 				</p>
 				<el-radio-group
-					v-model="region"
-					class="flex flex-col items-baseline gap-1"
+					:model-value="filtersStore.region ?? 'all'"
+					@change="onRegionChange"
+					class="flex flex-col gap-1"
 				>
-					<el-radio label="All regions" />
-					<el-radio label="Tashkent" />
-					<el-radio label="Tashkent Region" />
-					<el-radio label="Samarkand" />
-					<el-radio label="Fergana" />
-					<el-radio label="Andijan" />
-					<el-radio label="Djizzakh" />
-					<el-radio label="Bukhara" />
-					<el-radio label="Nukus" />
-					<el-radio label="Namangan" />
-					<el-radio label="Surkhandarya" />
-					<el-radio label="Kashkadarya" />
-					<el-radio label="Khorezm" />
-					<el-radio label="Syrdarya" />
-					<el-radio label="Navoi" />
-				</el-radio-group>
-			</div>
-
-			<!-- Currencies -->
-			<div>
-				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select currency(ies) for analysis
-				</p>
-				<el-radio-group v-model="currency" class="flex flex-col gap-1">
-					<el-radio label="UZS" />
-					<el-radio label="USD" />
+					<el-radio label="all">All regions</el-radio>
+					<el-radio
+						v-for="region in regions"
+						:key="region.id"
+						:label="region.id"
+					>
+						{{ region.full_name }}
+					</el-radio>
 				</el-radio-group>
 			</div>
 		</div>
 		<div class="flex flex-col gap-4">
-			<ValueIssuedBank
-				:data="creditDebit"
-				:creditLoan="creditLoan"
-				:outstandingLoan="outstandingLoan"
-				:loanGraph="loanGraph"
-				:outstandingGraphSum="outstandingGraphSum"
-			/>
-			<NumberIssuedBank
-				:data="creditDebit"
-				:creditLoan="creditLoan"
-				:outstandingLoan="outstandingLoan"
-				:countGraph="countGraph"
-				:outstandingGraphCount="outstandingGraphCount"
-			/>
+			<ValueIssuedBank />
+			<NumberIssuedBank />
 			<div class="bg-white p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">Statistics</p>
 				<p
@@ -210,49 +198,70 @@
 </template>
 
 <script setup>
+import { useFiltersStore } from '@/store/filterStore.js'
+const { generate } = useStackedChart()
+const filtersStore = useFiltersStore()
+const $axios = useAxios()
+const emit = defineEmits(['filterChanged'])
 const props = defineProps({
-	creditDebit: {
-		type: Array,
-		default: () => [],
-	},
-	creditLoan: {
-		type: Array,
-		default: () => [],
-	},
 	npl: {
-		type: Object,
-		default: () => ({}),
-	},
-	outstandingLoan: {
-		type: Object,
-		default: () => ({}),
-	},
-	loanGraph: {
-		type: Object,
-		default: () => ({}),
-	},
-	outstandingGraphSum: {
-		type: Object,
-		default: () => ({}),
-	},
-	countGraph: {
-		type: Object,
-		default: () => ({}),
-	},
-	outstandingGraphCount: {
 		type: Object,
 		default: () => ({}),
 	},
 })
 
-const { generate } = useStackedChart()
+const allBusinessTypes = [1, 2]
+const allBusinessSizes = [1, 2, 3]
 
+const onBusinessTypeChange = val => {
+  filtersStore.setBusinessTypes(val)
+}
+
+const onBusinessSizeChange = val => {
+  filtersStore.setBusinessSizes(val)
+}
+
+const onSectorChange = val => {
+  filtersStore.setSector(val)
+}
+
+const onRegionChange = val => {
+  filtersStore.setRegion(val)
+}
+
+const regions = ref([])
+
+const currentYear = new Date().getFullYear()
+const yearOptions = Array.from(
+	{ length: currentYear - 2019 },
+	(_, i) => 2020 + i
+)
 // Фильтры
 const businessTypes = ref(['Individual', 'Legal'])
 const businessSizes = ref(['Micro business'])
 const sector = ref('All sectors')
 const region = ref('All regions')
 const currency = ref('USD')
+
+// MOUNTED
+onMounted(() => {
+	getData()
+})
+
+function getData() {
+	$axios
+		.get('api/v1/resp/regions_lists', {
+			headers: {
+				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
+			},
+		})
+		.then(res => {
+			regions.value = res.data.data.region
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
 
 // Total NPL sum
 const microSum = props.npl?.micro_sum ?? 0

@@ -133,42 +133,49 @@
 					</div>
 					<div class="flex items-center gap-2">
 						<el-select
-							v-model="value"
+							clearable
+							@change="setFilter"
+							v-model="selectedRegion"
 							placeholder="Region"
 							size="small"
 							style="width: 160px"
 						>
 							<el-option
-								v-for="item in options"
+								v-for="item in regions"
+								:key="item.id"
+								:label="item.full_name"
+								:value="item.id"
+							/>
+						</el-select>
+						<el-select
+							clearable
+							@change="setFilter"
+							v-model="selectedBusiness"
+							placeholder="Size"
+							size="small"
+							style="width: 160px"
+						>
+							<el-option
+								v-for="item in microOptions"
 								:key="item.value"
 								:label="item.label"
 								:value="item.value"
 							/>
 						</el-select>
+
 						<el-select
-							v-model="value"
-							placeholder="Micro"
+							clearable
+							@change="setFilter"
+							v-model="selectedYear"
+							placeholder="Year"
 							size="small"
 							style="width: 160px"
 						>
 							<el-option
-								v-for="item in options"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value"
-							/>
-						</el-select>
-						<el-select
-							v-model="value"
-							placeholder="2025"
-							size="small"
-							style="width: 160px"
-						>
-							<el-option
-								v-for="item in options"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value"
+								v-for="item in yearOptions"
+								:key="item"
+								:label="item"
+								:value="item"
 							/>
 						</el-select>
 					</div>
@@ -257,6 +264,7 @@
 <script setup>
 import 'echarts'
 const { generate } = useStackedChart()
+const { formatNumber } = useFormatNumber()
 const props = defineProps({
 	deposit: {
 		type: Array,
@@ -267,34 +275,82 @@ const props = defineProps({
 		default: () => [],
 	},
 })
+const $axios = useAxios()
 const value = ref('')
-const { formatNumber } = useFormatNumber()
-const options = [
-	{
-		value: 'Option1',
-		label: 'Option1',
-	},
-	{
-		value: 'Option2',
-		label: 'Option2',
-	},
-	{
-		value: 'Option3',
-		label: 'Option3',
-	},
-	{
-		value: 'Option4',
-		label: 'Option4',
-	},
-	{
-		value: 'Option5',
-		label: 'Option5',
-	},
+const deposit = ref([])
+const depositGraph = ref([])
+const selectedRegion = ref(null)
+const regions = ref([])
+const selectedYear = ref(null)
+const selectedBusiness = ref(null)
+const currentYear = new Date().getFullYear()
+const yearOptions = Array.from(
+	{ length: currentYear - 2019 },
+	(_, i) => 2020 + i
+)
+const microOptions = [
+	{ value: 1, label: 'MICRO' },
+	{ value: 2, label: 'SMALL' },
+	{ value: 3, label: 'MEDIUM' },
+	{ value: 4, label: 'LARGE' },
+	{ value: 5, label: 'SOLO' },
 ]
 
+onMounted(() => {
+	getDeposit()
+	getDepositGraph()
+	getRegions()
+})
+
+function setFilter() {
+	getDepositGraph({
+		year: selectedYear.value,
+		region_id: selectedRegion.value,
+		business_type: selectedBusiness.value,
+	})
+}
+
+function getDeposit() {
+	$axios
+		.get('api/v1/wefi/dashboard/deposit')
+		.then(res => {
+			deposit.value = res.data.data
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
+function getDepositGraph(params = {}) {
+	$axios
+		.get('api/v1/wefi/dashboard/deposite_graph', { params })
+		.then(res => {
+			depositGraph.value = res.data.data
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
+
+function getRegions() {
+	$axios
+		.get('api/v1/resp/regions_lists', {
+			headers: {
+				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
+			},
+		})
+		.then(res => {
+			regions.value = res.data.data.region
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
 const statsOption = computed(() => {
-	const filtered = Array.isArray(props.depositGraph)
-		? props.depositGraph.filter(
+	const filtered = Array.isArray(depositGraph.value)
+		? depositGraph.value.filter(
 				item => item?.month !== null && item?.month !== undefined
 		  )
 		: []
@@ -346,7 +402,7 @@ const statsOption = computed(() => {
 			},
 		},
 		grid: {
-			left: 40,
+			left: 130,
 			right: 30,
 			top: 60,
 			bottom: 40,
@@ -394,7 +450,7 @@ const statsOption = computed(() => {
 	}
 })
 
-const gaugeOption = (menPct, womenPct, sumPct) => {
+const gaugeOption = (menPct, womenPct, sumPct, menSum, womenSum) => {
 	let totalShare = menPct + womenPct
 	if (totalShare === 0) totalShare = 1
 
@@ -407,16 +463,22 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 		tooltip: {
 			trigger: 'item',
 			formatter: params => {
-				const originalValue = params.seriesName === 'Men' ? menPct : womenPct
-				const color = params.seriesName === 'Men' ? '#3B8FF3' : '#F29F67'
+				const isMen = params.seriesName === 'Men'
+				const originalPct = isMen ? menPct : womenPct
+				const sumAmount = params.data?.sumAmount ?? null
+				const color = isMen ? '#3B8FF3' : '#F29F67'
 
-				return `<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>${
-					params.seriesName
-				}: ${originalValue.toFixed(1)}%`
+				return `
+					<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>
+					<b>${params.seriesName}</b><br/>
+					• Percentage: ${originalPct.toFixed(1)}%<br/>
+					${sumAmount !== null ? `• Sum: ${sumAmount.toLocaleString()}` : ''}
+				`
 			},
 		},
 		series: [
 			{
+				// background
 				type: 'gauge',
 				startAngle: 180,
 				endAngle: 0,
@@ -459,7 +521,7 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 				anchor: { show: false },
 				title: { show: false },
 				detail: { show: false },
-				data: [{ value: menValue }],
+				data: [{ value: menValue, sumAmount: menSum }],
 				z: 2,
 			},
 			{
@@ -500,7 +562,7 @@ const gaugeOption = (menPct, womenPct, sumPct) => {
 						},
 					},
 				},
-				data: [{ value: womenValue }],
+				data: [{ value: womenValue, sumAmount: womenSum }],
 				z: 3,
 			},
 		],
@@ -516,7 +578,9 @@ const genderChart = computed(() =>
 				name: 'Women',
 				data: [
 					{
-						value: props.deposit.women_percent ?? 0,
+						value: deposit.value.women_percent ?? 0,
+						count: deposit.value.women_count ?? 0,
+						sum: deposit.value.women_sum ?? 0,
 						name: 'women',
 					},
 				],
@@ -526,7 +590,9 @@ const genderChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: props.deposit.men_percent ?? 0,
+						value: deposit.value.men_percent ?? 0,
+						count: deposit.value.men_count ?? 0,
+						sum: deposit.value.men_sum ?? 0,
 						name: 'men',
 					},
 				],
@@ -546,7 +612,9 @@ const individualChart = computed(() =>
 				name: 'Women',
 				data: [
 					{
-						value: props.deposit.individual_women_pct ?? 0,
+						value: deposit.value.individual_women_pct ?? 0,
+						count: deposit.value.individual_women_count ?? 0,
+						sum: deposit.value.individual_women_sum ?? 0,
 						name: 'women',
 					},
 				],
@@ -556,7 +624,9 @@ const individualChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: props.deposit.individual_men_pct ?? 0,
+						value: deposit.value.individual_men_pct ?? 0,
+						count: deposit.value.individual_men_count ?? 0,
+						sum: deposit.value.individual_men_sum ?? 0,
 						name: 'men',
 					},
 				],
@@ -576,7 +646,9 @@ const legalChart = computed(() =>
 				name: 'Women',
 				data: [
 					{
-						value: props.deposit.legal_women_pct ?? 0,
+						value: deposit.value.legal_women_pct ?? 0,
+						count: deposit.value.legal_women_count ?? 0,
+						sum: deposit.value.legal_women_sum ?? 0,
 						name: 'women',
 					},
 				],
@@ -586,7 +658,9 @@ const legalChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: props.deposit.legal_men_pct ?? 0,
+						value: deposit.value.legal_men_pct ?? 0,
+						count: deposit.value.legal_men_count ?? 0,
+						sum: deposit.value.legal_men_sum ?? 0,
 						name: 'men',
 					},
 				],
@@ -602,6 +676,6 @@ const legalChart = computed(() =>
 
 <style scoped>
 .gradient-bar {
-	background: linear-gradient(90deg, #018E20 0%, #007219 100%);
+	background: linear-gradient(90deg, #018e20 0%, #007219 100%);
 }
 </style>

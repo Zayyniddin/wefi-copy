@@ -13,12 +13,12 @@
 					<div class="w-full bg-gray-200 h-4 rounded mt-1">
 						<div
 							class="h-4 rounded gradient-bar"
-							:style="`width: ${customers?.women_percent || 0}%`"
+							:style="`width: ${data?.women_percent || 0}%`"
 						></div>
 					</div>
 					<p class="text-sm flex items-center gap-2 text-gray-400 mt-5">
 						<span class="text-3xl text-[#1E1B39] font-bold"
-							>{{ customers?.women_percent || 0 }}%</span
+							>{{ data?.women_percent || 0 }}%</span
 						>
 						Women owned / led MSMEs
 					</p>
@@ -37,7 +37,7 @@
 							<p class="text-sm text-[#615E83]">Individual entrepreneurs</p>
 						</div>
 						<p class="text-xl font-bold">
-							{{ formatNumber(customers?.individual_count) || 0 }}
+							{{ formatNumber(data?.individual_count) || 0 }}
 						</p>
 					</div>
 					<div class="flex items-center justify-between">
@@ -46,7 +46,7 @@
 							<p class="text-sm text-[#615E83]">Legal entities</p>
 						</div>
 						<p class="text-xl font-bold">
-							{{ formatNumber(customers?.legal_count) || 0 }}
+							{{ formatNumber(data?.legal_count) || 0 }}
 						</p>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 					<div class="flex items-center gap-2">
 						<el-select
 							clearable
-							@change="emitFilter"
+							@change="setFilter"
 							v-model="selectedRegion"
 							placeholder="Region"
 							size="small"
@@ -76,7 +76,7 @@
 
 						<el-select
 							clearable
-							@change="emitFilter"
+							@change="setFilter"
 							v-model="selectedBusiness"
 							placeholder="Size"
 							size="small"
@@ -92,7 +92,7 @@
 
 						<el-select
 							clearable
-							@change="emitFilter"
+							@change="setFilter"
 							v-model="selectedYear"
 							placeholder="Year"
 							size="small"
@@ -108,7 +108,7 @@
 					</div>
 				</div>
 				<VChart
-					v-if="orgMonthly.length > 0"
+					v-if="lineData.length > 0"
 					:option="lineOption"
 					class="!h-[334px] !w-[1000px]"
 				/>
@@ -129,13 +129,13 @@
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
 							<p class="text-xl font-bold mt-1">
-								{{ formatNumber(customers.micro) }}
+								{{ formatNumber(data.micro) }}
 							</p>
 						</div>
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((customers.micro / customers_total) * 100) || 0,
+									Math.round((data.micro / customers_total) * 100) || 0,
 									'Micro'
 								)
 							"
@@ -151,13 +151,13 @@
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
 							<p class="text-xl font-bold mt-1">
-								{{ formatNumber(customers.small) }}
+								{{ formatNumber(data.small) }}
 							</p>
 						</div>
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((customers.small / customers_total) * 100) || 0,
+									Math.round((data.small / customers_total) * 100) || 0,
 									'Small'
 								)
 							"
@@ -173,13 +173,13 @@
 						>
 							<p class="text-gray-400 text-sm">Amount</p>
 							<p class="text-xl font-bold mt-1">
-								{{ formatNumber(customers.medium) }}
+								{{ formatNumber(data.medium) }}
 							</p>
 						</div>
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((customers.medium / customers_total) * 100) || 0,
+									Math.round((data.medium / customers_total) * 100) || 0,
 									'Medium'
 								)
 							"
@@ -210,17 +210,20 @@ const props = defineProps({
 // MOUNTED
 onMounted(() => {
 	getData()
+	getLineData()
+	getRegions()
 })
 
 // DATA
 const $axios = useAxios()
 const emit = defineEmits(['filter-change'])
+const data = ref([])
+const lineData = ref([])
 const regions = ref([])
 const selectedRegion = ref(null)
 const selectedYear = ref(null)
 const selectedBusiness = ref(null)
 
-const year = ref(null)
 const currentYear = new Date().getFullYear()
 const yearOptions = Array.from(
 	{ length: currentYear - 2019 },
@@ -235,7 +238,7 @@ const microOptions = [
 ]
 
 // METHODS
-function getData() {
+function getRegions() {
 	$axios
 		.get('api/v1/resp/regions_lists', {
 			headers: {
@@ -250,24 +253,46 @@ function getData() {
 		})
 }
 
-function emitFilter() {
-	emit('filter-change', {
+function getData() {
+	$axios
+		.get('api/v1/wefi/dashboard/customers')
+		.then(res => {
+			data.value = res.data.data
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
+function getLineData(params = {}) {
+	$axios
+		.get('api/v1/wefi/dashboard/org_monthly', { params })
+		.then(res => {
+			lineData.value = res.data.data
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
+function setFilter() {
+	getLineData({
 		year: selectedYear.value,
-		region: selectedRegion.value,
+		region_id: selectedRegion.value,
 		business_type: selectedBusiness.value,
 	})
 }
 
 // COMPUTED
 const customers_total = computed(() => {
-	return props.customers?.individual_count + props.customers?.legal_count
+	return data.value?.individual_count + data.value?.legal_count
 })
 const pieOption = computed(() => ({
 	color: ['#3B8FF3', '#F29F67'],
 	title: {
 		text: `{value|${formatNumber(
-			(props.customers?.individual_count ?? 0) +
-				(props.customers?.legal_count ?? 0)
+			(data.value?.individual_count ?? 0) +
+				(data.value?.legal_count ?? 0)
 		)}}\n{label|Total}`,
 		left: 'center',
 		top: 'center',
@@ -317,20 +342,18 @@ const pieOption = computed(() => ({
 			},
 			data: [
 				{
-					value: props.customers?.individual_count ?? 0,
+					value: data.value?.individual_count ?? 0,
 					name: 'Individual entrepreneurs',
 				},
-				{ value: props.customers?.legal_count ?? 0, name: 'Legal entities' },
+				{ value: data.value?.legal_count ?? 0, name: 'Legal entities' },
 			],
 		},
 	],
 }))
 
 const lineOption = computed(() => {
-	const data = Array.isArray(props.orgMonthly) ? props.orgMonthly : []
-
-	const months = data.map(item => item.name)
-	const values = data.map(item => item.cc)
+	const months = lineData.value.map(item => item.name)
+	const values = lineData.value.map(item => item.cc)
 
 	return {
 		tooltip: { trigger: 'axis' },
@@ -347,7 +370,7 @@ const lineOption = computed(() => {
 		yAxis: {
 			type: 'value',
 			position: 'right',
-			axisLabel: { formatter: '${value}' },
+			axisLabel: { formatter: '{value}' },
 		},
 		series: [
 			{
