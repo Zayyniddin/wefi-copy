@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="w-full mt-4">
-			<p class="text-sm text-gray-600 mb-2">NPL indicator</p>
+			<p class="text-sm text-gray-600 mb-2">Number of entrepreneurs by the gods</p>
 			<div class="relative w-full h-4 overflow-hidden bg-gray-200">
 				<div
 					class="absolute inset-0"
