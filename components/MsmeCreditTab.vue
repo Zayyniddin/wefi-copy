@@ -108,28 +108,34 @@
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Micro</p>
-							<p class="font-bold text-xl mr-8">{{ microTotal }}%</p>
+							<p class="font-bold text-xl mr-8">
+								{{ npl?.micro_percent?.toFixed(1) }}%
+							</p>
 						</div>
-						<VChart :option="microChart" class="!w-[300px] !h-[110px] z-50" />
+						<VChart :option="microChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
 							<div
-								class="flex items-center justify-between w-[125px] gap-2 rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center justify-between w-[135px] gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ micro.women }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.micro_women_percent?.toFixed(1) }} %
+								</p>
 							</div>
 
 							<div
-								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center gap-2 w-[135px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.micro_men_percent?.toFixed(1) }} %
+								</p>
 							</div>
 						</div>
 					</div>
@@ -137,57 +143,68 @@
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Small</p>
-							<p class="font-bold text-xl mr-8">{{ smallTotal }}%</p>
+							<p class="font-bold text-xl mr-8">
+								{{ npl?.small_percent?.toFixed(1) }}%
+							</p>
 						</div>
-						<VChart :option="smallChart" class="!w-[300px] !h-[110px] z-50" />
+						<VChart :option="smallChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
 							<div
-								class="flex items-center w-[125px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center w-[135px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ small.women }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.small_women_percent?.toFixed(1) }} %
+								</p>
 							</div>
 
 							<div
-								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center gap-2 w-[135px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.small_men_percent?.toFixed(1) }} %
+								</p>
 							</div>
 						</div>
 					</div>
-
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Medium</p>
-							<p class="font-bold text-xl mr-8">{{ mediumTotal }}%</p>
+							<p class="font-bold text-xl mr-8">
+								{{ npl?.medium_percent?.toFixed(1) }}%
+							</p>
 						</div>
-						<VChart :option="mediumChart" class="!w-[300px] !h-[110px] z-50" />
+						<VChart :option="mediumChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
 							<div
-								class="flex items-center w-[125px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center w-[135px] justify-between gap-2 rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ medium.women }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.medium_women_percent?.toFixed(1) }} %
+								</p>
 							</div>
 
 							<div
-								class="flex items-center gap-2 w-[125px] justify-between rounded-lg border-[#E5E5EF] border p-2"
+								class="flex items-center gap-2 w-[135px] justify-between rounded-lg border-[#E5E5EF] border p-2"
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
-								<p class="text-sm text-[#615E83]">{{ micro.men }} %</p>
+								<p class="text-sm text-[#615E83]">
+									{{ npl?.medium_men_percent?.toFixed(1) }} %
+								</p>
 							</div>
 						</div>
 					</div>
@@ -206,7 +223,7 @@ const emit = defineEmits(['filterChanged'])
 const props = defineProps({
 	npl: {
 		type: Object,
-		default: () => ({}),
+		default: () => [],
 	},
 })
 
@@ -214,19 +231,19 @@ const allBusinessTypes = [1, 2]
 const allBusinessSizes = [1, 2, 3]
 
 const onBusinessTypeChange = val => {
-  filtersStore.setBusinessTypes(val)
+	filtersStore.setBusinessTypes(val)
 }
 
 const onBusinessSizeChange = val => {
-  filtersStore.setBusinessSizes(val)
+	filtersStore.setBusinessSizes(val)
 }
 
 const onSectorChange = val => {
-  filtersStore.setSector(val)
+	filtersStore.setSector(val)
 }
 
 const onRegionChange = val => {
-  filtersStore.setRegion(val)
+	filtersStore.setRegion(val)
 }
 
 const regions = ref([])
@@ -236,12 +253,6 @@ const yearOptions = Array.from(
 	{ length: currentYear - 2019 },
 	(_, i) => 2020 + i
 )
-// Фильтры
-const businessTypes = ref(['Individual', 'Legal'])
-const businessSizes = ref(['Micro business'])
-const sector = ref('All sectors')
-const region = ref('All regions')
-const currency = ref('USD')
 
 // MOUNTED
 onMounted(() => {
@@ -318,30 +329,13 @@ const medium = computed(() =>
 // Чарты (можно сделать computed() для плавного обновления)
 const microChart = computed(() =>
 	generate({
-		totalsPercent: [
-			(props.npl?.micro_sum ?? 0) +
-			(props.npl?.small_sum ?? 0) +
-			(props.npl?.medium_sum ?? 0)
-				? +(
-						((props.npl?.micro_sum ?? 0) /
-							((props.npl?.micro_sum ?? 0) +
-								(props.npl?.small_sum ?? 0) +
-								(props.npl?.medium_sum ?? 0))) *
-						100
-				  ).toFixed(1)
-				: 0,
-		],
+		totalsPercent: [props.npl?.micro_percent ?? 0],
 		seriesData: [
 			{
 				name: 'Women',
 				data: [
 					{
-						value: (() => {
-							const women = props.npl?.micro_women_sum ?? 0
-							const men = props.npl?.micro_men_sum ?? 0
-							const total = women + men
-							return total ? +((women / total) * 100).toFixed(1) : 0
-						})(),
+						value: props.npl?.micro_women_percent ?? 0,
 						name: 'Micro',
 					},
 				],
@@ -351,12 +345,7 @@ const microChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: (() => {
-							const women = props.npl?.micro_women_sum ?? 0
-							const men = props.npl?.micro_men_sum ?? 0
-							const total = women + men
-							return total ? +((men / total) * 100).toFixed(1) : 0
-						})(),
+						value: props.npl?.micro_men_percent ?? 0,
 						name: 'Micro',
 					},
 				],
@@ -371,13 +360,13 @@ const microChart = computed(() =>
 
 const smallChart = computed(() =>
 	generate({
-		totalsPercent: [smallTotal.value ?? 0],
+		totalsPercent: [props.npl?.small_percent ?? 0],
 		seriesData: [
 			{
 				name: 'Women',
 				data: [
 					{
-						value: small.value?.women ?? 0,
+						value: props.npl?.small_women_percent ?? 0,
 						name: 'Small',
 					},
 				],
@@ -387,7 +376,7 @@ const smallChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: small.value?.men ?? 0,
+						value: props.npl?.small_men_percent ?? 0,
 						name: 'Small',
 					},
 				],
@@ -402,13 +391,13 @@ const smallChart = computed(() =>
 
 const mediumChart = computed(() =>
 	generate({
-		totalsPercent: [mediumTotal.value ?? 0],
+		totalsPercent: [props.npl?.small_percent ?? 0],
 		seriesData: [
 			{
 				name: 'Women',
 				data: [
 					{
-						value: medium.value?.women ?? 0,
+						value: props.npl?.medium_women_percent ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -418,7 +407,7 @@ const mediumChart = computed(() =>
 				name: 'Men',
 				data: [
 					{
-						value: medium.value?.men ?? 0,
+						value: props.npl?.medium_men_percent ?? 0,
 						name: 'Medium',
 					},
 				],

@@ -169,7 +169,7 @@ onMounted(() => {
 			show: false,
 			min: 0,
 			max: 10000,
-			text: ['NPL indicator'],
+			text: ['Number of entrepreneurs by the gods'],
 			orient: 'horizontal',
 			left: 80,
 			bottom: 20,

@@ -332,7 +332,6 @@ function getDepositGraph(params = {}) {
 		})
 }
 
-
 function getRegions() {
 	$axios
 		.get('api/v1/resp/regions_lists', {
@@ -393,6 +392,13 @@ const statsOption = computed(() => {
 			axisTick: { show: false },
 			axisLabel: {
 				color: '#6B7280',
+				formatter: value => {
+					if (value >= 1e12) return `${(value / 1e12).toFixed(0)} T`
+					if (value >= 1e9) return `${(value / 1e9).toFixed(0)} B`
+					if (value >= 1e6) return `${(value / 1e6).toFixed(0)} M`
+					if (value >= 1e3) return `${(value / 1e3).toFixed(0)} K`
+					return value
+				},
 			},
 			splitLine: {
 				lineStyle: {
@@ -401,8 +407,9 @@ const statsOption = computed(() => {
 				},
 			},
 		},
+
 		grid: {
-			left: 130,
+			left: 60,
 			right: 30,
 			top: 60,
 			bottom: 40,

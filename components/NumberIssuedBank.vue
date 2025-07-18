@@ -160,10 +160,10 @@ watch(
 	() => {
 		if (activeTab.value === 'number_issued') {
 			getCreditLoan()
-			getLoanGraph()
+			getCountGraph()
 		} else {
 			getOutstandingLoan()
-			getOutstandingGraph()
+			getLoanGraph()
 		}
 	},
 	{ deep: true }
@@ -360,8 +360,8 @@ const businessTypeChart = computed(() =>
 			},
 		],
 		totalsPercent: [
-			selectedData.value?.individual_count_percent ?? 0,
 			selectedData.value?.legal_count_percent ?? 0,
+			selectedData.value?.individual_count_percent ?? 0,
 		],
 	})
 )
@@ -373,6 +373,11 @@ const sectorsChart = computed(() =>
 			{
 				name: 'Women',
 				data: [
+					{
+						value: selectedData.value?.dir_women_percent ?? 0,
+						sum: selectedData.value?.dir_women_count ?? 0,
+						name: 'All sectors',
+					},
 					{
 						value: selectedData.value?.dir_others_women_percent ?? 0,
 						sum: selectedData.value?.dir_others_women_count ?? 0,
@@ -403,17 +408,17 @@ const sectorsChart = computed(() =>
 						sum: selectedData.value?.dir_agro_women_count ?? 0,
 						name: 'Agriculture',
 					},
-					{
-						value: selectedData.value?.dir_women_percent ?? 0,
-						sum: selectedData.value?.dir_women_count ?? 0,
-						name: 'All sectors',
-					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
 				name: 'Men',
 				data: [
+					{
+						value: selectedData.value?.dir_men_percent ?? 0,
+						sum: selectedData.value?.dir_men_count ?? 0,
+						name: 'All sectors',
+					},
 					{
 						value: selectedData.value?.dir_others_men_percent ?? 0,
 						sum: selectedData.value?.dir_others_men_count ?? 0,
@@ -444,23 +449,19 @@ const sectorsChart = computed(() =>
 						sum: selectedData.value?.dir_agro_men_count ?? 0,
 						name: 'Agriculture',
 					},
-					{
-						value: selectedData.value?.dir_men_percent ?? 0,
-						sum: selectedData.value?.dir_men_count ?? 0,
-						name: 'All sectors',
-					},
+					
 				],
 				style: { color: '#3B8FF3' },
 			},
 		],
 		totalsPercent: [
+			selectedData.value?.dir_percent ?? 0,
 			selectedData.value?.dir_others_percent ?? 0,
 			selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
 			selectedData.value?.dir_man_men_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,
 			selectedData.value?.dir_agro_percent ?? 0,
-			selectedData.value?.dir_percent ?? 0,
 		],
 	})
 )
@@ -553,22 +554,30 @@ const statsOption = computed(() => {
 			},
 		},
 		yAxis: {
-			type: 'log',
-			logBase: 10,
-			axisLine: { show: false },
-			axisTick: { show: false },
-			axisLabel: {
-				color: '#6B7280',
-			},
-			splitLine: {
-				lineStyle: {
-					type: 'dashed',
-					color: '#E5E7EB',
-				},
-			},
+	type: 'log',
+	logBase: 10,
+	axisLine: { show: false },
+	axisTick: { show: false },
+	axisLabel: {
+		color: '#6B7280',
+		formatter: value => {
+			if (value >= 1e12) return `${(value / 1e12).toFixed(0)} T`
+			if (value >= 1e9) return `${(value / 1e9).toFixed(0)} B`
+			if (value >= 1e6) return `${(value / 1e6).toFixed(0)} M`
+			if (value >= 1e3) return `${(value / 1e3).toFixed(0)} K`
+			return value
 		},
+	},
+	splitLine: {
+		lineStyle: {
+			type: 'dashed',
+			color: '#E5E7EB',
+		},
+	},
+},
+
 		grid: {
-			left: 60,
+			left: 50,
 			right: 10,
 			top: 60,
 			bottom: 40,

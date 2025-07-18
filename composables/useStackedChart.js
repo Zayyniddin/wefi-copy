@@ -8,7 +8,7 @@ export function useStackedChart() {
 		hideYAxisLabels = false,
 	}) {
 		const categories = seriesData[0]?.data.map(d => d.name) || []
-		const reversedTotals = [...totalsPercent].reverse()
+		const reversedTotals = [...totalsPercent]
 
 		const percentByCategory = {}
 		categories.forEach((cat, i) => {
@@ -89,31 +89,35 @@ export function useStackedChart() {
 			tooltip: {
 				trigger: 'item',
 				formatter: params => {
-	const color = params.color
-	const label = params.seriesName
-	const category = params.name
-	const value = typeof params.data?.__original === 'number'
-		? params.data.__original
-		: params.value
+					const color = params.color
+					const label = params.seriesName
+					const category = params.name
+					const value =
+						typeof params.data?.__original === 'number'
+							? params.data.__original
+							: params.value
 
-	// Получаем текущий год и месяц
-	const now = new Date()
-	const monthName = now.toLocaleString('en-US', { month: 'long' })
-	const year = now.getFullYear()
+					// Получаем текущий год и месяц
+					const now = new Date()
+					const monthName = now.toLocaleString('en-US', { month: 'long' })
+					const year = now.getFullYear()
 
-	// Генерируем список всех дополнительных полей, кроме стандартных
-	const extraFields = Object.entries(params.data || {})
-		.filter(([key]) =>
-			!['value', 'name', '__original', '__scaled'].includes(key)
-		)
-		.map(([key, val]) => {
-			const formatted =
-				typeof val === 'number' ? val.toLocaleString() : val
-			return `<div>• ${key[0].toUpperCase() + key.slice(1)}: ${formatted}</div>`
-		})
-		.join('')
+					// Генерируем список всех дополнительных полей, кроме стандартных
+					const extraFields = Object.entries(params.data || {})
+						.filter(
+							([key]) =>
+								!['value', 'name', '__original', '__scaled'].includes(key)
+						)
+						.map(([key, val]) => {
+							const formatted =
+								typeof val === 'number' ? val.toLocaleString() : val
+							return `<div>• ${
+								key[0].toUpperCase() + key.slice(1)
+							}: ${formatted}</div>`
+						})
+						.join('')
 
-	return `
+					return `
 		<div style="padding: 2px;">
 			<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
 				<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>

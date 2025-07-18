@@ -1,8 +1,8 @@
 export const useFiltersStore = defineStore('filters', {
   state: () => ({
     period: null,
-    businessTypes: [1], 
-    businessSizes: [1], 
+    businessTypes: null, 
+    businessSizes: [1,2,3], 
     sector: null,        
     region: null         
   }),
