@@ -108,12 +108,15 @@
 					</div>
 				</div>
 				<VChart
-					v-if="lineData.length > 0"
+					v-if="lineData && lineData.length > 0"
 					:option="lineOption"
 					class="!h-[334px] !w-[1000px]"
 				/>
-				<div v-else class="min-h-[334px] flex items-center justify-center">
-					Loading...
+				<div
+					v-else
+					class="min-h-[334px] flex items-center justify-center text-[#615E83] text-sm"
+				>
+					{{ lineData === null ? 'Loading...' : 'No data' }}
 				</div>
 			</div>
 
@@ -218,7 +221,7 @@ onMounted(() => {
 const $axios = useAxios()
 const emit = defineEmits(['filter-change'])
 const data = ref([])
-const lineData = ref([])
+const lineData = ref(null)
 const regions = ref([])
 const selectedRegion = ref(null)
 const selectedYear = ref(null)
@@ -291,8 +294,7 @@ const pieOption = computed(() => ({
 	color: ['#3B8FF3', '#F29F67'],
 	title: {
 		text: `{value|${formatNumber(
-			(data.value?.individual_count ?? 0) +
-				(data.value?.legal_count ?? 0)
+			(data.value?.individual_count ?? 0) + (data.value?.legal_count ?? 0)
 		)}}\n{label|Total}`,
 		left: 'center',
 		top: 'center',
