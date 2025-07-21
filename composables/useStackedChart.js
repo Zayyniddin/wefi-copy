@@ -93,10 +93,17 @@ export function useStackedChart() {
 				trigger: 'item',
 				formatter: params => {
 					const filtersStore = useFiltersStore()
-					const year = filtersStore.period || new Date().getFullYear()
 					const color = params.color
 					const label = params.seriesName
-					const category = params.name
+					const now = new Date()
+					const yearValue = filtersStore.period || now.getFullYear()
+					const formattedDate = now
+						.toLocaleString('en-US', {
+							month: 'long',
+							year: 'numeric',
+						})
+						.replace(now.getFullYear(), yearValue)
+
 					const value =
 						typeof params.data?.__original === 'number'
 							? params.data.__original
@@ -126,7 +133,7 @@ export function useStackedChart() {
 								font-size: 13px;
 							">
 								<div style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
-									Year: <span style="">${year}</span>
+								${formattedDate}
 								</div>
 								<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
 									<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
