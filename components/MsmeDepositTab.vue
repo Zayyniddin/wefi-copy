@@ -203,7 +203,9 @@
 								gaugeOption(
 									deposit.micro_men_pct ?? 0,
 									deposit.micro_women_pct ?? 0,
-									deposit.micro_sum_pct ?? 0
+									deposit.micro_sum_pct ?? 0,
+									deposit.micro_women_sum ?? 0,
+									deposit.micro_men_sum ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -226,7 +228,9 @@
 								gaugeOption(
 									deposit.small_men_pct ?? 0,
 									deposit.small_women_pct ?? 0,
-									deposit.small_sum_pct ?? 0
+									deposit.small_sum_pct ?? 0,
+									deposit.small_women_sum ?? 0,
+									deposit.small_men_sum ?? 0,
 								)
 							"
 							class="!h-[300px]"
@@ -249,7 +253,9 @@
 								gaugeOption(
 									deposit.medium_men_pct ?? 0,
 									deposit.medium_women_pct ?? 0,
-									deposit.medium_sum_pct ?? 0
+									deposit.medium_sum_pct ?? 0,
+									deposit.medium_women_sum ?? 0,
+									deposit.medium_men_sum ?? 0,
 								)
 							"
 							class="!h-[300px]"
@@ -363,16 +369,34 @@ const statsOption = computed(() => {
 			trigger: 'axis',
 			formatter: params => {
 				const lines = params
-					.map(p => `${p.seriesName}: ${p.value.toLocaleString()} sum`)
-					.join('<br/>')
-				return `${params[0].axisValue}<br/>${lines}`
+					.map(p => {
+						const color = p.color // возьмёт цвет из `itemStyle`
+						return `
+					<div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
+						<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+						<span>${
+							p.seriesName
+						}: <span style="font-weight: bold;">${p.value.toLocaleString()} sum</span></span>
+					</div>
+				`
+					})
+					.join('')
+
+				return `
+			<div style="padding: 4px 6px; font-size: 13px;">
+				<div style="font-weight: bold; margin-bottom: 8px;">Month: ${params[0].axisValue}</div>
+				${lines}
+			</div>
+		`
 			},
-			backgroundColor: '#2D2E54',
+			backgroundColor: '#fff', // белый фон
+			borderColor: '#E5E7EB',
+			borderWidth: 1,
 			borderRadius: 6,
 			padding: 10,
 			textStyle: {
-				color: '#fff',
-				fontSize: 12,
+				color: '#111827', // почти черный
+				fontSize: 13,
 			},
 		},
 		xAxis: {
@@ -457,7 +481,7 @@ const statsOption = computed(() => {
 	}
 })
 
-const gaugeOption = (menPct, womenPct, sumPct, menSum, womenSum) => {
+const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 	let totalShare = menPct + womenPct
 	if (totalShare === 0) totalShare = 1
 
@@ -476,11 +500,25 @@ const gaugeOption = (menPct, womenPct, sumPct, menSum, womenSum) => {
 				const color = isMen ? '#3B8FF3' : '#F29F67'
 
 				return `
-					<span style="display:inline-block;margin-right:6px;border-radius:50%;width:10px;height:10px;background:${color};"></span>
-					<b>${params.seriesName}</b><br/>
-					• Percentage: ${originalPct.toFixed(1)}%<br/>
-					${sumAmount !== null ? `• Sum: ${sumAmount.toLocaleString()}` : ''}
-				`
+				<div style="font-size: 13px; line-height: 1.6; color: #000;">
+					<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+						<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+						<b>${params.seriesName}</b>
+					</div>
+					<div style="display: flex; gap: 4px; margin-bottom: 2px;">
+						<span>• Percentage:</span>
+						<span style="font-weight: bold;">${originalPct.toFixed(1)}%</span>
+					</div>
+					${
+						sumAmount !== null
+							? `<div style="display: flex; gap:4px;">
+									<span>• Sum:</span>
+									<span style="font-weight: bold;">${sumAmount.toLocaleString()}</span>
+								</div>`
+							: ''
+					}
+				</div>
+			`
 			},
 		},
 		series: [

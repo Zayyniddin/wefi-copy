@@ -336,6 +336,7 @@ const microChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.micro_women_percent ?? 0,
+						sum: props.npl?.micro_women_sum ?? 0,
 						name: 'Micro',
 					},
 				],
@@ -346,6 +347,7 @@ const microChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.micro_men_percent ?? 0,
+						sum: props.npl?.micro_men_sum ?? 0,
 						name: 'Micro',
 					},
 				],
@@ -367,6 +369,7 @@ const smallChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.small_women_percent ?? 0,
+						sum: props.npl?.small_women_sum ?? 0,
 						name: 'Small',
 					},
 				],
@@ -377,6 +380,7 @@ const smallChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.small_men_percent ?? 0,
+						sum: props.npl?.small_men_sum ?? 0,
 						name: 'Small',
 					},
 				],
@@ -398,6 +402,7 @@ const mediumChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.medium_women_percent ?? 0,
+						sum: props.npl?.medium_women_sum ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -408,6 +413,7 @@ const mediumChart = computed(() =>
 				data: [
 					{
 						value: props.npl?.medium_men_percent ?? 0,
+						sum: props.npl?.medium_men_sum ?? 0,
 						name: 'Medium',
 					},
 				],

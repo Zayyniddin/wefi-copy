@@ -333,10 +333,12 @@ const businessTypeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.legal_women_percent ?? 0,
+						sum: selectedData.value?.legal_women_sum ?? 0,
 						name: 'Legal en.',
 					},
 					{
 						value: selectedData.value?.individual_women_percent ?? 0,
+						sum: selectedData.value?.individual_women_sum ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -347,10 +349,12 @@ const businessTypeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.legal_men_percent ?? 0,
+						sum: selectedData.value?.legal_men_sum ?? 0,
 						name: 'Legal en.',
 					},
 					{
 						value: selectedData.value?.individual_men_percent ?? 0,
+						sum: selectedData.value?.individual_men_sum ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -377,11 +381,6 @@ const sectorsChart = computed(() =>
 						name: 'All sectors',
 					},
 					{
-						value: selectedData.value?.dir_others_women_percent ?? 0,
-						sum: selectedData.value?.dir_others_women_sum ?? 0,
-						name: 'Other',
-					},
-					{
 						value: selectedData.value?.dir_trade_women_percent ?? 0,
 						sum: selectedData.value?.dir_trade_women_sum ?? 0,
 						name: 'Trade',
@@ -406,6 +405,11 @@ const sectorsChart = computed(() =>
 						sum: selectedData.value?.dir_agro_women_sum ?? 0,
 						name: 'Agriculture',
 					},
+					{
+						value: selectedData.value?.dir_others_women_percent ?? 0,
+						sum: selectedData.value?.dir_others_women_sum ?? 0,
+						name: 'Other',
+					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
@@ -416,11 +420,6 @@ const sectorsChart = computed(() =>
 						value: selectedData.value?.dir_men_percent ?? 0,
 						sum: selectedData.value?.dir_men_sum ?? 0,
 						name: 'All sectors',
-					},
-					{
-						value: selectedData.value?.dir_others_men_percent ?? 0,
-						sum: selectedData.value?.dir_others_men_sum ?? 0,
-						name: 'Other',
 					},
 					{
 						value: selectedData.value?.dir_trade_men_percent ?? 0,
@@ -447,18 +446,23 @@ const sectorsChart = computed(() =>
 						sum: selectedData.value?.dir_agro_men_sum ?? 0,
 						name: 'Agriculture',
 					},
+					{
+						value: selectedData.value?.dir_others_men_percent ?? 0,
+						sum: selectedData.value?.dir_others_men_sum ?? 0,
+						name: 'Other',
+					},
 				],
 				style: { color: '#3B8FF3' },
 			},
 		],
 		totalsPercent: [
 			selectedData.value?.dir_percent ?? 0,
-			selectedData.value?.dir_others_percent ?? 2,
 			selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
 			selectedData.value?.dir_man_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,
 			selectedData.value?.dir_agro_percent ?? 0,
+			selectedData.value?.dir_others_percent ?? 0,
 		],
 	})
 )
@@ -472,14 +476,17 @@ const businessSizeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.micro_women_percent ?? 0,
+						sum: selectedData.value?.micro_women_sum ?? 0,
 						name: 'Micro',
 					},
 					{
 						value: selectedData.value?.small_women_percent ?? 0,
+						sum: selectedData.value?.small_women_sum ?? 0,
 						name: 'Small',
 					},
 					{
 						value: selectedData.value?.medium_women_percent ?? 0,
+						sum: selectedData.value?.medium_women_sum ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -488,10 +495,19 @@ const businessSizeChart = computed(() =>
 			{
 				name: 'Men',
 				data: [
-					{ value: selectedData.value?.micro_men_percent ?? 0, name: 'Micro' },
-					{ value: selectedData.value?.small_men_percent ?? 0, name: 'Small' },
+					{
+						value: selectedData.value?.micro_men_percent ?? 0,
+						sum: selectedData.value?.micro_men_sum ?? 0,
+						name: 'Micro',
+					},
+					{
+						value: selectedData.value?.small_men_percent ?? 0,
+						sum: selectedData.value?.small_men_sum ?? 0,
+						name: 'Small',
+					},
 					{
 						value: selectedData.value?.medium_men_percent ?? 0,
+						sum: selectedData.value?.medium_men_sum ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -523,18 +539,37 @@ const statsOption = computed(() => {
 			trigger: 'axis',
 			formatter: params => {
 				const lines = params
-					.map(p => `${p.seriesName}: ${p.value.toLocaleString()} sum`)
-					.join('<br/>')
-				return `${params[0].axisValue}<br/>${lines}`
+					.map(p => {
+						const color = p.color // возьмёт цвет из `itemStyle`
+						return `
+					<div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
+						<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+						<span>${
+							p.seriesName
+						}: <span style="font-weight: bold;">${p.value.toLocaleString()} sum</span></span>
+					</div>
+				`
+					})
+					.join('')
+
+				return `
+			<div style="padding: 4px 6px; font-size: 13px;">
+				<div style="font-weight: bold; margin-bottom: 8px;">Year: ${params[0].axisValue}</div>
+				${lines}
+			</div>
+		`
 			},
-			backgroundColor: '#2D2E54',
+			backgroundColor: '#fff', // белый фон
+			borderColor: '#E5E7EB',
+			borderWidth: 1,
 			borderRadius: 6,
 			padding: 10,
 			textStyle: {
-				color: '#fff',
-				fontSize: 12,
+				color: '#111827', // почти черный
+				fontSize: 13,
 			},
 		},
+
 		xAxis: {
 			type: 'category',
 			data: years,

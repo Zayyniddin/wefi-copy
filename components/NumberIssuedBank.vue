@@ -335,10 +335,12 @@ const businessTypeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.legal_women_count_percent ?? 0,
+						count: selectedData.value?.legal_women_count ?? 0,
 						name: 'Legal en.',
 					},
 					{
 						value: selectedData.value?.individual_women_count_percent ?? 0,
+						count: selectedData.value?.individual_women_count ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -349,10 +351,12 @@ const businessTypeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.legal_men_count_percent ?? 0,
+						count: selectedData.value?.legal_men_count ?? 0,
 						name: 'Legal en.',
 					},
 					{
 						value: selectedData.value?.individual_men_count_percent ?? 0,
+						count: selectedData.value?.individual_men_count ?? 0,
 						name: 'Individual',
 					},
 				],
@@ -375,38 +379,39 @@ const sectorsChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.dir_women_percent ?? 0,
-						sum: selectedData.value?.dir_women_count ?? 0,
+						count: selectedData.value?.dir_women_count ?? 0,
 						name: 'All sectors',
 					},
-					{
-						value: selectedData.value?.dir_others_women_percent ?? 0,
-						sum: selectedData.value?.dir_others_women_count ?? 0,
-						name: 'Other',
-					},
+
 					{
 						value: selectedData.value?.dir_trade_women_percent ?? 0,
-						sum: selectedData.value?.dir_trade_women_count ?? 0,
+						count: selectedData.value?.dir_trade_women_count ?? 0,
 						name: 'Trade',
 					},
 					{
 						value: selectedData.value?.dir_service_women_percent ?? 0,
-						sum: selectedData.value?.dir_service_women_count ?? 0,
+						count: selectedData.value?.dir_service_women_count ?? 0,
 						name: 'Services',
 					},
 					{
 						value: selectedData.value?.dir_man_women_percent ?? 0,
-						sum: selectedData.value?.dir_man_women_count ?? 0,
+						count: selectedData.value?.dir_man_women_count ?? 0,
 						name: 'Manufacturing',
 					},
 					{
 						value: selectedData.value?.dir_con_women_percent ?? 0,
-						sum: selectedData.value?.dir_con_women_count ?? 0,
+						count: selectedData.value?.dir_con_women_count ?? 0,
 						name: 'Construction',
 					},
 					{
 						value: selectedData.value?.dir_agro_women_percent ?? 0,
-						sum: selectedData.value?.dir_agro_women_count ?? 0,
+						count: selectedData.value?.dir_agro_women_count ?? 0,
 						name: 'Agriculture',
+					},
+					{
+						value: selectedData.value?.dir_others_women_percent ?? 0,
+						count: selectedData.value?.dir_others_women_count ?? 0,
+						name: 'Other',
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
@@ -416,52 +421,52 @@ const sectorsChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.dir_men_percent ?? 0,
-						sum: selectedData.value?.dir_men_count ?? 0,
+						count: selectedData.value?.dir_men_count ?? 0,
 						name: 'All sectors',
 					},
-					{
-						value: selectedData.value?.dir_others_men_percent ?? 0,
-						sum: selectedData.value?.dir_others_men_count ?? 0,
-						name: 'Other',
-					},
+
 					{
 						value: selectedData.value?.dir_trade_men_percent ?? 0,
-						sum: selectedData.value?.dir_trade_men_count ?? 0,
+						count: selectedData.value?.dir_trade_men_count ?? 0,
 						name: 'Trade',
 					},
 					{
 						value: selectedData.value?.dir_service_men_percent ?? 0,
-						sum: selectedData.value?.dir_service_men_count ?? 0,
+						count: selectedData.value?.dir_service_men_count ?? 0,
 						name: 'Services',
 					},
 					{
 						value: selectedData.value?.dir_man_men_percent ?? 0,
-						sum: selectedData.value?.dir_man_men_count ?? 0,
+						count: selectedData.value?.dir_man_men_count ?? 0,
 						name: 'Manufacturing',
 					},
 					{
 						value: selectedData.value?.dir_con_men_percent ?? 0,
-						sum: selectedData.value?.dir_con_men_count ?? 0,
+						count: selectedData.value?.dir_con_men_count ?? 0,
 						name: 'Construction',
 					},
 					{
 						value: selectedData.value?.dir_agro_men_percent ?? 0,
-						sum: selectedData.value?.dir_agro_men_count ?? 0,
+						count: selectedData.value?.dir_agro_men_count ?? 0,
 						name: 'Agriculture',
 					},
-					
+					{
+						value: selectedData.value?.dir_others_men_percent ?? 0,
+						count: selectedData.value?.dir_others_men_count ?? 0,
+						name: 'Other',
+					},
 				],
 				style: { color: '#3B8FF3' },
 			},
 		],
 		totalsPercent: [
 			selectedData.value?.dir_percent ?? 0,
-			selectedData.value?.dir_others_percent ?? 0,
 			selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
 			selectedData.value?.dir_man_men_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,
 			selectedData.value?.dir_agro_percent ?? 0,
+			selectedData.value?.dir_others_percent ?? 0,
 		],
 	})
 )
@@ -474,14 +479,17 @@ const businessSizeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.micro_women_count_percent ?? 0,
+						count: selectedData.value?.micro_women_count ?? 0,
 						name: 'Micro',
 					},
 					{
 						value: selectedData.value?.small_women_count_percent ?? 0,
+						count: selectedData.value?.small_women_count ?? 0,
 						name: 'Small',
 					},
 					{
 						value: selectedData.value?.medium_women_count_percent ?? 0,
+						count: selectedData.value?.medium_women_count ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -492,14 +500,17 @@ const businessSizeChart = computed(() =>
 				data: [
 					{
 						value: selectedData.value?.micro_men_count_percent ?? 0,
+						count: selectedData.value?.micro_men_count ?? 0,
 						name: 'Micro',
 					},
 					{
 						value: selectedData.value?.small_men_count_percent ?? 0,
+						count: selectedData.value?.small_men_count ?? 0,
 						name: 'Small',
 					},
 					{
 						value: selectedData.value?.medium_men_count_percent ?? 0,
+						count: selectedData.value?.medium_men_count ?? 0,
 						name: 'Medium',
 					},
 				],
@@ -531,16 +542,34 @@ const statsOption = computed(() => {
 			trigger: 'axis',
 			formatter: params => {
 				const lines = params
-					.map(p => `${p.seriesName}: ${p.value.toLocaleString()} sum`)
-					.join('<br/>')
-				return `${params[0].axisValue}<br/>${lines}`
+					.map(p => {
+						const color = p.color // возьмёт цвет из `itemStyle`
+						return `
+					<div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
+						<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+						<span>${
+							p.seriesName
+						}: <span style="font-weight: bold;">${p.value.toLocaleString()}</span></span>
+					</div>
+				`
+					})
+					.join('')
+
+				return `
+			<div style="padding: 4px 6px; font-size: 13px;">
+				<div style="font-weight: bold; margin-bottom: 8px;">Year: ${params[0].axisValue}</div>
+				${lines}
+			</div>
+		`
 			},
-			backgroundColor: '#2D2E54',
+			backgroundColor: '#fff', // белый фон
+			borderColor: '#E5E7EB',
+			borderWidth: 1,
 			borderRadius: 6,
 			padding: 10,
 			textStyle: {
-				color: '#fff',
-				fontSize: 12,
+				color: '#111827', // почти черный
+				fontSize: 13,
 			},
 		},
 		xAxis: {
@@ -554,27 +583,27 @@ const statsOption = computed(() => {
 			},
 		},
 		yAxis: {
-	type: 'log',
-	logBase: 10,
-	axisLine: { show: false },
-	axisTick: { show: false },
-	axisLabel: {
-		color: '#6B7280',
-		formatter: value => {
-			if (value >= 1e12) return `${(value / 1e12).toFixed(0)} T`
-			if (value >= 1e9) return `${(value / 1e9).toFixed(0)} B`
-			if (value >= 1e6) return `${(value / 1e6).toFixed(0)} M`
-			if (value >= 1e3) return `${(value / 1e3).toFixed(0)} K`
-			return value
+			type: 'log',
+			logBase: 10,
+			axisLine: { show: false },
+			axisTick: { show: false },
+			axisLabel: {
+				color: '#6B7280',
+				formatter: value => {
+					if (value >= 1e12) return `${(value / 1e12).toFixed(0)} T`
+					if (value >= 1e9) return `${(value / 1e9).toFixed(0)} B`
+					if (value >= 1e6) return `${(value / 1e6).toFixed(0)} M`
+					if (value >= 1e3) return `${(value / 1e3).toFixed(0)} K`
+					return value
+				},
+			},
+			splitLine: {
+				lineStyle: {
+					type: 'dashed',
+					color: '#E5E7EB',
+				},
+			},
 		},
-	},
-	splitLine: {
-		lineStyle: {
-			type: 'dashed',
-			color: '#E5E7EB',
-		},
-	},
-},
 
 		grid: {
 			left: 50,

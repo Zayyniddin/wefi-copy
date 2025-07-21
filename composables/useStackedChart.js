@@ -1,3 +1,4 @@
+import { useFiltersStore } from '@/store/filterStore.js'
 export function useStackedChart() {
 	function generate({
 		seriesData,
@@ -9,6 +10,8 @@ export function useStackedChart() {
 	}) {
 		const categories = seriesData[0]?.data.map(d => d.name) || []
 		const reversedTotals = [...totalsPercent]
+		const filtersStore = useFiltersStore()
+		const year = filtersStore.period || new Date().getFullYear()
 
 		const percentByCategory = {}
 		categories.forEach((cat, i) => {
@@ -89,6 +92,8 @@ export function useStackedChart() {
 			tooltip: {
 				trigger: 'item',
 				formatter: params => {
+					const filtersStore = useFiltersStore()
+					const year = filtersStore.period || new Date().getFullYear()
 					const color = params.color
 					const label = params.seriesName
 					const category = params.name
@@ -97,12 +102,6 @@ export function useStackedChart() {
 							? params.data.__original
 							: params.value
 
-					// Получаем текущий год и месяц
-					const now = new Date()
-					const monthName = now.toLocaleString('en-US', { month: 'long' })
-					const year = now.getFullYear()
-
-					// Генерируем список всех дополнительных полей, кроме стандартных
 					const extraFields = Object.entries(params.data || {})
 						.filter(
 							([key]) =>
@@ -111,24 +110,36 @@ export function useStackedChart() {
 						.map(([key, val]) => {
 							const formatted =
 								typeof val === 'number' ? val.toLocaleString() : val
-							return `<div>• ${
-								key[0].toUpperCase() + key.slice(1)
-							}: ${formatted}</div>`
+							const capitalizedKey = key[0].toUpperCase() + key.slice(1)
+							return `
+							<div style="margin-bottom: 2px;">
+								• ${capitalizedKey}: <span style="font-weight: bold;">${formatted}</span>
+							</div>
+									`
 						})
 						.join('')
 
 					return `
-		<div style="padding: 2px;">
-			<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
-				<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
-				<b>${label}</b>
-			</div>
-			<div style="margin-left: 16px;">
-				<div>• Percentage: ${value.toFixed(1)}%</div>
-				${extraFields}
-			</div>
-		</div>
-	`
+							<div style="
+								background: #fff;
+								color: #111827;
+								font-size: 13px;
+							">
+								<div style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">
+									Year: <span style="">${year}</span>
+								</div>
+								<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+									<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+									<span style="font-weight: 600;">${label}</span>
+								</div>
+								<div style="margin-left: 18px;">
+									<div style="margin-bottom: 4px;">
+										• Percentage: <span style="font-weight: bold;">${value.toFixed(1)}%</span>
+									</div>
+									${extraFields}
+								</div>
+							</div>
+						`
 				},
 			},
 
