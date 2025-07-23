@@ -1,5 +1,5 @@
 <template>
-	<section class="relative h-[675px] w-full overflow-hidden">
+	<section class="relative h-screen w-full overflow-hidden">
 		<img
 			src="@/assets/images/hero-bg.png"
 			alt="Women Entrepreneurs"
