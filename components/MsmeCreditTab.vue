@@ -280,53 +280,7 @@ const smallSum = props.npl?.small_sum ?? 0
 const mediumSum = props.npl?.medium_sum ?? 0
 const totalNplSum = microSum + smallSum + mediumSum
 
-// Percent of each business size in total NPL
-const microTotal = computed(() => {
-	const micro = props.npl?.micro_sum ?? 0
-	const small = props.npl?.small_sum ?? 0
-	const medium = props.npl?.medium_sum ?? 0
-	const total = micro + small + medium
-	return total === 0 ? 0 : +((micro / total) * 100).toFixed(1)
-})
 
-const smallTotal = computed(() => {
-	const micro = props.npl?.micro_sum ?? 0
-	const small = props.npl?.small_sum ?? 0
-	const medium = props.npl?.medium_sum ?? 0
-	const total = micro + small + medium
-	return total === 0 ? 0 : +((small / total) * 100).toFixed(1)
-})
-
-const mediumTotal = computed(() => {
-	const micro = props.npl?.micro_sum ?? 0
-	const small = props.npl?.small_sum ?? 0
-	const medium = props.npl?.medium_sum ?? 0
-	const total = micro + small + medium
-	return total === 0 ? 0 : +((medium / total) * 100).toFixed(1)
-})
-
-// Inner male/female percentages
-function calcInnerPercent(menRaw, womenRaw) {
-	const men = menRaw ?? 0
-	const women = womenRaw ?? 0
-	const total = men + women
-	return {
-		men: total === 0 ? 0 : +((men / total) * 100).toFixed(1),
-		women: total === 0 ? 0 : +((women / total) * 100).toFixed(1),
-	}
-}
-
-const micro = computed(() =>
-	calcInnerPercent(props.npl?.micro_men_sum, props.npl?.micro_women_sum)
-)
-const small = computed(() =>
-	calcInnerPercent(props.npl?.small_men_sum, props.npl?.small_women_sum)
-)
-const medium = computed(() =>
-	calcInnerPercent(props.npl?.medium_men_sum, props.npl?.medium_women_sum)
-)
-
-// Чарты (можно сделать computed() для плавного обновления)
 const microChart = computed(() =>
 	generate({
 		totalsPercent: [props.npl?.micro_percent ?? 0],

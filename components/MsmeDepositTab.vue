@@ -166,16 +166,16 @@
 						<el-select
 							clearable
 							@change="setFilter"
-							v-model="selectedYear"
-							placeholder="Year"
+							v-model="selectedMonth"
+							placeholder="Month"
 							size="small"
 							style="width: 160px"
 						>
 							<el-option
-								v-for="item in yearOptions"
-								:key="item"
-								:label="item"
-								:value="item"
+								v-for="item in months"
+								:key="item.id"
+								:label="item.name"
+								:value="item.id"
 							/>
 						</el-select>
 					</div>
@@ -272,28 +272,18 @@ import 'echarts'
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
 const props = defineProps({
-	deposit: {
-		type: Array,
-		default: () => [],
-	},
-	depositGraph: {
+	months: {
 		type: Array,
 		default: () => [],
 	},
 })
 const $axios = useAxios()
-const value = ref('')
 const deposit = ref([])
 const depositGraph = ref([])
 const selectedRegion = ref(null)
 const regions = ref([])
-const selectedYear = ref(null)
+const selectedMonth = ref(null)
 const selectedBusiness = ref(null)
-const currentYear = new Date().getFullYear()
-const yearOptions = Array.from(
-	{ length: currentYear - 2019 },
-	(_, i) => 2020 + i
-)
 const microOptions = [
 	{ value: 1, label: 'MICRO' },
 	{ value: 2, label: 'SMALL' },
@@ -310,7 +300,7 @@ onMounted(() => {
 
 function setFilter() {
 	getDepositGraph({
-		year: selectedYear.value,
+		month: selectedMonth.value,
 		region_id: selectedRegion.value,
 		business_type: selectedBusiness.value,
 	})

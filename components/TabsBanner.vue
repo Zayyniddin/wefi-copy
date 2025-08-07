@@ -34,11 +34,7 @@
 	>
 		<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 			<el-tab-pane label="Market size and Market share" name="first" lazy>
-				<MarketTab
-					:customers="data.customers"
-					:orgMonthly="data.org_monthly"
-					@filter-change="onFilterChange"
-				/>
+				<MarketTab @filter-change="onFilterChange" />
 			</el-tab-pane>
 			<el-tab-pane label="MSME Credit" name="second" lazy>
 				<MsmeCreditTab
@@ -53,7 +49,7 @@
 				/>
 			</el-tab-pane>
 			<el-tab-pane label="MSME Deposit" name="third" lazy>
-				<MsmeDepositTab :deposit="data.deposit" :depositGraph='data.deposite_graph'/>
+				<MsmeDepositTab :months="data.months" />
 			</el-tab-pane>
 		</el-tabs>
 	</div>

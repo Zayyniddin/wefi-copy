@@ -121,7 +121,6 @@
 			</div>
 
 			<div class="flex items-center gap-4 w-full">
-				<!-- Micro / Small / Medium business -->
 				<div class="flex items-center w-full gap-4">
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
@@ -138,8 +137,11 @@
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((data.micro / customers_total) * 100) || 0,
-									'Micro'
+									data.micro_men_percent ?? 0,
+									data.micro_women_percent ?? 0,
+									data.micro_percent ?? 0,
+									data.micro_women ?? 0,
+									data.micro_men ?? 0,
 								)
 							"
 							class="!h-[300px]"
@@ -160,8 +162,11 @@
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((data.small / customers_total) * 100) || 0,
-									'Small'
+									data.small_men_percent ?? 0,
+									data.small_women_percent ?? 0,
+									data.small_percent ?? 0,
+									data.small_women ?? 0,
+									data.small_men ?? 0,
 								)
 							"
 							class="!h-[300px]"
@@ -182,8 +187,11 @@
 						<VChart
 							:option="
 								gaugeOption(
-									Math.round((data.medium / customers_total) * 100) || 0,
-									'Medium'
+									data.medium_men_percent ?? 0,
+									data.medium_women_percent ?? 0,
+									data.medium_percent ?? 0,
+									data.medium_women ?? 0,
+									data.medium_men ?? 0,
 								)
 							"
 							class="!h-[300px]"
@@ -398,53 +406,138 @@ const lineOption = computed(() => {
 	}
 })
 
-const gaugeOption = value => ({
-	series: [
-		{
-			type: 'gauge',
-			startAngle: 180,
-			endAngle: 0,
-			min: 0,
-			max: 100,
-			progress: {
-				show: true,
-				width: 18,
-				roundCap: true,
-				itemStyle: { color: '#3B8FF3' },
+const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
+	let totalShare = menPct + womenPct
+	if (totalShare === 0) totalShare = 1
+
+	const menValue = (menPct / totalShare) * sumPct
+	const womenValue = (womenPct / totalShare) * sumPct
+
+	return {
+		animationDuration: 1000,
+		animationEasing: 'cubicOut',
+		tooltip: {
+			trigger: 'item',
+			formatter: params => {
+				const isMen = params.seriesName === 'Men'
+				const originalPct = isMen ? menPct : womenPct
+				const sumAmount = params.data?.sumAmount ?? null
+				const color = isMen ? '#3B8FF3' : '#F29F67'
+
+				return `
+				<div style="font-size: 13px; line-height: 1.6; color: #000;">
+					<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+						<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+						<b>${params.seriesName}</b>
+					</div>
+					<div style="display: flex; gap: 4px; margin-bottom: 2px;">
+						<span>• Percentage:</span>
+						<span style="font-weight: bold;">${originalPct.toFixed(1)}%</span>
+					</div>
+					${
+						sumAmount !== null
+							? `<div style="display: flex; gap:4px;">
+									<span>• Count:</span>
+									<span style="font-weight: bold;">${sumAmount.toLocaleString()}</span>
+								</div>`
+							: ''
+					}
+				</div>
+			`
 			},
-			tooltip: {
-				show: true,
-				formatter: () => `${value}%<br/>Sales: $24,400`,
-			},
-			axisLine: {
-				lineStyle: {
-					width: 18,
-					color: [[1, '#E5EAFC']],
-				},
-			},
-			axisTick: { show: false },
-			splitLine: { show: false },
-			axisLabel: { show: false },
-			pointer: { show: false },
-			anchor: { show: false },
-			title: { show: false },
-			detail: {
-				valueAnimation: true,
-				formatter: () => `{value|${value}%}\n`,
-				offsetCenter: ['5%', '-5%'],
-				rich: {
-					value: {
-						fontSize: 34,
-						fontWeight: 'bold',
-						color: '#111827',
-						lineHeight: 30,
+		},
+		series: [
+			{
+				// background
+				type: 'gauge',
+				startAngle: 180,
+				endAngle: 0,
+				min: 0,
+				max: 100,
+				progress: { show: false },
+				axisLine: {
+					lineStyle: {
+						width: 18,
+						color: [[1, '#E5EAFC']],
 					},
 				},
+				axisTick: { show: false },
+				splitLine: { show: false },
+				axisLabel: { show: false },
+				pointer: { show: false },
+				anchor: { show: false },
+				title: { show: false },
+				detail: { show: false },
+				z: 1,
 			},
-			data: [{ value }],
-		},
-	],
-})
+			{
+				name: 'Men',
+				type: 'gauge',
+				startAngle: 180,
+				endAngle: 0,
+				min: 0,
+				max: 100,
+				progress: {
+					show: true,
+					width: 18,
+					roundCap: true,
+					itemStyle: { color: '#3B8FF3' },
+				},
+				axisLine: { show: false },
+				axisTick: { show: false },
+				splitLine: { show: false },
+				axisLabel: { show: false },
+				pointer: { show: false },
+				anchor: { show: false },
+				title: { show: false },
+				detail: { show: false },
+				data: [{ value: menValue, sumAmount: menSum }],
+				z: 2,
+			},
+			{
+				name: 'Women',
+				type: 'gauge',
+				startAngle: 180,
+				endAngle: 0,
+				min: 0,
+				max: 100,
+				progress: {
+					show: true,
+					width: 18,
+					roundCap: true,
+					itemStyle: { color: '#F29F67' },
+				},
+				axisLine: { show: false },
+				axisTick: { show: false },
+				splitLine: { show: false },
+				axisLabel: { show: false },
+				pointer: { show: false },
+				anchor: { show: false },
+				title: { show: false },
+				detail: {
+					valueAnimation: true,
+					formatter: () =>
+						`{value|${sumPct?.toFixed(1) ?? 0}%}\n{label|Total Participants}`,
+					offsetCenter: [0, '-20%'],
+					rich: {
+						value: {
+							fontSize: 24,
+							fontWeight: 'bold',
+							color: '#111827',
+							lineHeight: 30,
+						},
+						label: {
+							fontSize: 14,
+							color: '#6B7280',
+						},
+					},
+				},
+				data: [{ value: womenValue, sumAmount: womenSum }],
+				z: 3,
+			},
+		],
+	}
+}
 </script>
 
 <style scoped>
