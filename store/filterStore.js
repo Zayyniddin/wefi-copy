@@ -2,7 +2,7 @@ export const useFiltersStore = defineStore('filters', {
   state: () => ({
     period: null,
     businessTypes: null, 
-    businessSizes: [1,2,3], 
+    businessSizes: null, 
     sector: null,        
     region: null         
   }),
