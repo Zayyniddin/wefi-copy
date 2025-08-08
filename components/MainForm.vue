@@ -1,5 +1,5 @@
 <template>
-	<div class="relative py-32 my-32">
+	<div  class="relative py-32 my-32">
 		<img
 			class="absolute top-0 left-0 w-full h-full object-cover z-10"
 			src="@/assets/images/form-bg.png"
@@ -25,6 +25,7 @@
 			</div>
 
 			<el-form
+			data-aos='fade-up'
 				class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md"
 				label-position="top"
 				:model="form"

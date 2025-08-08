@@ -103,7 +103,7 @@
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
-								{{ deposit.legal_men_pct || 0 }}%
+								{{ deposit.legal_women_pct || 0 }}%
 							</p>
 						</div>
 
@@ -115,7 +115,7 @@
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
-								{{ deposit.legal_women_pct || 0 }}%
+								{{ deposit.legal_men_pct || 0 }}%
 							</p>
 						</div>
 					</div>

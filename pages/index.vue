@@ -2,11 +2,10 @@
 	<Hero />
 	<MainStats :data="data.msme" />
 	<MainMap :orgRegion="data.org_region" :msme="data.msme" />
-	<GenderStats />
+	<GenderStats id='overview' />
 	<MainForm />
 	<Blogs />
-	<!-- <TeamMembers /> -->
-	<Questionary />
+	<Questionary id='faq' />
 	<Partners />
 	<Footer />
 </template>

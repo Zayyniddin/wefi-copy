@@ -1,6 +1,7 @@
 <template>
-	<div class="bg-[#F4F7FA] py-16">
+	<div data-aos="fade-up" class="bg-[#F4F7FA] py-16">
 		<p
+		
 			class="text-2xl font-bold mb-16 text-center max-w-[450px] mx-auto w-full"
 		>
 			Gender Statistics in Entrepreneurship: Key Indicators Overview

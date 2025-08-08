@@ -1,11 +1,10 @@
 <template>
 	<section class="relative h-screen w-full overflow-hidden">
-		<img
-			src="@/assets/images/hero-bg.png"
-			alt="Women Entrepreneurs"
-			class="absolute inset-0 h-full w-full object-cover z-0"
-		/>
-
+		<div
+			class="rellax absolute inset-0 h-full w-full z-0"
+			data-rellax-speed="-5"
+			:style="`will-change: transform; background-image: url(${heroBg}); background-size: cover; background-position: center;`"
+		></div>
 		<div
 			class="absolute inset-0 z-10 pointer-events-none"
 			style="
@@ -33,3 +32,13 @@
 		</div>
 	</section>
 </template>
+
+<script setup>
+import heroBg from '@/assets/images/hero-bg.png'
+import Rellax from 'rellax'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+	new Rellax('.rellax')
+})
+</script>
