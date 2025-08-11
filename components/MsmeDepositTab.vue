@@ -472,11 +472,28 @@ const statsOption = computed(() => {
 })
 
 const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
-	let totalShare = menPct + womenPct
-	if (totalShare === 0) totalShare = 1
+	// нормализация
+	menPct = Number(menPct) || 0;
+	womenPct = Number(womenPct) || 0;
+	sumPct = Number(sumPct);
+	if (!isFinite(sumPct)) sumPct = 0;
+	sumPct = Math.max(0, Math.min(100, sumPct)); // clamp 0..100
 
-	const menValue = (menPct / totalShare) * sumPct
-	const womenValue = (womenPct / totalShare) * sumPct
+	const totalShare = menPct + womenPct;
+	const filledAngle = (sumPct / 100) * 180; // сколько градусов заполнено из полукруга
+	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0;
+	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0;
+	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle); // на случай погрешностей
+	const fillerAngle = Math.max(0, 360 - filledAngle); // прозрачная нижняя половина
+
+	// защитим от маленьких дробей (чтобы сумма = 360)
+	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle;
+	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1;
+
+	const menVal = menAngle * normalizeFactor;
+	const womenVal = womenAngle * normalizeFactor;
+	const remVal = remainderFilledAngle * normalizeFactor;
+	const fillerVal = fillerAngle * normalizeFactor;
 
 	return {
 		animationDuration: 1000,
@@ -484,125 +501,92 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 		tooltip: {
 			trigger: 'item',
 			formatter: params => {
-				const isMen = params.seriesName === 'Men'
-				const originalPct = isMen ? menPct : womenPct
-				const sumAmount = params.data?.sumAmount ?? null
-				const color = isMen ? '#3B8FF3' : '#F29F67'
+				if (!params || !params.name) return '';
+				if (params.name === 'Filled remainder' || params.name === 'invisible') return '';
+				const isMen = params.name === 'Men';
+				const originalPct = isMen ? menPct : womenPct;
+				const sumAmount = isMen ? menSum : womenSum;
+				const color = isMen ? '#3B8FF3' : '#F29F67';
 
 				return `
-				<div style="font-size: 13px; line-height: 1.6; color: #000;">
-					<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-						<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
-						<b>${params.seriesName}</b>
+					<div style="font-size:13px;line-height:1.6;color:#000;">
+						<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+							<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+							<b>${params.name}</b>
+						</div>
+						<div style="display:flex;gap:6px;margin-bottom:4px;">
+							<span>• Percentage:</span>
+							<span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
+						</div>
+						${
+							sumAmount != null
+								? `<div style="display:flex;gap:6px;"><span>• Sum:</span><span style="font-weight:bold;">${Number(sumAmount).toLocaleString()}</span></div>`
+								: ''
+						}
 					</div>
-					<div style="display: flex; gap: 4px; margin-bottom: 2px;">
-						<span>• Percentage:</span>
-						<span style="font-weight: bold;">${originalPct.toFixed(1)}%</span>
-					</div>
-					${
-						sumAmount !== null
-							? `<div style="display: flex; gap:4px;">
-									<span>• Sum:</span>
-									<span style="font-weight: bold;">${sumAmount.toLocaleString()}</span>
-								</div>`
-							: ''
-					}
-				</div>
-			`
+				`;
 			},
 		},
 		series: [
+			// фон: серый полукруг (чтобы была видна пустая часть сверху)
 			{
-				// background
-				type: 'gauge',
+				type: 'pie',
 				startAngle: 180,
-				endAngle: 0,
-				min: 0,
-				max: 100,
-				progress: { show: false },
-				axisLine: {
-					lineStyle: {
-						width: 18,
-						color: [[1, '#E5EAFC']],
-					},
-				},
-				axisTick: { show: false },
-				splitLine: { show: false },
-				axisLabel: { show: false },
-				pointer: { show: false },
-				anchor: { show: false },
-				title: { show: false },
-				detail: { show: false },
-				z: 1,
+				radius: ['72%', '88%'],
+				center: ['50%', '62%'],
+				hoverAnimation: false,
+				silent: true,
+				label: { show: false },
+				data: [
+					{ value: 180, itemStyle: { color: '#E5EAFC' } }, // верхняя половина фон
+					{ value: 180, itemStyle: { color: 'transparent' } }, // нижняя прозрачная
+				],
 			},
+			// foreground: men / women / remainderFilled / invisible bottom
 			{
-				name: 'Men',
-				type: 'gauge',
+				type: 'pie',
 				startAngle: 180,
-				endAngle: 0,
-				min: 0,
-				max: 100,
-				progress: {
-					show: true,
-					width: 18,
-					roundCap: true,
-					itemStyle: { color: '#3B8FF3' },
-				},
-				axisLine: { show: false },
-				axisTick: { show: false },
-				splitLine: { show: false },
-				axisLabel: { show: false },
-				pointer: { show: false },
-				anchor: { show: false },
-				title: { show: false },
-				detail: { show: false },
-				data: [{ value: menValue, sumAmount: menSum }],
-				z: 2,
-			},
-			{
-				name: 'Women',
-				type: 'gauge',
-				startAngle: 180,
-				endAngle: 0,
-				min: 0,
-				max: 100,
-				progress: {
-					show: true,
-					width: 18,
-					roundCap: true,
-					itemStyle: { color: '#F29F67' },
-				},
-				axisLine: { show: false },
-				axisTick: { show: false },
-				splitLine: { show: false },
-				axisLabel: { show: false },
-				pointer: { show: false },
-				anchor: { show: false },
-				title: { show: false },
-				detail: {
-					valueAnimation: true,
-					formatter: () =>
-						`{value|${sumPct?.toFixed(1) ?? 0}%}\n{label|Total Participants}`,
-					offsetCenter: [0, '-20%'],
-					rich: {
-						value: {
-							fontSize: 24,
-							fontWeight: 'bold',
-							color: '#111827',
-							lineHeight: 30,
-						},
-						label: {
-							fontSize: 14,
-							color: '#6B7280',
-						},
+				radius: ['72%', '88%'],
+				center: ['50%', '62%'],
+				avoidLabelOverlap: false,
+				hoverAnimation: true,
+				label: { show: false },
+				stillShowZeroSum: false,
+				data: [
+					{ value: menVal, name: 'Men', itemStyle: { color: '#3B8FF3' }, sumAmount: menSum },
+					{ value: womenVal, name: 'Women', itemStyle: { color: '#F29F67' }, sumAmount: womenSum },
+					{
+						value: remVal,
+						name: 'Filled remainder',
+						itemStyle: { color: '#E5EAFC' },
+						tooltip: { show: false },
 					},
-				},
-				data: [{ value: womenValue, sumAmount: womenSum }],
-				z: 3,
+					{
+						value: fillerVal,
+						name: 'invisible',
+						itemStyle: { color: 'transparent' },
+						tooltip: { show: false },
+					},
+				],
 			},
 		],
-	}
-}
+		graphic: [
+			{
+				type: 'text',
+				left: '24%',
+				top: '44%',
+				style: {
+					text: `${sumPct.toFixed(1)}%\nTotal Participants`,
+					textAlign: 'center',
+					fill: '#111827',
+					font: '600 18px "Arial"',
+					lineHeight: 26,
+				},
+			},
+		],
+	};
+};
+
 
 // BUSINES SIZE CHART
 
