@@ -297,16 +297,19 @@ onMounted(() => {
 })
 
 function setFilter() {
-	getDepositGraph({
+	const params = {
 		month: selectedMonth.value,
 		region_id: selectedRegion.value,
 		business_type: selectedBusiness.value,
-	})
+	}
+
+	getDeposit(params)
+	getDepositGraph(params)
 }
 
-function getDeposit() {
+function getDeposit(params = {}) {
 	$axios
-		.get('api/v1/wefi/dashboard/deposit')
+		.get('api/v1/wefi/dashboard/deposit', { params })
 		.then(res => {
 			deposit.value = res.data.data
 		})
@@ -325,6 +328,7 @@ function getDepositGraph(params = {}) {
 			console.error(error)
 		})
 }
+
 
 function getRegions() {
 	$axios
