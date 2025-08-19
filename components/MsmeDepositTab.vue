@@ -288,8 +288,6 @@ const microOptions = [
 	{ value: 1, label: 'MICRO' },
 	{ value: 2, label: 'SMALL' },
 	{ value: 3, label: 'MEDIUM' },
-	{ value: 4, label: 'LARGE' },
-	{ value: 5, label: 'SOLO' },
 ]
 
 onMounted(() => {

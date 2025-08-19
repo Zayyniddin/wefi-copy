@@ -106,7 +106,7 @@
 				>
 					Credits
 				</p>
-				<VChart :option="statsOption" class="!w-[550px] !h-[400px] z-50" />
+				<VChart :option="statsOption" class="!w-[550px] !h-[300px] z-50" />
 			</div>
 			<div class="p-6 rounded-lg bg-white shadow">
 				<p class="text-xl font-medium">By sectors</p>
@@ -116,7 +116,7 @@
 					<p>Sectors</p>
 					<p>MSME Credits</p>
 				</div>
-				<VChart :option="sectorsChart" class="!w-[400px] !h-[385px] z-50" />
+				<VChart :option="sectorsChart" class="!w-[400px] !h-[300px] z-50" />
 			</div>
 		</div>
 	</div>
@@ -375,16 +375,16 @@ const sectorsChart = computed(() =>
 			{
 				name: 'Women',
 				data: [
-					{
-						value: selectedData.value?.dir_women_percent ?? 0,
-						sum: selectedData.value?.dir_women_sum ?? 0,
-						name: 'All sectors',
-					},
-					{
-						value: selectedData.value?.dir_trade_women_percent ?? 0,
-						sum: selectedData.value?.dir_trade_women_sum ?? 0,
-						name: 'Trade',
-					},
+					// {
+					// 	value: selectedData.value?.dir_women_percent ?? 0,
+					// 	sum: selectedData.value?.dir_women_sum ?? 0,
+					// 	name: 'All sectors',
+					// },
+					// {
+					// 	value: selectedData.value?.dir_trade_women_percent ?? 0,
+					// 	sum: selectedData.value?.dir_trade_women_sum ?? 0,
+					// 	name: 'Trade',
+					// },
 					{
 						value: selectedData.value?.dir_service_women_percent ?? 0,
 						sum: selectedData.value?.dir_service_women_sum ?? 0,
@@ -416,16 +416,16 @@ const sectorsChart = computed(() =>
 			{
 				name: 'Men',
 				data: [
-					{
-						value: selectedData.value?.dir_men_percent ?? 0,
-						sum: selectedData.value?.dir_men_sum ?? 0,
-						name: 'All sectors',
-					},
-					{
-						value: selectedData.value?.dir_trade_men_percent ?? 0,
-						sum: selectedData.value?.dir_trade_men_sum ?? 0,
-						name: 'Trade',
-					},
+					// {
+					// 	value: selectedData.value?.dir_men_percent ?? 0,
+					// 	sum: selectedData.value?.dir_men_sum ?? 0,
+					// 	name: 'All sectors',
+					// },
+					// {
+					// 	value: selectedData.value?.dir_trade_men_percent ?? 0,
+					// 	sum: selectedData.value?.dir_trade_men_sum ?? 0,
+					// 	name: 'Trade',
+					// },
 					{
 						value: selectedData.value?.dir_service_men_percent ?? 0,
 						sum: selectedData.value?.dir_service_men_sum ?? 0,
@@ -456,8 +456,8 @@ const sectorsChart = computed(() =>
 			},
 		],
 		totalsPercent: [
-			selectedData.value?.dir_percent ?? 0,
-			selectedData.value?.dir_trade_percent ?? 0,
+			// selectedData.value?.dir_percent ?? 0,
+			// selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
 			selectedData.value?.dir_man_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,

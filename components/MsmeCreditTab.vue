@@ -248,11 +248,8 @@ const onRegionChange = val => {
 
 const regions = ref([])
 
-const currentYear = new Date().getFullYear()
-const yearOptions = Array.from(
-	{ length: currentYear - 2019 },
-	(_, i) => 2020 + i
-)
+const currentYear = new Date().getFullYear();
+const yearOptions = [currentYear];
 
 // MOUNTED
 onMounted(() => {
