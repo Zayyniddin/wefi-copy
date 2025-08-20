@@ -64,12 +64,11 @@
 					class="flex flex-col gap-1"
 				>
 					<el-radio label="all">All sectors</el-radio>
-					<el-radio :label="1">Agriculture</el-radio>
-					<el-radio :label="2">Construction</el-radio>
-					<el-radio :label="3">Manufacturing</el-radio>
-					<el-radio :label="4">Services</el-radio>
-					<el-radio :label="5">Trade</el-radio>
-					<el-radio :label="6">Other</el-radio>
+					<el-radio :label="1">Other</el-radio>
+					<el-radio :label="3">Services</el-radio>
+					<el-radio :label="4">Construction</el-radio>
+					<el-radio :label="5">Manufacturing</el-radio>
+					<el-radio :label="6">Agriculture</el-radio>
 				</el-radio-group>
 			</div>
 
