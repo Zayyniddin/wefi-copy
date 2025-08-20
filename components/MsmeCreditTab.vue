@@ -66,8 +66,8 @@
 					<el-radio label="all">All sectors</el-radio>
 					<el-radio :label="1">Other</el-radio>
 					<el-radio :label="3">Services</el-radio>
-					<el-radio :label="4">Construction</el-radio>
-					<el-radio :label="5">Manufacturing</el-radio>
+					<el-radio :label="5">Construction</el-radio>
+					<el-radio :label="4">Manufacturing</el-radio>
 					<el-radio :label="6">Agriculture</el-radio>
 				</el-radio-group>
 			</div>
