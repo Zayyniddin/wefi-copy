@@ -515,9 +515,9 @@ const businessSizeChart = computed(() =>
 			},
 		],
 		totalsPercent: [
-			selectedData.value?.medium_percent ?? 0,
-			selectedData.value?.small_percent ?? 0,
 			selectedData.value?.micro_percent ?? 0,
+			selectedData.value?.small_percent ?? 0,
+			selectedData.value?.medium_percent ?? 0,
 		],
 	})
 )
