@@ -115,7 +115,7 @@
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Micro</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.micro_percent?.toFixed(0) }}%
+								{{ npl?.micro_percent }}%
 							</p>
 						</div>
 						<VChart :option="microChart" class="!w-[310px] !h-[110px] z-50" />
@@ -128,7 +128,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.micro_women_percent?.toFixed(0) }} %
+									{{ npl?.micro_women_percent }} %
 								</p>
 							</div>
 
@@ -140,7 +140,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.micro_men_percent?.toFixed(0) }} %
+									{{ npl?.micro_men_percent }} %
 								</p>
 							</div>
 						</div>
@@ -150,7 +150,7 @@
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Small</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.small_percent?.toFixed(0) }}%
+								{{ npl?.small_percent }}%
 							</p>
 						</div>
 						<VChart :option="smallChart" class="!w-[310px] !h-[110px] z-50" />
@@ -163,7 +163,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.small_women_percent?.toFixed(0) }} %
+									{{ npl?.small_women_percent }} %
 								</p>
 							</div>
 
@@ -175,7 +175,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.small_men_percent?.toFixed(0) }} %
+									{{ npl?.small_men_percent }} %
 								</p>
 							</div>
 						</div>
@@ -184,7 +184,7 @@
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Medium</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.medium_percent?.toFixed(0) }}%
+								{{ npl?.medium_percent }}%
 							</p>
 						</div>
 						<VChart :option="mediumChart" class="!w-[310px] !h-[110px] z-50" />
@@ -197,7 +197,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.medium_women_percent?.toFixed(0) }} %
+									{{ npl?.medium_women_percent }} %
 								</p>
 							</div>
 
@@ -209,7 +209,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.medium_men_percent?.toFixed(0) }} %
+									{{ npl?.medium_men_percent }} %
 								</p>
 							</div>
 						</div>
