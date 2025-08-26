@@ -97,18 +97,25 @@
 			<ValueIssuedBank />
 			<NumberIssuedBank />
 			<div class="bg-white p-6 rounded-lg shadow">
-				<p class="text-sm text-gray-500">Statistics</p>
-				<p
-					class="font-medium text-black text-lg border-b pb-2 border-[#E5E5EF]"
+				<div
+					class="border-b pb-2 border-[#E5E5EF] flex items-center justify-between"
 				>
-					By NPL
-				</p>
+					<div>
+						<p class="text-sm text-gray-500">Statistics</p>
+						<p class="font-medium text-black text-lg">By NPL</p>
+					</div>
+					<div class='flex items-end flex-col'>
+						<p class="text-sm text-gray-500">Total percent</p>
+						<p class='font-bold text-left text-black text-xl'>{{npl?.total_percent || 0}}%</p>
+					</div>
+				</div>
+
 				<div class="flex items-center justify-between">
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Micro</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.micro_percent?.toFixed(1) }}%
+								{{ npl?.micro_percent?.toFixed(0) }}%
 							</p>
 						</div>
 						<VChart :option="microChart" class="!w-[310px] !h-[110px] z-50" />
@@ -121,7 +128,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.micro_women_percent?.toFixed(1) }} %
+									{{ npl?.micro_women_percent?.toFixed(0) }} %
 								</p>
 							</div>
 
@@ -133,7 +140,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.micro_men_percent?.toFixed(1) }} %
+									{{ npl?.micro_men_percent?.toFixed(0) }} %
 								</p>
 							</div>
 						</div>
@@ -143,7 +150,7 @@
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Small</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.small_percent?.toFixed(1) }}%
+								{{ npl?.small_percent?.toFixed(0) }}%
 							</p>
 						</div>
 						<VChart :option="smallChart" class="!w-[310px] !h-[110px] z-50" />
@@ -156,7 +163,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.small_women_percent?.toFixed(1) }} %
+									{{ npl?.small_women_percent?.toFixed(0) }} %
 								</p>
 							</div>
 
@@ -168,7 +175,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.small_men_percent?.toFixed(1) }} %
+									{{ npl?.small_men_percent?.toFixed(0) }} %
 								</p>
 							</div>
 						</div>
@@ -177,7 +184,7 @@
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Medium</p>
 							<p class="font-bold text-xl mr-8">
-								{{ npl?.medium_percent?.toFixed(1) }}%
+								{{ npl?.medium_percent?.toFixed(0) }}%
 							</p>
 						</div>
 						<VChart :option="mediumChart" class="!w-[310px] !h-[110px] z-50" />
@@ -190,7 +197,7 @@
 									<p class="text-sm text-[#615E83]">Women</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.medium_women_percent?.toFixed(1) }} %
+									{{ npl?.medium_women_percent?.toFixed(0) }} %
 								</p>
 							</div>
 
@@ -202,7 +209,7 @@
 									<p class="text-sm text-[#615E83]">Men</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
-									{{ npl?.medium_men_percent?.toFixed(1) }} %
+									{{ npl?.medium_men_percent?.toFixed(0) }} %
 								</p>
 							</div>
 						</div>
@@ -247,8 +254,8 @@ const onRegionChange = val => {
 
 const regions = ref([])
 
-const currentYear = new Date().getFullYear();
-const yearOptions = [currentYear];
+const currentYear = new Date().getFullYear()
+const yearOptions = [currentYear]
 
 // MOUNTED
 onMounted(() => {
@@ -276,10 +283,9 @@ const smallSum = props.npl?.small_sum ?? 0
 const mediumSum = props.npl?.medium_sum ?? 0
 const totalNplSum = microSum + smallSum + mediumSum
 
-
 const microChart = computed(() =>
 	generate({
-		totalsPercent: [props.npl?.micro_percent ?? 0],
+		totalsPercent: [props.npl?.micro_percent.toFixed(0) ?? 0],
 		seriesData: [
 			{
 				name: 'Women',
