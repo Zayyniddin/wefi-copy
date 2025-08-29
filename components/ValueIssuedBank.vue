@@ -60,7 +60,7 @@
 								<p class="text-sm text-[#615E83]">Men</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(selectedData.men_sum) }} mln
+								{{ formatNumber(selectedData.men_sum) }} bln
 							</p>
 						</div>
 						<div class="flex items-center justify-between">
@@ -69,7 +69,7 @@
 								<p class="text-sm text-[#615E83]">Women</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(selectedData.women_sum) }} mln
+								{{ formatNumber(selectedData.women_sum) }} bln
 							</p>
 						</div>
 					</div>
@@ -116,7 +116,7 @@
 					<p>Sectors</p>
 					<p>MSME Credits</p>
 				</div>
-				<VChart :option="sectorsChart" class="!w-[400px] !h-[300px] z-50" />
+				<VChart :option="sectorsChart" class="!min-w-[420px] !h-[300px] z-50" />
 			</div>
 		</div>
 	</div>
@@ -279,11 +279,16 @@ const pieOption = computed(() => ({
 			const percent = Math.round(params.percent)
 
 			return `
-			<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-				<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
-				<b>${name}</b>
-			</div>
-			${value} (${percent}%)
+			 <div style="font-family: sans-serif; color: black; font-size: 13px; line-height: 1.4;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+          <div style="width: 10px; height: 10px; background:${color}; border-radius: 50%;"></div>
+          <span style="font-weight: 600;">${name}</span>
+        </div>
+        <div style="margin-left: 16px;">
+          <span style="font-size: 14px; font-weight: 500;">${value} bln</span>
+          <span style="font-size: 13px; font-weight: 600;">(${percent}%)</span>
+        </div>
+      </div>
 		`
 		},
 	},
@@ -375,16 +380,6 @@ const sectorsChart = computed(() =>
 			{
 				name: 'Women',
 				data: [
-					// {
-					// 	value: selectedData.value?.dir_women_percent ?? 0,
-					// 	sum: selectedData.value?.dir_women_sum ?? 0,
-					// 	name: 'All sectors',
-					// },
-					// {
-					// 	value: selectedData.value?.dir_trade_women_percent ?? 0,
-					// 	sum: selectedData.value?.dir_trade_women_sum ?? 0,
-					// 	name: 'Trade',
-					// },
 					{
 						value: selectedData.value?.dir_service_women_percent ?? 0,
 						sum: selectedData.value?.dir_service_women_sum ?? 0,
@@ -416,16 +411,6 @@ const sectorsChart = computed(() =>
 			{
 				name: 'Men',
 				data: [
-					// {
-					// 	value: selectedData.value?.dir_men_percent ?? 0,
-					// 	sum: selectedData.value?.dir_men_sum ?? 0,
-					// 	name: 'All sectors',
-					// },
-					// {
-					// 	value: selectedData.value?.dir_trade_men_percent ?? 0,
-					// 	sum: selectedData.value?.dir_trade_men_sum ?? 0,
-					// 	name: 'Trade',
-					// },
 					{
 						value: selectedData.value?.dir_service_men_percent ?? 0,
 						sum: selectedData.value?.dir_service_men_sum ?? 0,
@@ -456,8 +441,6 @@ const sectorsChart = computed(() =>
 			},
 		],
 		totalsPercent: [
-			// selectedData.value?.dir_percent ?? 0,
-			// selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
 			selectedData.value?.dir_man_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,

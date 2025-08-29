@@ -84,7 +84,7 @@ export function useStackedChart() {
 
 		return {
 			grid: {
-				left: 6,
+				left: 0,
 				top: 20,
 				bottom: 20,
 				containLabel: true,
