@@ -75,8 +75,8 @@ export function useStackedChart() {
 					style: {
 						text: `${(percentByCategory[cat] || 0).toFixed(1)}%`,
 						fill: '#013F21',
-						font: '12px sans-serif',
-						width: 50,
+						font: '10px sans-serif',
+						width: 40,
 						overflow: 'truncate',
 					},
 			  }))
@@ -84,7 +84,7 @@ export function useStackedChart() {
 
 		return {
 			grid: {
-				left: 0,
+				left: 10,
 				top: 20,
 				bottom: 20,
 				containLabel: true,
@@ -164,7 +164,7 @@ export function useStackedChart() {
 				axisLabel: hideYAxisLabels
 					? { show: false }
 					: {
-							fontSize: 14,
+							fontSize: 12,
 							color: '#374151',
 							fontWeight: 500,
 					  },

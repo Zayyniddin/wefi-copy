@@ -106,7 +106,7 @@
 				>
 					Credits
 				</p>
-				<VChart :option="statsOption" class="!w-[450px] !h-[300px] z-50" />
+				<VChart :option="statsOption" class="!w-[550px] !h-[300px] z-50" />
 			</div>
 			<div class="p-6 w-full rounded-lg bg-white shadow">
 				<p class="text-xl font-medium">By sectors</p>
