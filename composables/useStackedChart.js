@@ -71,11 +71,11 @@ export function useStackedChart() {
 		const graphicTexts = addGraphic
 			? categories.map((cat, i) => ({
 					type: 'text',
-					top: i * 46,
+					top: i * 47,
 					style: {
 						text: `${(percentByCategory[cat] || 0).toFixed(1)}%`,
 						fill: '#013F21',
-						font: '11px sans-serif',
+						font: '12px sans-serif',
 						width: 40,
 						overflow: 'truncate',
 					},
@@ -185,7 +185,7 @@ export function useStackedChart() {
 				? [
 						{
 							type: 'group',
-							left: '92%',
+							left: '91%',
 							top: 38,
 							children: graphicTexts,
 						},
