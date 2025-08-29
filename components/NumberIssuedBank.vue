@@ -106,9 +106,9 @@
 				>
 					Credits
 				</p>
-				<VChart :option="statsOption" class="!w-[550px] !h-[300px] z-50" />
+				<VChart :option="statsOption" class="!w-[450px] !h-[300px] z-50" />
 			</div>
-			<div class="p-6 rounded-lg bg-white shadow">
+			<div class="p-6 w-full rounded-lg bg-white shadow">
 				<p class="text-xl font-medium">By sectors</p>
 				<div
 					class="flex items-center justify-between border-b pb-1 border-[#E5E5EF] mt-2 text-xs"
@@ -116,7 +116,7 @@
 					<p>Sectors</p>
 					<p>MSME Credits</p>
 				</div>
-				<VChart :option="sectorsChart" class="!w-[420px] !h-[300px] z-50" />
+				<VChart :option="sectorsChart" class="w-full !h-[300px] z-50" />
 			</div>
 		</div>
 	</div>
@@ -468,7 +468,7 @@ const sectorsChart = computed(() =>
 			// selectedData.value?.dir_percent ?? 0,
 			// selectedData.value?.dir_trade_percent ?? 0,
 			selectedData.value?.dir_service_percent ?? 0,
-			selectedData.value?.dir_man_men_percent ?? 0,
+			selectedData.value?.dir_man_percent ?? 0,
 			selectedData.value?.dir_con_percent ?? 0,
 			selectedData.value?.dir_agro_percent ?? 0,
 			selectedData.value?.dir_others_percent ?? 0,
