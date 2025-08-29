@@ -75,7 +75,7 @@ export function useStackedChart() {
 					style: {
 						text: `${(percentByCategory[cat] || 0).toFixed(1)}%`,
 						fill: '#013F21',
-						font: '10px sans-serif',
+						font: '11px sans-serif',
 						width: 40,
 						overflow: 'truncate',
 					},
@@ -164,7 +164,7 @@ export function useStackedChart() {
 				axisLabel: hideYAxisLabels
 					? { show: false }
 					: {
-							fontSize: 12,
+							fontSize: 13,
 							color: '#374151',
 							fontWeight: 500,
 					  },
