@@ -48,7 +48,7 @@
 					<img src="@/assets/images/suhrob.png" class="h-[278px] w-[278px] rounded-xl" alt="" />
 					<div class="flex flex-col h-[278px]">
 						<div class="flex flex-col gap-4">
-							<p class="text-2xl font-bold">Eshmatov Suhrobjon Karimjonovich</p>
+							<p class="text-2xl font-bold">Eshmatov Sukhrobjon Karimjonovich</p>
 							<p class="text-[15px]">
 								Head of Digitalization and Analytics Division Coordinated the
 								digitalization of entrepreneurship and credit platforms
