@@ -46,7 +46,7 @@
 							<p class="font-bold text-sm">Number of communities</p>
 						</div>
 						<p class="text-primary font-bold text-2xl">
-							{{ formatNumber(9453) }}
+							{{ formatNumber(9008) }}
 						</p>
 					</div>
 				</div>
@@ -56,32 +56,28 @@
 					<div class="flex items-center justify-between">
 						<p>W MSME</p>
 						<p class="text-primary font-bold text-xl">
-							{{ formatNumber(msme.women_total_asum?.toFixed(0)) }}
+							{{ formatNumber(221611) }}
 						</p>
 					</div>
 					<div class="flex items-center justify-between">
 						<p>Credit</p>
-						<p class="text-primary font-bold text-xl">
-							{{ formatNumber(678) }} mln
-						</p>
+						<p class="text-primary font-bold text-xl">65,6 trln</p>
 					</div>
 					<div class="flex items-center justify-between">
 						<p>Deposit</p>
 						<p class="text-primary font-bold text-xl">
-							{{ formatNumber(105) }}
+							{{ formatNumber(577281) }}
 						</p>
 					</div>
 					<div class="flex items-center justify-between">
 						<p>NPL</p>
-						<p class="text-primary font-bold text-xl">
-							{{ formatNumber(105) }}
-						</p>
+						<p class="text-primary font-bold text-xl">6,3 %</p>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="w-full mt-4">
-			<p class="text-sm text-gray-600 mb-2">Number of entrepreneurs by the gods</p>
+			<p class="text-sm text-gray-600 mb-2">Enterprises</p>
 			<div class="relative w-full h-4 overflow-hidden bg-gray-200">
 				<div
 					class="absolute inset-0"
@@ -130,6 +126,7 @@ const props = defineProps({
 })
 
 const option = ref({})
+const currentDate = ref(new Date())
 
 watch(
 	() => props.orgRegion,
@@ -139,6 +136,10 @@ watch(
 		option.value.series[0].data = newVal.map(region => ({
 			name: region.name,
 			value: region.cc,
+			msme: region.msme,
+			area: region.area,
+			mahalla: region.mahalla,
+			percent: region.percent,
 		}))
 	},
 	{ immediate: true }
@@ -153,7 +154,37 @@ onMounted(() => {
 	}))
 
 	option.value = {
-		tooltip: { trigger: 'item', formatter: '{b}: {c}' },
+		tooltip: {
+			trigger: 'item',
+			formatter: params => {
+				const data = params.data || {}
+
+				const date = new Date(currentDate.value)
+				const month = date.toLocaleString('en-US', { month: 'long' })
+				const year = date.getFullYear()
+
+				const regionName = data.name.toLowerCase().includes('region')
+					? data.name
+					: `${data.name} Region`
+
+				return `
+      <div style="font-size:16px; line-height:1.4">
+        <b>${regionName} – ${month} ${year}</b><br/>
+        <div style="margin: 10px 0;">
+          Districts – ${data.area?.toLocaleString() || 0}<br/>
+          Communities – ${data.mahalla?.toLocaleString() || 0}<br/>
+          MSME – ${data.msme?.toLocaleString() || 0} enterprises
+        </div>
+        
+        <div style="font-weight:bold; color:#000">
+          Women-owned – ${data.value?.toLocaleString() || 0} enterprises (${
+					data.percent || 0
+				}%)
+        </div>
+      </div>
+    `
+			},
+		},
 		toolbox: {
 			show: true,
 			orient: 'vertical',

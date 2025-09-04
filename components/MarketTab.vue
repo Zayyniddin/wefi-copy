@@ -141,7 +141,7 @@
 									data.micro_women_percent ?? 0,
 									data.micro_percent ?? 0,
 									data.micro_women ?? 0,
-									data.micro_men ?? 0,
+									data.micro_men ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -166,7 +166,7 @@
 									data.small_women_percent ?? 0,
 									data.small_percent ?? 0,
 									data.small_women ?? 0,
-									data.small_men ?? 0,
+									data.small_men ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -191,7 +191,7 @@
 									data.medium_women_percent ?? 0,
 									data.medium_percent ?? 0,
 									data.medium_women ?? 0,
-									data.medium_men ?? 0,
+									data.medium_men ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -262,9 +262,9 @@ function getRegions() {
 		})
 }
 
-function getData() {
+function getData(params = {}) {
 	$axios
-		.get('api/v1/wefi/dashboard/customers')
+		.get('api/v1/wefi/dashboard/customers', { params })
 		.then(res => {
 			data.value = res.data.data
 		})
@@ -285,6 +285,11 @@ function getLineData(params = {}) {
 }
 
 function setFilter() {
+	getData({
+		region_id: selectedRegion.value,
+		year: selectedYear.value,
+	})
+
 	getLineData({
 		year: selectedYear.value,
 		region_id: selectedRegion.value,
@@ -405,28 +410,27 @@ const lineOption = computed(() => {
 })
 
 const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
-	// нормализация
-	menPct = Number(menPct) || 0;
-	womenPct = Number(womenPct) || 0;
-	sumPct = Number(sumPct);
-	if (!isFinite(sumPct)) sumPct = 0;
-	sumPct = Math.max(0, Math.min(100, sumPct)); // clamp 0..100
+	menPct = Number(menPct) || 0
+	womenPct = Number(womenPct) || 0
+	sumPct = Number(sumPct)
+	if (!isFinite(sumPct)) sumPct = 0
+	sumPct = Math.max(0, Math.min(100, sumPct)) // clamp 0..100
 
-	const totalShare = menPct + womenPct;
-	const filledAngle = (sumPct / 100) * 180; // сколько градусов заполнено из полукруга
-	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0;
-	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0;
-	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle); // на случай погрешностей
-	const fillerAngle = Math.max(0, 360 - filledAngle); // прозрачная нижняя половина
+	const totalShare = menPct + womenPct
+	const filledAngle = (sumPct / 100) * 180 // сколько градусов заполнено из полукруга
+	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0
+	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0
+	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle) // на случай погрешностей
+	const fillerAngle = Math.max(0, 360 - filledAngle) // прозрачная нижняя половина
 
 	// защитим от маленьких дробей (чтобы сумма = 360)
-	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle;
-	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1;
+	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle
+	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1
 
-	const menVal = menAngle * normalizeFactor;
-	const womenVal = womenAngle * normalizeFactor;
-	const remVal = remainderFilledAngle * normalizeFactor;
-	const fillerVal = fillerAngle * normalizeFactor;
+	const menVal = menAngle * normalizeFactor
+	const womenVal = womenAngle * normalizeFactor
+	const remVal = remainderFilledAngle * normalizeFactor
+	const fillerVal = fillerAngle * normalizeFactor
 
 	return {
 		animationDuration: 1000,
@@ -434,12 +438,13 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 		tooltip: {
 			trigger: 'item',
 			formatter: params => {
-				if (!params || !params.name) return '';
-				if (params.name === 'Filled remainder' || params.name === 'invisible') return '';
-				const isMen = params.name === 'Men';
-				const originalPct = isMen ? menPct : womenPct;
-				const sumAmount = isMen ? menSum : womenSum;
-				const color = isMen ? '#3B8FF3' : '#F29F67';
+				if (!params || !params.name) return ''
+				if (params.name === 'Filled remainder' || params.name === 'invisible')
+					return ''
+				const isMen = params.name === 'Men'
+				const originalPct = isMen ? menPct : womenPct
+				const sumAmount = isMen ? menSum : womenSum
+				const color = isMen ? '#3B8FF3' : '#F29F67'
 
 				return `
 					<div style="font-size:13px;line-height:1.6;color:#000;">
@@ -453,11 +458,13 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 						</div>
 						${
 							sumAmount != null
-								? `<div style="display:flex;gap:6px;"><span>• Sum:</span><span style="font-weight:bold;">${Number(sumAmount).toLocaleString()}</span></div>`
+								? `<div style="display:flex;gap:6px;"><span>• Sum:</span><span style="font-weight:bold;">${Number(
+										sumAmount
+								  ).toLocaleString()}</span></div>`
 								: ''
 						}
 					</div>
-				`;
+				`
 			},
 		},
 		series: [
@@ -486,8 +493,18 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				label: { show: false },
 				stillShowZeroSum: false,
 				data: [
-					{ value: menVal, name: 'Men', itemStyle: { color: '#3B8FF3' }, sumAmount: menSum },
-					{ value: womenVal, name: 'Women', itemStyle: { color: '#F29F67' }, sumAmount: womenSum },
+					{
+						value: menVal,
+						name: 'Men',
+						itemStyle: { color: '#3B8FF3' },
+						sumAmount: menSum,
+					},
+					{
+						value: womenVal,
+						name: 'Women',
+						itemStyle: { color: '#F29F67' },
+						sumAmount: womenSum,
+					},
 					{
 						value: remVal,
 						name: 'Filled remainder',
@@ -517,8 +534,8 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				},
 			},
 		],
-	};
-};
+	}
+}
 </script>
 
 <style scoped>

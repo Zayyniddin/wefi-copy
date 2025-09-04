@@ -17,13 +17,15 @@
       </div>
 
       <!-- Partner 3 -->
-      <div class="flex flex-col items-center">
-        <img class="h-16 object-contain" src="@/assets/icons/parnter3.svg" alt="">
+        <div class="flex flex-col items-center">
+        <img class="h-16 object-contain" src="@/assets/icons/partner4.png
+        " alt="">
       </div>
+     
 
       <!-- Partner 4 -->
       <div class="flex flex-col items-center">
-        <img class="h-16 object-contain" src="@/assets/icons/partner4.svg" alt="">
+        <img class="h-16 object-contain" src="@/assets/icons/parnter3.svg" alt="">
       </div>
     </div>
   </div>

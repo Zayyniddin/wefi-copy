@@ -3,7 +3,7 @@
 		<div class="flex items-center gap-4">
 			<Vue3AutoCounter
 				:startAmount="0"
-				:endAmount="data?.total_count || 0"
+				:endAmount="347492"
 				:duration="2.5"
 				prefix=""
 				suffix=""
@@ -19,7 +19,7 @@
 		<div class="flex items-center gap-4">
 			<Vue3AutoCounter
 				:startAmount="0"
-				:endAmount="data?.women_percent || 0"
+				:endAmount="11"
 				:duration="2.5"
 				prefix=""
 				suffix=" %"
@@ -35,10 +35,10 @@
 		<div class="flex items-center gap-4">
 			<Vue3AutoCounter
 				:startAmount="0"
-				:endAmount="Math.floor(data?.total_asum / 1000) || 0"
+				:endAmount="203"
 				:duration="2.5"
 				prefix=""
-				suffix=" bln"
+				suffix=" trln"
 				separator=","
 				:autoinit="true"
 				class="text-5xl font-bold !w-[180px]"
