@@ -1,16 +1,15 @@
 <template>
 	<div class="f-container my-32 px-4 mx-auto">
 		<p class="text-2xl font-bold mb-6 text-center">
-			Regional overview of key financial inclusion <br />
-			indicators for WSME
+			{{ $t('regionalOverview') }}
 		</p>
 		<div class="w-full justify-between flex items-start gap-16">
 			<VChart :option="option" class="!w-[915px] !h-[600px]" />
 			<div class="flex flex-col max-w-[400px] w-full gap-4">
 				<div class="rounded-lg shadow-lg p-4">
-					<p class="text-[#013F21] text-xl">Republic of Uzbekistan</p>
+					<p class="text-[#013F21] text-xl">{{ $t('republicOfUzbekistan') }}</p>
 					<div class="flex items-center justify-between">
-						<p class="text-[#013F21] text-sm">Population</p>
+						<p class="text-[#013F21] text-sm">{{ $t('population') }}</p>
 						<p class="text-primary font-bold text-xl">
 							{{ formatNumber(37657647) }}
 						</p>
@@ -18,32 +17,26 @@
 				</div>
 
 				<div class="rounded-lg flex flex-col gap-2 shadow-lg p-4">
-					<div
-						class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg"
-					>
+					<div class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg">
 						<div class="flex items-center gap-4">
 							<img src="@/assets/icons/regions-num.svg" alt="" />
-							<p class="font-bold text-sm">Number of Regions</p>
+							<p class="font-bold text-sm">{{ $t('numberOfRegions') }}</p>
 						</div>
 						<p class="text-primary font-bold text-2xl">14</p>
 					</div>
 
-					<div
-						class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg"
-					>
+					<div class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg">
 						<div class="flex items-center gap-4">
 							<img src="@/assets/icons/districts-num.svg" alt="" />
-							<p class="font-bold text-sm">Number of Districts</p>
+							<p class="font-bold text-sm">{{ $t('numberOfDistricts') }}</p>
 						</div>
 						<p class="text-primary font-bold text-2xl">208</p>
 					</div>
 
-					<div
-						class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg"
-					>
+					<div class="flex items-center justify-between bg-[#EDF8EE] p-3 rounded-lg">
 						<div class="flex items-center gap-4">
 							<img src="@/assets/icons/communities-num.svg" alt="" />
-							<p class="font-bold text-sm">Number of communities</p>
+							<p class="font-bold text-sm">{{ $t('numberOfCommunities') }}</p>
 						</div>
 						<p class="text-primary font-bold text-2xl">
 							{{ formatNumber(9008) }}
@@ -77,11 +70,9 @@
 			</div>
 		</div>
 		<div class="w-full mt-4">
-			<p class="text-sm text-gray-600 mb-2">Enterprises</p>
+			<p class="text-sm text-gray-600 mb-2">{{ $t('enterprises') }}</p>
 			<div class="relative w-full h-4 overflow-hidden bg-gray-200">
-				<div
-					class="absolute inset-0"
-					style="
+				<div class="absolute inset-0" style="
 						background: linear-gradient(
 							to right,
 							#a90000 0%,
@@ -92,14 +83,9 @@
 							#009e0a 90%,
 							#008029 100%
 						);
-					"
-				></div>
+					"></div>
 				<div class="absolute inset-0 flex justify-between">
-					<span
-						v-for="i in 11"
-						:key="i"
-						class="w-[1px] h-full bg-white opacity-60"
-					></span>
+					<span v-for="i in 11" :key="i" class="w-[1px] h-full bg-white opacity-60"></span>
 				</div>
 			</div>
 			<div class="flex justify-between text-xs text-gray-500 mt-1">
@@ -113,7 +99,7 @@
 import * as echarts from 'echarts'
 import uzGeo from '../assets/data/uzbekistan.json'
 const { formatNumber } = useFormatNumber()
-
+const { t } = useI18n()
 const props = defineProps({
 	orgRegion: {
 		type: Array,
@@ -154,79 +140,76 @@ onMounted(() => {
 	}))
 
 	option.value = {
-		tooltip: {
-			trigger: 'item',
-			formatter: params => {
-				const data = params.data || {}
+  tooltip: {
+    trigger: 'item',
+    formatter: params => {
+      const data = params.data || {}
 
-				const date = new Date(currentDate.value)
-				const month = date.toLocaleString('en-US', { month: 'long' })
-				const year = date.getFullYear()
+      const date = new Date(currentDate.value)
+      const month = date.toLocaleString('en-US', { month: 'long' })
+      const year = date.getFullYear()
 
-				const regionName = data.name.toLowerCase().includes('region')
-					? data.name
-					: `${data.name} Region`
+      const regionName = data.name.toLowerCase().includes('region')
+        ? data.name
+        : `${data.name} {{$t('region')}}`
 
-				return `
+       return `
       <div style="font-size:16px; line-height:1.4">
-        <b>${regionName} – ${month} ${year}</b><br/>
+        <b>${data.name} ${t('region')} – ${month} ${year}</b><br/>
         <div style="margin: 10px 0;">
-          Districts – ${data.area?.toLocaleString() || 0}<br/>
-          Communities – ${data.mahalla?.toLocaleString() || 0}<br/>
-          MSME – ${data.msme?.toLocaleString() || 0} enterprises
+          ${t('districts')} – ${(data.area ?? 0).toLocaleString()}<br/>
+          ${t('communities')} – ${(data.mahalla ?? 0).toLocaleString()}<br/>
+          ${t('msme')} – ${(data.msme ?? 0).toLocaleString()} ${t('enterprises')}
         </div>
-        
         <div style="font-weight:bold; color:#000">
-          Women-owned – ${data.value?.toLocaleString() || 0} enterprises (${
-					data.percent || 0
-				}%)
+          ${t('women_owned')} – ${(data.value ?? 0).toLocaleString()} ${t('enterprises')} (${data.percent ?? 0}%)
         </div>
       </div>
     `
-			},
-		},
-		toolbox: {
-			show: true,
-			orient: 'vertical',
-			left: 'right',
-			top: 'top',
-			feature: {
-				dataView: { readOnly: true },
-				restore: {},
-				saveAsImage: {},
-			},
-		},
-		visualMap: {
-			show: false,
-			min: 0,
-			max: 10000,
-			text: ['Number of entrepreneurs by the gods'],
-			orient: 'horizontal',
-			left: 80,
-			bottom: 20,
-			calculable: true,
-			inRange: {
-				color: [
-					'#A90000',
-					'#915006',
-					'#FFBB00',
-					'#35C20A',
-					'#0DC900',
-					'#009E0A',
-					'#008029',
-				],
-			},
-		},
-		series: [
-			{
-				name: 'Uzbekistan',
-				type: 'map',
-				map: 'uzbekistan',
-				roam: false,
-				emphasis: { label: { show: true } },
-				data: regions,
-			},
-		],
-	}
+    },
+  },
+  toolbox: {
+    show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'top',
+    feature: {
+      dataView: { readOnly: true },
+      restore: {},
+      saveAsImage: {},
+    },
+  },
+  visualMap: {
+    show: false,
+    min: 0,
+    max: 10000,
+    text: [t('number_of_entrepreneurs_by_gods')],
+    orient: 'horizontal',
+    left: 80,
+    bottom: 20,
+    calculable: true,
+    inRange: {
+      color: [
+        '#A90000',
+        '#915006',
+        '#FFBB00',
+        '#35C20A',
+        '#0DC900',
+        '#009E0A',
+        '#008029',
+      ],
+    },
+  },
+  series: [
+    {
+      name: 'Uzbekistan',
+      type: 'map',
+      map: 'uzbekistan',
+      roam: false,
+      emphasis: { label: { show: true } },
+      data: regions,
+    },
+  ],
+}
 })
 </script>

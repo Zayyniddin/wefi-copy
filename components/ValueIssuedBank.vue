@@ -13,7 +13,7 @@
 					]"
 					@click="activeTab = 'value_issued'"
 				>
-					Value of issued bank loans
+					{{ $t('valueIssuedLoans') }}
 				</p>
 
 				<p
@@ -25,7 +25,7 @@
 					]"
 					@click="activeTab = 'value_outstanding'"
 				>
-					Value of outstanding bank loans
+					{{ $t('valueOutstandingLoans') }}
 				</p>
 			</div>
 			<div class="flex items-center gap-2">
@@ -33,31 +33,33 @@
 					class="flex items-center gap-2 rounded-lg border-[#E5E5EF] border p-2"
 				>
 					<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-					<p class="text-sm text-[#615E83]">Men</p>
+					<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 				</div>
 				<div
 					class="flex items-center gap-2 rounded-lg border-[#E5E5EF] border p-2"
 				>
 					<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-					<p class="text-sm text-[#615E83]">Women</p>
+					<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 				</div>
 			</div>
 		</div>
 		<div class="flex gap-4 items-stretch">
 			<div class="grid grid-cols-1 h-full w-full gap-4">
 				<div class="bg-white h-full text-black p-6 rounded-lg shadow">
-					<p class="text-sm text-gray-500">Statistics</p>
+					<p class="text-sm text-gray-500">
+						{{ $t('statistics') }}
+					</p>
 					<p
 						class="font-medium text-black text-lg border-b pb-2 border-[#E5E5EF]"
 					>
-						By gender
+						{{ $t('byGender') }}
 					</p>
 					<VChart :option="pieOption" class="!h-[350px] mx-auto !w-[400px]" />
 					<div class="text-sm mt-4">
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Men</p>
+								<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 							</div>
 							<p class="text-xl font-bold">
 								{{ formatNumber(selectedData.men_sum) }} bln
@@ -66,7 +68,7 @@
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Women</p>
+								<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 							</div>
 							<p class="text-xl font-bold">
 								{{ formatNumber(selectedData.women_sum) }} bln
@@ -79,7 +81,7 @@
 			<div class="h-full w-full">
 				<div class="p-6 rounded-lg bg-white shadow w-full">
 					<p class="text-xl font-medium border-b pb-2 border-[#E5E5EF]">
-						By business type
+						{{ $t('byBusinessType') }}
 					</p>
 					<VChart
 						:option="businessTypeChart"
@@ -89,7 +91,7 @@
 
 				<div class="p-6 mt-4 rounded-lg bg-white shadow w-full">
 					<p class="text-xl font-medium border-b pb-2 border-[#E5E5EF]">
-						By business size
+						{{ $t('byBusinessSize') }}
 					</p>
 					<VChart
 						:option="businessSizeChart"
@@ -100,12 +102,13 @@
 		</div>
 		<div class="flex gap-4">
 			<div class="p-6 rounded-lg bg-white shadow">
-				<p class="text-sm text-gray-500">Statistics</p>
+				<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
 				<p
 					class="font-medium text-black text-lg border-b pb-2 border-[#E5E5EF]"
 				>
-					Credits
+					{{ $t('credits') }}
 				</p>
+
 				<VChart :option="statsOption" class="!w-[500px] !h-[300px] z-50" />
 			</div>
 			<div class="p-6 w-full rounded-lg bg-white shadow">
@@ -113,8 +116,8 @@
 				<div
 					class="flex items-center justify-between border-b pb-1 border-[#E5E5EF] mt-2 text-xs"
 				>
-					<p>Sectors</p>
-					<p>MSME Credits</p>
+					<p>{{ $t('sectors') }}</p>
+					<p>{{ $t('msmeCredits') }}</p>
 				</div>
 				<VChart :option="sectorsChart" class="w-full !h-[300px] z-50" />
 			</div>
@@ -251,7 +254,7 @@ const pieOption = computed(() => ({
 	title: {
 		text: `{value|${formatNumber(
 			(selectedData.value?.women_sum ?? 0) + (selectedData.value?.men_sum ?? 0)
-		)}}\n{label|Billion}`,
+		)}}\n{label|${$t('billion')}}`,
 		left: 'center',
 		top: 'center',
 		textStyle: {
@@ -294,7 +297,7 @@ const pieOption = computed(() => ({
 	},
 	series: [
 		{
-			name: 'Business Type',
+			name: $t('businessType'),
 			type: 'pie',
 			radius: ['40%', '70%'],
 			avoidLabelOverlap: false,
@@ -319,11 +322,11 @@ const pieOption = computed(() => ({
 			data: [
 				{
 					value: Math.round(selectedData.value?.men_sum ?? 0),
-					name: 'Men',
+					name: $t('men'),
 				},
 				{
 					value: Math.round(selectedData.value?.women_sum ?? 0) ?? 0,
-					name: 'Women',
+					name: $t('women'),
 				},
 			],
 		},
@@ -334,33 +337,33 @@ const businessTypeChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+				name: $t('women'),
 				data: [
 					{
 						value: selectedData.value?.legal_women_percent ?? 0,
 						sum: selectedData.value?.legal_women_sum ?? 0,
-						name: 'Legal en.',
+						name: $t('legal'),
 					},
 					{
 						value: selectedData.value?.individual_women_percent ?? 0,
 						sum: selectedData.value?.individual_women_sum ?? 0,
-						name: 'Individual',
+						name: $t('individual'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+				name: $t('men'),
 				data: [
 					{
 						value: selectedData.value?.legal_men_percent ?? 0,
 						sum: selectedData.value?.legal_men_sum ?? 0,
-						name: 'Legal en.',
+						name: $t('legal'),
 					},
 					{
 						value: selectedData.value?.individual_men_percent ?? 0,
 						sum: selectedData.value?.individual_men_sum ?? 0,
-						name: 'Individual',
+						name: $t('individual'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -378,63 +381,63 @@ const sectorsChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+				name: $t('women'),
 				data: [
 					{
 						value: selectedData.value?.dir_service_women_percent ?? 0,
 						sum: selectedData.value?.dir_service_women_sum ?? 0,
-						name: 'Services',
+						name: $t('services'),
 					},
 					{
 						value: selectedData.value?.dir_man_women_percent ?? 0,
 						sum: selectedData.value?.dir_man_women_sum ?? 0,
-						name: 'Manufacturing',
+						name: $t('manufacturing'),
 					},
 					{
 						value: selectedData.value?.dir_con_women_percent ?? 0,
 						sum: selectedData.value?.dir_con_women_sum ?? 0,
-						name: 'Construction',
+						name: $t('construction'),
 					},
 					{
 						value: selectedData.value?.dir_agro_women_percent ?? 0,
 						sum: selectedData.value?.dir_agro_women_sum ?? 0,
-						name: 'Agriculture',
+						name: $t('agriculture'),
 					},
 					{
 						value: selectedData.value?.dir_others_women_percent ?? 0,
 						sum: selectedData.value?.dir_others_women_sum ?? 0,
-						name: 'Other',
+						name: $t('other'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+				name: $t('men'),
 				data: [
 					{
 						value: selectedData.value?.dir_service_men_percent ?? 0,
 						sum: selectedData.value?.dir_service_men_sum ?? 0,
-						name: 'Services',
+						name: $t('services'),
 					},
 					{
 						value: selectedData.value?.dir_man_men_percent ?? 0,
 						sum: selectedData.value?.dir_man_men_sum ?? 0,
-						name: 'Manufacturing',
+						name: $t('manufacturing'),
 					},
 					{
 						value: selectedData.value?.dir_con_men_percent ?? 0,
 						sum: selectedData.value?.dir_con_men_sum ?? 0,
-						name: 'Construction',
+						name: $t('construction'),
 					},
 					{
 						value: selectedData.value?.dir_agro_men_percent ?? 0,
 						sum: selectedData.value?.dir_agro_men_sum ?? 0,
-						name: 'Agriculture',
+						name: $t('agriculture'),
 					},
 					{
 						value: selectedData.value?.dir_others_men_percent ?? 0,
 						sum: selectedData.value?.dir_others_men_sum ?? 0,
-						name: 'Other',
+						name: $t('other'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -450,48 +453,49 @@ const sectorsChart = computed(() =>
 	})
 )
 
+
 // BUSINESS SIZE CHART
 const businessSizeChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+				name: $t('women'),
 				data: [
 					{
 						value: selectedData.value?.micro_women_percent ?? 0,
 						sum: selectedData.value?.micro_women_sum ?? 0,
-						name: 'Micro',
+						name: $t('micro'),
 					},
 					{
 						value: selectedData.value?.small_women_percent ?? 0,
 						sum: selectedData.value?.small_women_sum ?? 0,
-						name: 'Small',
+						name: $t('small'),
 					},
 					{
 						value: selectedData.value?.medium_women_percent ?? 0,
 						sum: selectedData.value?.medium_women_sum ?? 0,
-						name: 'Medium',
+						name: $t('medium'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+				name: $t('men'),
 				data: [
 					{
 						value: selectedData.value?.micro_men_percent ?? 0,
 						sum: selectedData.value?.micro_men_sum ?? 0,
-						name: 'Micro',
+						name: $t('micro'),
 					},
 					{
 						value: selectedData.value?.small_men_percent ?? 0,
 						sum: selectedData.value?.small_men_sum ?? 0,
-						name: 'Small',
+						name: $t('small'),
 					},
 					{
 						value: selectedData.value?.medium_men_percent ?? 0,
 						sum: selectedData.value?.medium_men_sum ?? 0,
-						name: 'Medium',
+						name: $t('medium'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -523,32 +527,30 @@ const statsOption = computed(() => {
 			formatter: params => {
 				const lines = params
 					.map(p => {
-						const color = p.color // возьмёт цвет из `itemStyle`
+						const color = p.color
 						return `
-					<div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
-						<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
-						<span>${
-							p.seriesName
-						}: <span style="font-weight: bold;">${p.value.toLocaleString()} sum</span></span>
-					</div>
-				`
+							<div style="display: flex; align-items: center; gap: 6px; font-size: 13px;">
+								<div style="width: 10px; height: 10px; background: ${color}; border-radius: 50%;"></div>
+								<span>${p.seriesName}: <span style="font-weight: bold;">${p.value.toLocaleString()} ${$t('sum')}</span></span>
+							</div>
+						`
 					})
 					.join('')
 
 				return `
-			<div style="padding: 4px 6px; font-size: 13px;">
-				<div style="font-weight: bold; margin-bottom: 8px;">Year: ${params[0].axisValue}</div>
-				${lines}
-			</div>
-		`
+					<div style="padding: 4px 6px; font-size: 13px;">
+						<div style="font-weight: bold; margin-bottom: 8px;">${$t('month')}: ${params[0].axisValue}</div>
+						${lines}
+					</div>
+				`
 			},
-			backgroundColor: '#fff', // белый фон
+			backgroundColor: '#fff',
 			borderColor: '#E5E7EB',
 			borderWidth: 1,
 			borderRadius: 6,
 			padding: 10,
 			textStyle: {
-				color: '#111827', // почти черный
+				color: '#111827',
 				fontSize: 13,
 			},
 		},
@@ -593,7 +595,7 @@ const statsOption = computed(() => {
 		},
 		series: [
 			{
-				name: 'Women',
+				name: $t('women'),
 				type: 'line',
 				data: womenData,
 				smooth: true,
@@ -612,7 +614,7 @@ const statsOption = computed(() => {
 				},
 			},
 			{
-				name: 'Men',
+				name: $t('men'),
 				type: 'line',
 				data: menData,
 				smooth: true,

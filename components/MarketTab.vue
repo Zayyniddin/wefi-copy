@@ -4,7 +4,7 @@
 		<div class="flex flex-col min-h-full max-w-[456px] gap-4 w-full">
 			<div class="bg-white p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">
-					Total number of registered active MSMEs
+					{{ $t('totalRegisteredMsmes') }}
 				</p>
 				<p class="text-3xl font-bold mt-2">
 					{{ formatNumber(customers_total) }}
@@ -17,24 +17,26 @@
 						></div>
 					</div>
 					<p class="text-sm flex items-center gap-2 text-gray-400 mt-5">
-						<span class="text-3xl text-[#1E1B39] font-bold"
-							>{{ data?.women_percent || 0 }}%</span
-						>
-						Women owned / led MSMEs
+						<span class="text-3xl text-[#1E1B39] font-bold">
+							{{ data?.women_percent || 0 }}%
+						</span>
+						{{ $t('womenOwnedMsmes') }}
 					</p>
 				</div>
 			</div>
 
 			<!-- Donut Chart -->
 			<div class="bg-white h-full w-full text-black p-6 rounded-lg shadow">
-				<p class="text-sm text-gray-500">Statistics</p>
-				<p class="font-medium text-black text-lg">Business type</p>
+				<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
+				<p class="font-medium text-black text-lg">{{ $t('businessType') }}</p>
 				<VChart :option="pieOption" class="!h-[320px] mx-auto !w-[370px]" />
 				<div class="text-sm mt-4">
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
 							<div class="w-4 h-4 bg-[#3B8FF3] rounded-full"></div>
-							<p class="text-sm text-[#615E83]">Individual entrepreneurs</p>
+							<p class="text-sm text-[#615E83]">
+								{{ $t('individualEntrepreneurs') }}
+							</p>
 						</div>
 						<p class="text-xl font-bold">
 							{{ formatNumber(data?.individual_count) || 0 }}
@@ -43,7 +45,7 @@
 					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
 							<div class="w-4 h-4 bg-[#F29F67] rounded-full"></div>
-							<p class="text-sm text-[#615E83]">Legal entities</p>
+							<p class="text-sm text-[#615E83]">{{ $t('legalEntities') }}</p>
 						</div>
 						<p class="text-xl font-bold">
 							{{ formatNumber(data?.legal_count) || 0 }}
@@ -125,11 +127,11 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Micro business</p>
+						<p class="text-left text-xl font-bold">{{ $t('microBusiness') }}</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.micro) }}
 							</p>
@@ -150,11 +152,11 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Small business</p>
+						<p class="text-left text-xl font-bold">{{ $t('smallBusiness') }}</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.small) }}
 							</p>
@@ -175,11 +177,13 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Medium business</p>
+						<p class="text-left text-xl font-bold">
+							{{ $t('mediumBusiness') }}
+						</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.medium) }}
 							</p>
@@ -206,6 +210,7 @@
 <script setup>
 import 'echarts'
 const { formatNumber } = useFormatNumber()
+const { t } = useI18n()
 // PROPS
 const props = defineProps({
 	customers: {
@@ -302,66 +307,69 @@ const customers_total = computed(() => {
 	return data.value?.individual_count + data.value?.legal_count
 })
 const pieOption = computed(() => ({
-	color: ['#3B8FF3', '#F29F67'],
-	title: {
-		text: `{value|${formatNumber(
-			(data.value?.individual_count ?? 0) + (data.value?.legal_count ?? 0)
-		)}}\n{label|Total}`,
-		left: 'center',
-		top: 'center',
-		textStyle: {
-			rich: {
-				value: {
-					fontSize: 20,
-					fontWeight: 'bold',
-					color: '#111827',
-					align: 'center',
-				},
-				label: {
-					fontSize: 14,
-					color: '#6B7280',
-					align: 'center',
-				},
-			},
-		},
-	},
-	tooltip: {
-		trigger: 'item',
-		formatter: '{b}: {c}',
-	},
-	series: [
-		{
-			name: 'Business Type',
-			type: 'pie',
-			radius: ['40%', '70%'],
-			avoidLabelOverlap: false,
-			label: {
-				show: true,
-				position: 'outside',
-				formatter: params => `${Math.round(params.percent)}%`,
-				textStyle: {
-					fontSize: 16,
-					fontWeight: 'bold',
-					color: '#111827',
-				},
-			},
-			padAngle: 5,
-			itemStyle: {
-				borderRadius: 10,
-			},
-			labelLine: {
-				show: true,
-				smooth: 0.2,
-			},
-			data: [
-				{
-					value: data.value?.individual_count ?? 0,
-					name: 'Individual entrepreneurs',
-				},
-				{ value: data.value?.legal_count ?? 0, name: 'Legal entities' },
-			],
-		},
-	],
+  color: ['#3B8FF3', '#F29F67'],
+  title: {
+    text: `{value|${formatNumber(
+      (data.value?.individual_count ?? 0) + (data.value?.legal_count ?? 0)
+    )}}\n{label|${t('total')}}`,
+    left: 'center',
+    top: 'center',
+    textStyle: {
+      rich: {
+        value: {
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: '#111827',
+          align: 'center',
+        },
+        label: {
+          fontSize: 14,
+          color: '#6B7280',
+          align: 'center',
+        },
+      },
+    },
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: '{b}: {c}',
+  },
+  series: [
+    {
+      name: t('businessType'),
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      label: {
+        show: true,
+        position: 'outside',
+        formatter: params => `${Math.round(params.percent)}%`,
+        textStyle: {
+          fontSize: 16,
+          fontWeight: 'bold',
+          color: '#111827',
+        },
+      },
+      padAngle: 5,
+      itemStyle: {
+        borderRadius: 10,
+      },
+      labelLine: {
+        show: true,
+        smooth: 0.2,
+      },
+      data: [
+        {
+          value: data.value?.individual_count ?? 0,
+          name: t('individualEntrepreneurs'),
+        },
+        {
+          value: data.value?.legal_count ?? 0,
+          name: t('legalEntities'),
+        },
+      ],
+    },
+  ],
 }))
 
 const lineOption = computed(() => {
@@ -410,131 +418,129 @@ const lineOption = computed(() => {
 })
 
 const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
-	menPct = Number(menPct) || 0
-	womenPct = Number(womenPct) || 0
-	sumPct = Number(sumPct)
-	if (!isFinite(sumPct)) sumPct = 0
-	sumPct = Math.max(0, Math.min(100, sumPct)) // clamp 0..100
+  menPct = Number(menPct) || 0
+  womenPct = Number(womenPct) || 0
+  sumPct = Number(sumPct)
+  if (!isFinite(sumPct)) sumPct = 0
+  sumPct = Math.max(0, Math.min(100, sumPct))
 
-	const totalShare = menPct + womenPct
-	const filledAngle = (sumPct / 100) * 180 // сколько градусов заполнено из полукруга
-	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0
-	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0
-	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle) // на случай погрешностей
-	const fillerAngle = Math.max(0, 360 - filledAngle) // прозрачная нижняя половина
+  const totalShare = menPct + womenPct
+  const filledAngle = (sumPct / 100) * 180
+  const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0
+  const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0
+  const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle)
+  const fillerAngle = Math.max(0, 360 - filledAngle)
 
-	// защитим от маленьких дробей (чтобы сумма = 360)
-	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle
-	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1
+  const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle
+  const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1
 
-	const menVal = menAngle * normalizeFactor
-	const womenVal = womenAngle * normalizeFactor
-	const remVal = remainderFilledAngle * normalizeFactor
-	const fillerVal = fillerAngle * normalizeFactor
+  const menVal = menAngle * normalizeFactor
+  const womenVal = womenAngle * normalizeFactor
+  const remVal = remainderFilledAngle * normalizeFactor
+  const fillerVal = fillerAngle * normalizeFactor
 
-	return {
-		animationDuration: 1000,
-		animationEasing: 'cubicOut',
-		tooltip: {
-			trigger: 'item',
-			formatter: params => {
-				if (!params || !params.name) return ''
-				if (params.name === 'Filled remainder' || params.name === 'invisible')
-					return ''
-				const isMen = params.name === 'Men'
-				const originalPct = isMen ? menPct : womenPct
-				const sumAmount = isMen ? menSum : womenSum
-				const color = isMen ? '#3B8FF3' : '#F29F67'
+  return {
+    animationDuration: 1000,
+    animationEasing: 'cubicOut',
+    tooltip: {
+      trigger: 'item',
+      formatter: params => {
+        if (!params || !params.name) return ''
+        if (params.name === t('filledRemainder') || params.name === t('invisible'))
+          return ''
 
-				return `
-					<div style="font-size:13px;line-height:1.6;color:#000;">
-						<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-							<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
-							<b>${params.name}</b>
-						</div>
-						<div style="display:flex;gap:6px;margin-bottom:4px;">
-							<span>• Percentage:</span>
-							<span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
-						</div>
-						${
-							sumAmount != null
-								? `<div style="display:flex;gap:6px;"><span>• Sum:</span><span style="font-weight:bold;">${Number(
-										sumAmount
-								  ).toLocaleString()}</span></div>`
-								: ''
-						}
-					</div>
-				`
-			},
-		},
-		series: [
-			// фон: серый полукруг (чтобы была видна пустая часть сверху)
-			{
-				type: 'pie',
-				startAngle: 180,
-				radius: ['72%', '88%'],
-				center: ['50%', '62%'],
-				hoverAnimation: false,
-				silent: true,
-				label: { show: false },
-				data: [
-					{ value: 180, itemStyle: { color: '#E5EAFC' } }, // верхняя половина фон
-					{ value: 180, itemStyle: { color: 'transparent' } }, // нижняя прозрачная
-				],
-			},
-			// foreground: men / women / remainderFilled / invisible bottom
-			{
-				type: 'pie',
-				startAngle: 180,
-				radius: ['72%', '88%'],
-				center: ['50%', '62%'],
-				avoidLabelOverlap: false,
-				hoverAnimation: true,
-				label: { show: false },
-				stillShowZeroSum: false,
-				data: [
-					{
-						value: menVal,
-						name: 'Men',
-						itemStyle: { color: '#3B8FF3' },
-						sumAmount: menSum,
-					},
-					{
-						value: womenVal,
-						name: 'Women',
-						itemStyle: { color: '#F29F67' },
-						sumAmount: womenSum,
-					},
-					{
-						value: remVal,
-						name: 'Filled remainder',
-						itemStyle: { color: '#E5EAFC' },
-						tooltip: { show: false },
-					},
-					{
-						value: fillerVal,
-						name: 'invisible',
-						itemStyle: { color: 'transparent' },
-						tooltip: { show: false },
-					},
-				],
-			},
-		],
-		graphic: [
-			{
-				type: 'text',
-				left: '22%',
-				top: '44%',
-				style: {
-					text: `${sumPct.toFixed(1)}%\nTotal Participants`,
-					textAlign: 'center',
-					fill: '#111827',
-					font: '600 18px "Arial"',
-					lineHeight: 26,
-				},
-			},
-		],
-	}
+        const isMen = params.name === t('men')
+        const originalPct = isMen ? menPct : womenPct
+        const sumAmount = isMen ? menSum : womenSum
+        const color = isMen ? '#3B8FF3' : '#F29F67'
+
+        return `
+          <div style="font-size:13px;line-height:1.6;color:#000;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+              <b>${params.name}</b>
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:4px;">
+              <span>• ${t('percentage')}:</span>
+              <span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
+            </div>
+            ${
+              sumAmount != null
+                ? `<div style="display:flex;gap:6px;"><span>• ${t('sum')}:</span><span style="font-weight:bold;">${Number(
+                    sumAmount
+                  ).toLocaleString()}</span></div>`
+                : ''
+            }
+          </div>
+        `
+      },
+    },
+    series: [
+      {
+        type: 'pie',
+        startAngle: 180,
+        radius: ['72%', '88%'],
+        center: ['50%', '62%'],
+        hoverAnimation: false,
+        silent: true,
+        label: { show: false },
+        data: [
+          { value: 180, itemStyle: { color: '#E5EAFC' } },
+          { value: 180, itemStyle: { color: 'transparent' } },
+        ],
+      },
+      {
+        type: 'pie',
+        startAngle: 180,
+        radius: ['72%', '88%'],
+        center: ['50%', '62%'],
+        avoidLabelOverlap: false,
+        hoverAnimation: true,
+        label: { show: false },
+        stillShowZeroSum: false,
+        data: [
+          {
+            value: menVal,
+            name: t('men'),
+            itemStyle: { color: '#3B8FF3' },
+            sumAmount: menSum,
+          },
+          {
+            value: womenVal,
+            name: t('women'),
+            itemStyle: { color: '#F29F67' },
+            sumAmount: womenSum,
+          },
+          {
+            value: remVal,
+            name: t('filledRemainder'),
+            itemStyle: { color: '#E5EAFC' },
+            tooltip: { show: false },
+          },
+          {
+            value: fillerVal,
+            name: t('invisible'),
+            itemStyle: { color: 'transparent' },
+            tooltip: { show: false },
+          },
+        ],
+      },
+    ],
+    graphic: [
+      {
+        type: 'text',
+        left: '22%',
+        top: '45%',
+        style: {
+          text: `${sumPct.toFixed(1)}%\n${t('totalParticipants')}`,
+          textAlign: 'center',
+          fill: '#111827',
+          font: '600 19px "Arial"',
+          lineHeight: 26,
+        },
+      },
+    ],
+  }
 }
 </script>
 

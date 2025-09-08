@@ -22,11 +22,10 @@
 		>
 			<div class="w-full max-w-[980px] text-left">
 				<h1 class="text-5xl font-bold mb-6 leading-tight">
-					Women Entrepreneurs Finance Code Republic of Uzbekistan
+					{{ $t('womenEntrepreneursFinance') }}
 				</h1>
 				<p class="text-lg max-w-[487px]">
-					An online platform providing gender-disaggregated data on micro, small
-					and medium-sized enterprises.
+					{{ $t('platformDescription') }}
 				</p>
 			</div>
 		</div>

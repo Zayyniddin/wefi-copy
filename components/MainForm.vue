@@ -1,5 +1,5 @@
 <template>
-	<div  class="relative py-32 my-32">
+	<div class="relative py-32 my-32">
 		<img
 			class="absolute top-0 left-0 w-full h-full object-cover z-10"
 			src="@/assets/images/form-bg.png"
@@ -16,44 +16,52 @@
 					<img src="@/assets/icons/message.svg" alt="icon" />
 				</div>
 				<p class="text-white font-medium text-4xl leading-snug">
-					Let’s Connect — Your <br />
-					Thoughts Matter
+					{{ $t('letsConnect') }}
 				</p>
 				<p class="text-gray-300 text-xl">
-					Suggestions and inquires can be sent here.
+					{{ $t('suggestionsText') }}
 				</p>
 			</div>
 
 			<el-form
-			data-aos='fade-up'
+				data-aos="fade-up"
 				class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md"
 				label-position="top"
 				:model="form"
 			>
-				<el-form-item label="Name">
-					<el-input v-model="form.name" placeholder="i.e. John Doe" />
+				<el-form-item :label="$t('formName')">
+					<el-input
+						v-model="form.name"
+						:placeholder="$t('formNamePlaceholder')"
+					/>
 				</el-form-item>
 
-				<el-form-item label="Email">
-					<el-input v-model="form.email" placeholder="i.e. john@mail.com" />
+				<el-form-item :label="$t('formEmail')">
+					<el-input
+						v-model="form.email"
+						:placeholder="$t('formEmailPlaceholder')"
+					/>
 				</el-form-item>
 
-				<el-form-item label="Phone">
-					<el-input v-model="form.phone" placeholder="i.e. 123-456-7890" />
+				<el-form-item :label="$t('formPhone')">
+					<el-input
+						v-model="form.phone"
+						:placeholder="$t('formPhonePlaceholder')"
+					/>
 				</el-form-item>
 
-				<el-form-item label="Write your inquiry">
+				<el-form-item :label="$t('formInquiry')">
 					<el-input
 						type="textarea"
 						:rows="3"
 						v-model="form.message"
-						placeholder="Enter your message"
+						:placeholder="$t('formMessagePlaceholder')"
 					/>
 				</el-form-item>
 
 				<el-form-item>
 					<button class="w-full text-white py-4 rounded-lg bg-primary text-lg">
-						Contact Us
+						{{ $t('contactUs') }}
 					</button>
 				</el-form-item>
 			</el-form>

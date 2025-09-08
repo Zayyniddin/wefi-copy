@@ -33,10 +33,11 @@
 		class="relative f-container mx-auto z-20 h-full -mt-40 pb-10 w-full px-4 max-w-full"
 	>
 		<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-			<el-tab-pane label="Market size and Market share" name="first" lazy>
+			<el-tab-pane :label="$t('marketSizeAndShare')" name="first" lazy>
 				<MarketTab @filter-change="onFilterChange" />
 			</el-tab-pane>
-			<el-tab-pane label="MSME Credit" name="second" lazy>
+
+			<el-tab-pane :label="$t('msmeCredit')" name="second" lazy>
 				<MsmeCreditTab
 					:creditDebit="data.credit_debit"
 					:npl="data.npl"
@@ -48,7 +49,8 @@
 					:outstandingGraphCount="data.outstanding_graph_count"
 				/>
 			</el-tab-pane>
-			<el-tab-pane label="MSME Deposit" name="third" lazy>
+
+			<el-tab-pane :label="$t('msmeDeposit')" name="third" lazy>
 				<MsmeDepositTab :months="data.months" />
 			</el-tab-pane>
 		</el-tabs>

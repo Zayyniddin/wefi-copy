@@ -1,16 +1,17 @@
 <template>
 	<div class="flex items-stretch gap-4">
 		<div class="bg-white rounded-xl shadow p-8 w-[350px] h-fit space-y-6">
-			<p class="font-bold text-2xl">Filters</p>
+			<p class="font-bold text-2xl">{{ $t('filters') }}</p>
+
 			<!-- Period -->
 			<div>
 				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select period for analysis
+					{{ $t('selectPeriod') }}
 				</p>
 				<el-select
 					clearable
 					v-model="filtersStore.period"
-					placeholder="Year"
+					:placeholder="$t('year')"
 					size="small"
 				>
 					<el-option
@@ -25,64 +26,66 @@
 			<!-- Business Type -->
 			<div>
 				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select business type for analysis
+					{{ $t('selectBusinessType') }}
 				</p>
 				<el-checkbox-group
 					:model-value="filtersStore.businessTypes ?? allBusinessTypes"
 					@change="onBusinessTypeChange"
 					class="flex flex-col gap-1"
 				>
-					<el-checkbox :label="1">Individual entrepreneurs</el-checkbox>
-					<el-checkbox :label="2">Legal entities</el-checkbox>
+					<el-checkbox :label="1">{{
+						$t('individualEntrepreneurs')
+					}}</el-checkbox>
+					<el-checkbox :label="2">{{ $t('legalEntities') }}</el-checkbox>
 				</el-checkbox-group>
 			</div>
 
 			<!-- Business Size -->
 			<div>
 				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select business size for analysis
+					{{ $t('selectBusinessSize') }}
 				</p>
 				<el-checkbox-group
 					:model-value="filtersStore.businessSizes ?? allBusinessSizes"
 					@change="onBusinessSizeChange"
 					class="flex flex-col gap-1"
 				>
-					<el-checkbox :label="1">Micro business</el-checkbox>
-					<el-checkbox :label="2">Small business</el-checkbox>
-					<el-checkbox :label="3">Medium business</el-checkbox>
+					<el-checkbox :label="1">{{ $t('microBusiness') }}</el-checkbox>
+					<el-checkbox :label="2">{{ $t('smallBusiness') }}</el-checkbox>
+					<el-checkbox :label="3">{{ $t('mediumBusiness') }}</el-checkbox>
 				</el-checkbox-group>
 			</div>
 
 			<!-- Sectors -->
 			<div>
 				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select sector(s) for analysis
+					{{ $t('selectSector') }}
 				</p>
 				<el-radio-group
 					:model-value="filtersStore.sector ?? 'all'"
 					@change="onSectorChange"
 					class="flex flex-col gap-1"
 				>
-					<el-radio label="all">All sectors</el-radio>
-					<el-radio :label="1">Other</el-radio>
-					<el-radio :label="3">Services</el-radio>
-					<el-radio :label="5">Construction</el-radio>
-					<el-radio :label="4">Manufacturing</el-radio>
-					<el-radio :label="6">Agriculture</el-radio>
+					<el-radio label="all">{{ $t('allSectors') }}</el-radio>
+					<el-radio :label="1">{{ $t('other') }}</el-radio>
+					<el-radio :label="3">{{ $t('services') }}</el-radio>
+					<el-radio :label="5">{{ $t('construction') }}</el-radio>
+					<el-radio :label="4">{{ $t('manufacturing') }}</el-radio>
+					<el-radio :label="6">{{ $t('agriculture') }}</el-radio>
 				</el-radio-group>
 			</div>
 
 			<!-- Regions -->
 			<div>
 				<p class="text-sm font-medium text-[#013F21] mb-2">
-					Select region(s) for analysis
+					{{ $t('selectRegion') }}
 				</p>
 				<el-radio-group
 					:model-value="filtersStore.region ?? 'all'"
 					@change="onRegionChange"
 					class="flex flex-col gap-1"
 				>
-					<el-radio label="all">All regions</el-radio>
+					<el-radio label="all">{{ $t('allRegions') }}</el-radio>
 					<el-radio
 						v-for="region in regions"
 						:key="region.id"
@@ -104,9 +107,11 @@
 						<p class="text-sm text-gray-500">Statistics</p>
 						<p class="font-medium text-black text-lg">By NPL</p>
 					</div>
-					<div class='flex items-end flex-col'>
+					<div class="flex items-end flex-col">
 						<p class="text-sm text-gray-500">Total percent</p>
-						<p class='font-bold text-left text-black text-xl'>{{npl?.total_percent || 0}}%</p>
+						<p class="font-bold text-left text-black text-xl">
+							{{ npl?.total_percent || 0 }}%
+						</p>
 					</div>
 				</div>
 
@@ -114,9 +119,7 @@
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Micro</p>
-							<p class="font-bold text-xl mr-8">
-								{{ npl?.micro_percent }}%
-							</p>
+							<p class="font-bold text-xl mr-8">{{ npl?.micro_percent }}%</p>
 						</div>
 						<VChart :option="microChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
@@ -149,9 +152,7 @@
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Small</p>
-							<p class="font-bold text-xl mr-8">
-								{{ npl?.small_percent }}%
-							</p>
+							<p class="font-bold text-xl mr-8">{{ npl?.small_percent }}%</p>
 						</div>
 						<VChart :option="smallChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
@@ -183,9 +184,7 @@
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
 							<p class="text-gray-400">Medium</p>
-							<p class="font-bold text-xl mr-8">
-								{{ npl?.medium_percent }}%
-							</p>
+							<p class="font-bold text-xl mr-8">{{ npl?.medium_percent }}%</p>
 						</div>
 						<VChart :option="mediumChart" class="!w-[310px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">

@@ -12,7 +12,7 @@
 				class="text-5xl font-bold !w-[180px]"
 			/>
 			<p class="text-gray-400 text-sm max-w-[180px] w-full">
-				Number of outstanding MSME loans
+				{{ $t('numberOfOutstandingMsmeLoans') }}
 			</p>
 		</div>
 
@@ -28,7 +28,7 @@
 				class="text-5xl font-bold !w-[120px]"
 			/>
 			<p class="text-gray-400 text-sm max-w-[180px] w-full">
-				Outstanding share of women in MSME
+				{{ $t('outstandingShareOfWomenInMsme') }}
 			</p>
 		</div>
 
@@ -44,7 +44,7 @@
 				class="text-5xl font-bold !w-[180px]"
 			/>
 			<p class="text-gray-400 text-sm max-w-[150px] w-full">
-				Value of outstanding MSME loans
+				{{ $t('valueOfOutstandingMsmeLoans') }}
 			</p>
 		</div>
 	</div>
