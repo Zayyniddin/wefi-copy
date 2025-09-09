@@ -3,9 +3,9 @@
   <p class="text-2xl font-bold mb-16 text-center max-w-[450px] mx-auto w-full">
     {{$t('genderStatsTitle')}}
   </p>
-  <div class="flex items-start justify-center gap-5">
+  <div class="flex items-stretch justify-center gap-5">
     <NuxtLink to='/dashboard' class="flex flex-col gap-5 max-w-[450px] w-full">
-      <p class="text-xl font-medium">{{$t('marketSizeShare')}}</p>
+      <p class="text-sm font-medium min-h-[40px]">{{$t('marketSizeShare')}}</p>
       <img class="rounded-[10px]" src="@/assets/images/gender-stat1.png" alt="" />
       <p class="text-lg text-gray-500">
         {{$t('msmeTotalAndWsmeShare')}}
@@ -16,7 +16,7 @@
     </NuxtLink>
 
     <NuxtLink to="/dashboard?tab=second" class="flex flex-col gap-5 max-w-[450px] w-full">
-      <p class="text-xl font-medium">{{$t('wmsmeCreditNpl')}}</p>
+      <p class="text-sm font-medium min-h-[40px]">{{$t('wmsmeCreditNpl')}}</p>
       <img class="rounded-[10px]" src="@/assets/images/gender-stat2.png" alt="" />
       <p class="text-lg text-gray-500">
         {{$t('valueOutstandingAndNpl')}}
@@ -27,7 +27,7 @@
     </NuxtLink>
 
     <NuxtLink to="/dashboard?tab=third" class="flex flex-col gap-5 max-w-[450px] w-full">
-      <p class="text-xl font-medium">{{$t('wmsmeDeposits')}}</p>
+      <p class="text-sm font-medium min-h-[40px]">{{$t('wmsmeDeposits')}}</p>
       <img class="rounded-[10px]" src="@/assets/images/gender-stat3.png" alt="" />
       <p class="text-lg text-gray-500">
         {{$t('wmsmeDepositsTotal')}}

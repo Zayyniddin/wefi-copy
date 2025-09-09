@@ -148,11 +148,6 @@ onMounted(() => {
       const date = new Date(currentDate.value)
       const month = date.toLocaleString('en-US', { month: 'long' })
       const year = date.getFullYear()
-
-      const regionName = data.name.toLowerCase().includes('region')
-        ? data.name
-        : `${data.name} {{$t('region')}}`
-
        return `
       <div style="font-size:16px; line-height:1.4">
         <b>${data.name} ${t('region')} – ${month} ${year}</b><br/>
