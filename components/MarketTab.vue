@@ -59,7 +59,9 @@
 			<!-- Line Chart -->
 			<div class="bg-white rounded-lg shadow">
 				<div class="flex items-start p-6 pb-0 justify-end">
-					<div class="flex items-center gap-2">
+					<div class='flex items-center justify-between w-full'>
+						<p class='text-xl font-bold max-w-[300px]'>Number of registered active MSMEs by months</p>
+						<div class="flex items-center gap-2">
 						<el-select
 							clearable
 							@change="setFilter"
@@ -107,6 +109,7 @@
 								:value="item"
 							/>
 						</el-select>
+					</div>
 					</div>
 				</div>
 				<VChart

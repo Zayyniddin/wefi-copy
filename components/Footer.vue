@@ -35,15 +35,6 @@
 				</ul>
 			</div>
 
-			<!-- Legal -->
-			<div>
-				<h3 class="font-medium text-sm mb-4">{{ $t('legal') }}</h3>
-				<ul class="space-y-2 text-sm text-gray-700">
-					<li>{{ $t('privacyPolicy') }}</li>
-					<li>{{ $t('termsConditions') }}</li>
-					<li>{{ $t('returnPolicy') }}</li>
-				</ul>
-			</div>
 
 			<!-- Contact -->
 			<div>

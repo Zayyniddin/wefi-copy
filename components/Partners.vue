@@ -1,7 +1,7 @@
 <template>
 	<div class="bg-[#F4F7FA] my-32 py-16 flex flex-col items-center gap-10">
 		<div class="text-center">
-			<p class="text-xl text-gray-400">{{ $t('usefulLinks') }}</p>
+			<!-- <p class="text-xl text-gray-400">{{ $t('usefulLinks') }}</p> -->
 			<p class="text-4xl font-bold mt-2">{{ $t('ourPartners') }}</p>
 		</div>
 
