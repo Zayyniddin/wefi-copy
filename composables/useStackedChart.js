@@ -11,7 +11,6 @@ export function useStackedChart() {
 		const categories = seriesData[0]?.data.map(d => d.name) || []
 		const reversedTotals = [...totalsPercent]
 		const filtersStore = useFiltersStore()
-		const year = filtersStore.period || new Date().getFullYear()
 
 		const percentByCategory = {}
 		categories.forEach((cat, i) => {
@@ -43,7 +42,6 @@ export function useStackedChart() {
 			})
 		}
 
-		// Remaining
 		if (addRemaining) {
 			const remaining = categories.map((_, i) => {
 				const sum = seriesData.reduce(
