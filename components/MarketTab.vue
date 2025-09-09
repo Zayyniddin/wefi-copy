@@ -134,7 +134,7 @@
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
+							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.micro) }}
 							</p>
@@ -159,7 +159,7 @@
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
+							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.small) }}
 							</p>
@@ -186,7 +186,7 @@
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
+							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.medium) }}
 							</p>
