@@ -529,7 +529,7 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
     graphic: [
       {
         type: 'text',
-        left: '22%',
+        left: '21%',
         top: '45%',
         style: {
           text: `${sumPct.toFixed(1)}%\n${t('totalParticipants')}`,

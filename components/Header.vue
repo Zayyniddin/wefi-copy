@@ -117,7 +117,7 @@ const root = ref(null)
 
 const locales = [
 	{ code: 'en', name: 'EN' },
-	{ code: 'la', name: 'LA' },
+	{ code: 'la', name: 'UZ' },
 ]
 
 const currentLocaleName = computed(
