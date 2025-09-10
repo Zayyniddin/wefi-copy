@@ -349,11 +349,11 @@ function getRegions() {
 const statsOption = computed(() => {
 	const filtered = Array.isArray(depositGraph.value)
 		? depositGraph.value.filter(
-				item => item?.month !== null && item?.month !== undefined
+				item => item?.months_name !== null && item?.months_name !== undefined
 		  )
 		: []
 
-	const months = filtered.map(item => item.month_name?.toString?.() ?? '')
+	const months = filtered.map(item => item.months_name ?? '')
 	const womenData = filtered.map(item => item?.women_asum ?? 0)
 	const menData = filtered.map(item => item?.men_asum ?? 0)
 
