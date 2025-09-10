@@ -128,6 +128,7 @@
 <script setup>
 import { useFiltersStore } from '@/store/filterStore.js'
 const $axios = useAxios()
+const { locale, t } = useI18n()
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
 const filtersStore = useFiltersStore()
@@ -198,7 +199,7 @@ function buildParamsFromFilters() {
 
 function getCreditLoan() {
 	$axios
-		.get('api/v1/wefi/dashboard/credit_loan', {
+		.get(`api/v1/wefi/dashboard/credit_loan`, {
 			params: buildParamsFromFilters(),
 		})
 		.then(res => {
@@ -225,7 +226,7 @@ function getOutstandingLoan() {
 
 function getLoanGraph() {
 	$axios
-		.get('api/v1/wefi/dashboard/loan_graph', {
+		.get(`api/v1/wefi/dashboard/loan_graph?lang=${locale.value}`, {
 			params: buildParamsFromFilters(),
 		})
 		.then(res => {

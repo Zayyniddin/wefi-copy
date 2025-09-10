@@ -73,7 +73,7 @@
 				<!-- Dashboard / Main (через localePath) -->
 				<NuxtLink
 					v-if="!isDashboard"
-					:to="localePath('dashboard')"
+					:to="localePath('/dashboard')"
 					class="bg-primary text-white max-w-[150px] w-full text-center rounded-lg text-lg py-2 px-3"
 				>
 					Dashboard

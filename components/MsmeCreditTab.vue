@@ -104,11 +104,11 @@
 					class="border-b pb-2 border-[#E5E5EF] flex items-center justify-between"
 				>
 					<div>
-						<p class="text-sm text-gray-500">Statistics</p>
-						<p class="font-medium text-black text-lg">By NPL</p>
+						<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
+						<p class="font-medium text-black text-lg">{{ $t('byNpl') }}</p>
 					</div>
 					<div class="flex items-end flex-col">
-						<p class="text-sm text-gray-500">Total percent</p>
+						<p class="text-sm text-gray-500">{{ $t('total') }}</p>
 						<p class="font-bold text-left text-black text-xl">
 							{{ npl?.total_percent || 0 }}%
 						</p>
@@ -118,7 +118,7 @@
 				<div class="flex items-center justify-between">
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
-							<p class="text-gray-400">Micro</p>
+							<p class="text-gray-400">{{ $t('micro') }}</p>
 							<p class="font-bold text-xl mr-8">{{ npl?.micro_percent }}%</p>
 						</div>
 						<VChart :option="microChart" class="!w-[310px] !h-[110px] z-50" />
@@ -128,7 +128,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Women</p>
+									<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.micro_women_percent }} %
@@ -140,7 +140,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Men</p>
+									<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.micro_men_percent }} %
@@ -151,7 +151,7 @@
 
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
-							<p class="text-gray-400">Small</p>
+							<p class="text-gray-400">{{ $t('small') }}</p>
 							<p class="font-bold text-xl mr-8">{{ npl?.small_percent }}%</p>
 						</div>
 						<VChart :option="smallChart" class="!w-[310px] !h-[110px] z-50" />
@@ -161,7 +161,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Women</p>
+									<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.small_women_percent }} %
@@ -173,7 +173,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Men</p>
+									<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.small_men_percent }} %
@@ -183,7 +183,7 @@
 					</div>
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
-							<p class="text-gray-400">Medium</p>
+							<p class="text-gray-400">{{ $t('medium') }}</p>
 							<p class="font-bold text-xl mr-8">{{ npl?.medium_percent }}%</p>
 						</div>
 						<VChart :option="mediumChart" class="!w-[310px] !h-[110px] z-50" />
@@ -193,7 +193,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Women</p>
+									<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.medium_women_percent }} %
@@ -205,7 +205,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Men</p>
+									<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 								</div>
 								<p class="text-sm text-[#615E83]">
 									{{ npl?.medium_men_percent }} %
@@ -222,6 +222,7 @@
 <script setup>
 import { useFiltersStore } from '@/store/filterStore.js'
 const { generate } = useStackedChart()
+const { t, locale } = useI18n()
 const filtersStore = useFiltersStore()
 const $axios = useAxios()
 const emit = defineEmits(['filterChanged'])
@@ -263,7 +264,7 @@ onMounted(() => {
 
 function getData() {
 	$axios
-		.get('api/v1/resp/regions_lists', {
+		.get(`api/v1/resp/regions_lists?locale=${locale.value}`, {
 			headers: {
 				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
 			},
@@ -287,23 +288,23 @@ const microChart = computed(() =>
 		totalsPercent: [props.npl?.micro_percent.toFixed(0) ?? 0],
 		seriesData: [
 			{
-				name: 'Women',
+					name: t('women'),
 				data: [
 					{
 						value: props.npl?.micro_women_percent ?? 0,
 						sum: props.npl?.micro_women_sum ?? 0,
-						name: 'Micro',
+						name: t('micro'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+					name: t('men'),
 				data: [
 					{
 						value: props.npl?.micro_men_percent ?? 0,
 						sum: props.npl?.micro_men_sum ?? 0,
-						name: 'Micro',
+						name: t('micro'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -320,23 +321,23 @@ const smallChart = computed(() =>
 		totalsPercent: [props.npl?.small_percent ?? 0],
 		seriesData: [
 			{
-				name: 'Women',
+				name: t('women'),
 				data: [
 					{
 						value: props.npl?.small_women_percent ?? 0,
 						sum: props.npl?.small_women_sum ?? 0,
-						name: 'Small',
+						name: t('small'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+			name: t('men'),
 				data: [
 					{
 						value: props.npl?.small_men_percent ?? 0,
 						sum: props.npl?.small_men_sum ?? 0,
-						name: 'Small',
+						name: t('small'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -353,23 +354,23 @@ const mediumChart = computed(() =>
 		totalsPercent: [props.npl?.small_percent ?? 0],
 		seriesData: [
 			{
-				name: 'Women',
+				name: t('women'),
 				data: [
 					{
 						value: props.npl?.medium_women_percent ?? 0,
 						sum: props.npl?.medium_women_sum ?? 0,
-						name: 'Medium',
+						name: t('medium'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+				name: t('men'),
 				data: [
 					{
 						value: props.npl?.medium_men_percent ?? 0,
 						sum: props.npl?.medium_men_sum ?? 0,
-						name: 'Medium',
+						name: t('medium'),
 					},
 				],
 				style: { color: '#3B8FF3' },

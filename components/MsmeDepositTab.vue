@@ -4,7 +4,7 @@
 		<div class="flex flex-col min-h-full max-w-[456px] gap-4 w-full">
 			<div class="bg-white p-6 rounded-lg shadow">
 				<div class="flex items-center justify-between">
-					<p class="text-2xl font-medium">MSME deposits</p>
+					<p class="text-xl font-medium">{{ $t('msmeDeposit') }}</p>
 					<p class="text-3xl font-medium">
 						{{ formatNumber(deposit.total_count) }}
 					</p>
@@ -12,7 +12,7 @@
 				<div class="mt-8">
 					<div>
 						<div class="flex items-center justify-between mt-4 -mb-4">
-							<p class="text-gray-400">By gender</p>
+							<p class="text-gray-400">{{ $t('byGender') }}</p>
 						</div>
 						<VChart :option="genderChart" class="!w-[450px] !h-[110px] z-50" />
 						<div class="flex items-center gap-2 -mt-8">
@@ -21,7 +21,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Women</p>
+									<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 								</div>
 								<p class="text-xl text-[#615E83]">
 									{{ deposit.women_percent || 0 }}%
@@ -33,7 +33,7 @@
 							>
 								<div class="flex items-center gap-2">
 									<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-									<p class="text-sm text-[#615E83]">Men</p>
+									<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 								</div>
 								<p class="text-xl text-[#615E83]">
 									{{ deposit.men_percent || 0 }}%
@@ -46,11 +46,11 @@
 
 			<!-- Donut Chart -->
 			<div class="bg-white h-full text-black p-6 rounded-lg shadow">
-				<p class="text-sm text-gray-500">Statistics</p>
-				<p class="font-medium text-black text-lg">Deposit by Business type</p>
+				<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
+				<p class="font-medium text-black text-lg">{{ $t('deposit_by_business_type') }}</p>
 				<div>
 					<div class="flex items-center justify-between mt-4 -mb-4">
-						<p class="text-gray-400">Individual entrepreneurs</p>
+						<p class="text-gray-400">{{ $t('individualEntrepreneurs') }}</p>
 						<p class="text-gray-400 text-xl">
 							<!-- <span class="text-black">410</span>/740 -->
 						</p>
@@ -65,7 +65,7 @@
 						>
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Women</p>
+								<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
 								{{ deposit.individual_women_pct || 0 }}%
@@ -77,7 +77,7 @@
 						>
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Men</p>
+								<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
 								{{ deposit.individual_men_pct || 0 }}%
@@ -88,7 +88,7 @@
 
 				<div>
 					<div class="flex items-center justify-between mt-10 -mb-4">
-						<p class="text-gray-400">Legal entities</p>
+						<p class="text-gray-400">{{ $t('legalEntities') }}</p>
 						<p class="text-gray-400 text-xl">
 							<!-- <span class="text-black">410</span>/740 -->
 						</p>
@@ -100,7 +100,7 @@
 						>
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#F29F67] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Women</p>
+								<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
 								{{ deposit.legal_women_pct || 0 }}%
@@ -112,7 +112,7 @@
 						>
 							<div class="flex items-center gap-2">
 								<div class="w-3 h-3 bg-[#3B8FF3] rounded-full"></div>
-								<p class="text-sm text-[#615E83]">Men</p>
+								<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 							</div>
 							<p class="text-xl text-[#615E83]">
 								{{ deposit.legal_men_pct || 0 }}%
@@ -128,8 +128,8 @@
 			<div class="bg-white rounded-lg shadow">
 				<div class="flex items-start p-6 pb-0 justify-between">
 					<div>
-						<p class="text-sm text-gray-500">Statistics</p>
-						<p class="font-bold text-black text-lg border-[#E5E5EF]">Deposit</p>
+						<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
+						<p class="font-bold text-black text-lg border-[#E5E5EF]">{{ $t('deposit') }}</p>
 					</div>
 					<div class="flex items-center gap-2">
 						<el-select
@@ -189,11 +189,11 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Micro business</p>
+						<p class="text-left text-xl font-bold">{{ $t('microBusiness') }}</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-2xl font-bold mt-1">
 								{{ formatNumber(deposit.micro_count) }}
 							</p>
@@ -214,11 +214,11 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Small business</p>
+						<p class="text-left text-xl font-bold">{{ $t('smallBusiness') }}</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-2xl font-bold mt-1">
 								{{ formatNumber(deposit.small_count) }}
 							</p>
@@ -239,11 +239,11 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">Medium business</p>
+						<p class="text-left text-xl font-bold">{{ $t('mediumBusiness') }}</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-							<p class="text-gray-400 text-sm">Amount</p>
+								<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-2xl font-bold mt-1">
 								{{ formatNumber(deposit.medium_count) }}
 							</p>
@@ -269,6 +269,7 @@
 
 <script setup>
 import 'echarts'
+const { t , locale} = useI18n()
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
 const props = defineProps({
@@ -309,7 +310,7 @@ function setFilter() {
 
 function getDeposit(params = {}) {
 	$axios
-		.get('api/v1/wefi/dashboard/deposit', { params })
+		.get(`api/v1/wefi/dashboard/deposit?lang=${locale.value}`, { params })
 		.then(res => {
 			deposit.value = res.data.data
 		})
@@ -320,7 +321,7 @@ function getDeposit(params = {}) {
 
 function getDepositGraph(params = {}) {
 	$axios
-		.get('api/v1/wefi/dashboard/deposite_graph', { params })
+		.get(`api/v1/wefi/dashboard/deposite_graph?lang=${locale.value}`, { params })
 		.then(res => {
 			depositGraph.value = res.data.data
 		})
@@ -332,7 +333,7 @@ function getDepositGraph(params = {}) {
 
 function getRegions() {
 	$axios
-		.get('api/v1/resp/regions_lists', {
+		.get(`api/v1/resp/regions_lists?lang=${locale.value}`, {
 			headers: {
 				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
 			},
@@ -352,7 +353,7 @@ const statsOption = computed(() => {
 		  )
 		: []
 
-	const months = filtered.map(item => item.month?.toString?.() ?? '')
+	const months = filtered.map(item => item.month_name?.toString?.() ?? '')
 	const womenData = filtered.map(item => item?.women_asum ?? 0)
 	const menData = filtered.map(item => item?.men_asum ?? 0)
 
@@ -432,7 +433,7 @@ const statsOption = computed(() => {
 		},
 		series: [
 			{
-				name: 'Women',
+						name: t('women'),
 				type: 'line',
 				data: womenData,
 				smooth: true,
@@ -451,7 +452,7 @@ const statsOption = computed(() => {
 				},
 			},
 			{
-				name: 'Men',
+					name: t('men'),
 				type: 'line',
 				data: menData,
 				smooth: true,
@@ -511,21 +512,22 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				const color = isMen ? '#3B8FF3' : '#F29F67';
 
 				return `
-					<div style="font-size:13px;line-height:1.6;color:#000;">
-						<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-							<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
-							<b>${params.name}</b>
-						</div>
-						<div style="display:flex;gap:6px;margin-bottom:4px;">
-							<span>• Percentage:</span>
-							<span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
-						</div>
-						${
-							sumAmount != null
-								? `<div style="display:flex;gap:6px;"><span>• Sum:</span><span style="font-weight:bold;">${Number(sumAmount).toLocaleString()}</span></div>`
-								: ''
-						}
-					</div>
+				 <div style="font-size:13px;line-height:1.6;color:#000;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${color};"></span>
+              <b>${params.name}</b>
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:4px;">
+              <span>• ${t('percentage')}:</span>
+              <span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
+            </div>
+            ${sumAmount != null
+						? `<div style="display:flex;gap:6px;"><span>• ${t('sum')}:</span><span style="font-weight:bold;">${Number(
+							sumAmount
+						).toLocaleString()}</span></div>`
+						: ''
+					}
+          </div>
 				`;
 			},
 		},
@@ -555,8 +557,8 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				label: { show: false },
 				stillShowZeroSum: false,
 				data: [
-					{ value: menVal, name: 'Men', itemStyle: { color: '#3B8FF3' }, sumAmount: menSum },
-					{ value: womenVal, name: 'Women', itemStyle: { color: '#F29F67' }, sumAmount: womenSum },
+					{ value: menVal, 	name: t('men'), itemStyle: { color: '#3B8FF3' }, sumAmount: menSum },
+					{ value: womenVal, 	name: t('women'), itemStyle: { color: '#F29F67' }, sumAmount: womenSum },
 					{
 						value: remVal,
 						name: 'Filled remainder',
@@ -578,7 +580,7 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				left: '22%',
 				top: '44%',
 				style: {
-					text: `${sumPct.toFixed(1)}%\nTotal Participants`,
+				text: `${sumPct.toFixed(1)}%\n${t('totalParticipants')}`,
 					textAlign: 'center',
 					fill: '#111827',
 					font: '600 18px "Arial"',
@@ -596,25 +598,25 @@ const genderChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+						name: t('women'),
 				data: [
 					{
 						value: deposit.value.women_percent ?? 0,
 						count: deposit.value.women_count ?? 0,
 						sum: deposit.value.women_sum ?? 0,
-						name: 'women',
+								name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+					name: t('men'),
 				data: [
 					{
 						value: deposit.value.men_percent ?? 0,
 						count: deposit.value.men_count ?? 0,
 						sum: deposit.value.men_sum ?? 0,
-						name: 'men',
+						name: t('men'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -630,25 +632,25 @@ const individualChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+					name: t('women'),
 				data: [
 					{
 						value: deposit.value.individual_women_pct ?? 0,
 						count: deposit.value.individual_women_count ?? 0,
 						sum: deposit.value.individual_women_sum ?? 0,
-						name: 'women',
+								name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+					name: t('men'),
 				data: [
 					{
 						value: deposit.value.individual_men_pct ?? 0,
 						count: deposit.value.individual_men_count ?? 0,
 						sum: deposit.value.individual_men_sum ?? 0,
-						name: 'men',
+								name: t('men'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -664,25 +666,25 @@ const legalChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-				name: 'Women',
+						name: t('women'),
 				data: [
 					{
 						value: deposit.value.legal_women_pct ?? 0,
 						count: deposit.value.legal_women_count ?? 0,
 						sum: deposit.value.legal_women_sum ?? 0,
-						name: 'women',
+								name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-				name: 'Men',
+					name: t('men'),
 				data: [
 					{
 						value: deposit.value.legal_men_pct ?? 0,
 						count: deposit.value.legal_men_count ?? 0,
 						sum: deposit.value.legal_men_sum ?? 0,
-						name: 'men',
+								name: t('men'),
 					},
 				],
 				style: { color: '#3B8FF3' },

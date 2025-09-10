@@ -224,7 +224,7 @@ const selectedLine = computed(() => {
 
 function getCountGraph() {
 	$axios
-		.get('api/v1/wefi/dashboard/count_graph', {
+		.get(`api/v1/wefi/dashboard/count_graph?lang=${locale.value}`, {
 			params: buildParamsFromFilters(),
 		})
 		.then(res => {
