@@ -127,6 +127,8 @@ watch(
 			mahalla: region.mahalla,
 			percent: region.percent,
 		}))
+
+		console.log('option', option.value.series[0].data)
 	},
 	{ immediate: true }
 )

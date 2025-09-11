@@ -12,11 +12,12 @@
 
 <script setup>
 const $axios = useAxios()
+const {locale} = useI18n()
 const data = ref([]) 
 
-onMounted(async () => {
-	data.value = await useDashboardData($axios, updated => {
-		data.value = updated
+onMounted(() => {
+	$axios.get(`/api/v1/wefi/dashboard/`).then(res => {
+		data.value = res.data.data
 	})
 })
 </script>
