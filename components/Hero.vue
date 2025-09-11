@@ -3,7 +3,15 @@
 		<div
 			class="rellax absolute inset-0 h-full w-full z-0"
 			data-rellax-speed="-5"
-			:style="`will-change: transform; background-image: url(${heroBg}); background-size: cover; background-position: center;`"
+			:style="`
+  will-change: transform; 
+  background-image: url(${heroBg}); 
+  width: 100%; 
+  height: 100%; 
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-position: top;
+`"
 		></div>
 		<div
 			class="absolute inset-0 z-10 pointer-events-none"
@@ -33,7 +41,7 @@
 </template>
 
 <script setup>
-import heroBg from '@/assets/images/hero-bg.png'
+import heroBg from '@/assets/images/hero-bg.jpg'
 import Rellax from 'rellax'
 import { onMounted } from 'vue'
 
