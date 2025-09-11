@@ -54,7 +54,7 @@
 					</div>
 					<div class="flex items-center justify-between">
 						<p>Credit</p>
-						<p class="text-primary font-bold text-xl">65,6 trln</p>
+						<p class="text-primary font-bold text-xl">65 "trln"</p>
 					</div>
 					<div class="flex items-center justify-between">
 						<p>Deposit</p>
