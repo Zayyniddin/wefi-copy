@@ -8,9 +8,9 @@
   background-image: url(${heroBg}); 
   width: 100%; 
   height: 100%; 
-  background-size:  contain; 
+  background-size: cover; 
   background-repeat: no-repeat; 
-  background-position: top;
+  background-position: center;
 `"
 		></div>
 		<div
