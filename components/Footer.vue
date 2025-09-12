@@ -15,7 +15,12 @@
 					<li>{{ $t('genderIndicators') }}</li>
 					<li>{{ $t('blogs') }}</li>
 					<li>{{ $t('faq') }}</li>
-					<li>{{ $t('ourPartners') }}</li>
+					<li class="text-sm font-bold">
+						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
+					</li>
+					<li class="text-sm font-bold">
+						<a href="#faq">{{ $t('faq') }}</a>
+					</li>
 				</ul>
 			</div>
 
@@ -61,3 +66,8 @@
 		</p>
 	</div>
 </template>
+
+
+<script setup>
+const localePath = useLocalePath()
+</script>

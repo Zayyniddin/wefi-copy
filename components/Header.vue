@@ -10,15 +10,15 @@
 					<li class="text-sm font-bold">
 						<a href="#overview">{{ $t('overview') }}</a>
 					</li>
-					<li class="text-sm font-bold">
+					<!-- <li class="text-sm font-bold">
 						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
-					</li>
+					</li> -->
 					<li class="text-sm font-bold">
 						<a href="#blog">{{ $t('blog') }}</a>
 					</li>
-					<li class="text-sm font-bold">
+					<!-- <li class="text-sm font-bold">
 						<a href="#faq">{{ $t('faq') }}</a>
-					</li>
+					</li> -->
 				</ul>
 			</nav>
 
