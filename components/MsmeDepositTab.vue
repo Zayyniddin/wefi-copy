@@ -47,7 +47,9 @@
 			<!-- Donut Chart -->
 			<div class="bg-white h-full text-black p-6 rounded-lg shadow">
 				<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
-				<p class="font-medium text-black text-lg">{{ $t('deposit_by_business_type') }}</p>
+				<p class="font-medium text-black text-lg">
+					{{ $t('deposit_by_business_type') }}
+				</p>
 				<div>
 					<div class="flex items-center justify-between mt-4 -mb-4">
 						<p class="text-gray-400">{{ $t('individualEntrepreneurs') }}</p>
@@ -129,7 +131,9 @@
 				<div class="flex items-start p-6 pb-0 justify-between">
 					<div>
 						<p class="text-sm text-gray-500">{{ $t('statistics') }}</p>
-						<p class="font-bold text-black text-lg border-[#E5E5EF]">{{ $t('deposit') }}</p>
+						<p class="font-bold text-black text-lg border-[#E5E5EF]">
+							{{ $t('deposit') }}
+						</p>
 					</div>
 					<div class="flex items-center gap-2">
 						<el-select
@@ -230,7 +234,7 @@
 									deposit.small_women_pct ?? 0,
 									deposit.small_sum_pct ?? 0,
 									deposit.small_women_sum ?? 0,
-									deposit.small_men_sum ?? 0,
+									deposit.small_men_sum ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -239,11 +243,13 @@
 					<div
 						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
 					>
-						<p class="text-left text-xl font-bold">{{ $t('mediumBusiness') }}</p>
+						<p class="text-left text-xl font-bold">
+							{{ $t('mediumBusiness') }}
+						</p>
 						<div
 							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
 						>
-								<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
+							<p class="text-gray-400 text-sm">{{ $t('amount') }}</p>
 							<p class="text-2xl font-bold mt-1">
 								{{ formatNumber(deposit.medium_count) }}
 							</p>
@@ -255,7 +261,7 @@
 									deposit.medium_women_pct ?? 0,
 									deposit.medium_sum_pct ?? 0,
 									deposit.medium_women_sum ?? 0,
-									deposit.medium_men_sum ?? 0,
+									deposit.medium_men_sum ?? 0
 								)
 							"
 							class="!h-[300px]"
@@ -269,7 +275,7 @@
 
 <script setup>
 import 'echarts'
-const { t , locale} = useI18n()
+const { t, locale } = useI18n()
 const { generate } = useStackedChart()
 const { formatNumber } = useFormatNumber()
 const props = defineProps({
@@ -321,7 +327,9 @@ function getDeposit(params = {}) {
 
 function getDepositGraph(params = {}) {
 	$axios
-		.get(`api/v1/wefi/dashboard/deposite_graph?lang=${locale.value}`, { params })
+		.get(`api/v1/wefi/dashboard/deposite_graph?lang=${locale.value}`, {
+			params,
+		})
 		.then(res => {
 			depositGraph.value = res.data.data
 		})
@@ -329,7 +337,6 @@ function getDepositGraph(params = {}) {
 			console.error(error)
 		})
 }
-
 
 function getRegions() {
 	$axios
@@ -433,7 +440,7 @@ const statsOption = computed(() => {
 		},
 		series: [
 			{
-						name: t('women'),
+				name: t('women'),
 				type: 'line',
 				data: womenData,
 				smooth: true,
@@ -452,7 +459,7 @@ const statsOption = computed(() => {
 				},
 			},
 			{
-					name: t('men'),
+				name: t('men'),
 				type: 'line',
 				data: menData,
 				smooth: true,
@@ -476,27 +483,27 @@ const statsOption = computed(() => {
 
 const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 	// нормализация
-	menPct = Number(menPct) || 0;
-	womenPct = Number(womenPct) || 0;
-	sumPct = Number(sumPct);
-	if (!isFinite(sumPct)) sumPct = 0;
-	sumPct = Math.max(0, Math.min(100, sumPct)); // clamp 0..100
+	menPct = Number(menPct) || 0
+	womenPct = Number(womenPct) || 0
+	sumPct = Number(sumPct)
+	if (!isFinite(sumPct)) sumPct = 0
+	sumPct = Math.max(0, Math.min(100, sumPct)) // clamp 0..100
 
-	const totalShare = menPct + womenPct;
-	const filledAngle = (sumPct / 100) * 180; // сколько градусов заполнено из полукруга
-	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0;
-	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0;
-	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle); // на случай погрешностей
-	const fillerAngle = Math.max(0, 360 - filledAngle); // прозрачная нижняя половина
+	const totalShare = menPct + womenPct
+	const filledAngle = (sumPct / 100) * 180 // сколько градусов заполнено из полукруга
+	const menAngle = totalShare > 0 ? (menPct / totalShare) * filledAngle : 0
+	const womenAngle = totalShare > 0 ? (womenPct / totalShare) * filledAngle : 0
+	const remainderFilledAngle = Math.max(0, filledAngle - menAngle - womenAngle) // на случай погрешностей
+	const fillerAngle = Math.max(0, 360 - filledAngle) // прозрачная нижняя половина
 
 	// защитим от маленьких дробей (чтобы сумма = 360)
-	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle;
-	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1;
+	const sumAngles = menAngle + womenAngle + remainderFilledAngle + fillerAngle
+	const normalizeFactor = sumAngles > 0 ? 360 / sumAngles : 1
 
-	const menVal = menAngle * normalizeFactor;
-	const womenVal = womenAngle * normalizeFactor;
-	const remVal = remainderFilledAngle * normalizeFactor;
-	const fillerVal = fillerAngle * normalizeFactor;
+	const menVal = menAngle * normalizeFactor
+	const womenVal = womenAngle * normalizeFactor
+	const remVal = remainderFilledAngle * normalizeFactor
+	const fillerVal = fillerAngle * normalizeFactor
 
 	return {
 		animationDuration: 1000,
@@ -504,12 +511,13 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 		tooltip: {
 			trigger: 'item',
 			formatter: params => {
-				if (!params || !params.name) return '';
-				if (params.name === 'Filled remainder' || params.name === 'invisible') return '';
-				const isMen = params.name === 'Men';
-				const originalPct = isMen ? menPct : womenPct;
-				const sumAmount = isMen ? menSum : womenSum;
-				const color = isMen ? '#3B8FF3' : '#F29F67';
+				if (!params || !params.name) return ''
+				if (params.name === 'Filled remainder' || params.name === 'invisible')
+					return ''
+				const isMen = params.name === 'Men'
+				const originalPct = isMen ? menPct : womenPct
+				const sumAmount = isMen ? menSum : womenSum
+				const color = isMen ? '#3B8FF3' : '#F29F67'
 
 				return `
 				 <div style="font-size:13px;line-height:1.6;color:#000;">
@@ -521,14 +529,17 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
               <span>• ${t('percentage')}:</span>
               <span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
             </div>
-            ${sumAmount != null
-						? `<div style="display:flex;gap:6px;"><span>• ${t('sum')}:</span><span style="font-weight:bold;">${Number(
-							sumAmount
-						).toLocaleString()}</span></div>`
-						: ''
-					}
+            ${
+							sumAmount != null
+								? `<div style="display:flex;gap:6px;"><span>• ${t(
+										'sum'
+								  )}:</span><span style="font-weight:bold;">${Number(
+										sumAmount
+								  ).toLocaleString()}</span></div>`
+								: ''
+						}
           </div>
-				`;
+				`
 			},
 		},
 		series: [
@@ -557,8 +568,18 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				label: { show: false },
 				stillShowZeroSum: false,
 				data: [
-					{ value: menVal, 	name: t('men'), itemStyle: { color: '#3B8FF3' }, sumAmount: menSum },
-					{ value: womenVal, 	name: t('women'), itemStyle: { color: '#F29F67' }, sumAmount: womenSum },
+					{
+						value: menVal,
+						name: t('men'),
+						itemStyle: { color: '#3B8FF3' },
+						sumAmount: menSum,
+					},
+					{
+						value: womenVal,
+						name: t('women'),
+						itemStyle: { color: '#F29F67' },
+						sumAmount: womenSum,
+					},
 					{
 						value: remVal,
 						name: 'Filled remainder',
@@ -580,7 +601,7 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				left: '22%',
 				top: '44%',
 				style: {
-				text: `${sumPct.toFixed(1)}%\n${t('totalParticipants')}`,
+					text: `${sumPct.toFixed(1)}%\n${t('totalParticipants')}`,
 					textAlign: 'center',
 					fill: '#111827',
 					font: '600 18px "Arial"',
@@ -588,9 +609,8 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 				},
 			},
 		],
-	};
-};
-
+	}
+}
 
 // BUSINES SIZE CHART
 
@@ -598,19 +618,19 @@ const genderChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-						name: t('women'),
+				name: t('women'),
 				data: [
 					{
 						value: deposit.value.women_percent ?? 0,
 						count: deposit.value.women_count ?? 0,
 						sum: deposit.value.women_sum ?? 0,
-								name: t('women'),
+						name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-					name: t('men'),
+				name: t('men'),
 				data: [
 					{
 						value: deposit.value.men_percent ?? 0,
@@ -625,6 +645,7 @@ const genderChart = computed(() =>
 		barWidth: 40,
 		addGraphic: false,
 		hideYAxisLabels: true,
+		fixedMonth: 'june'
 	})
 )
 
@@ -632,25 +653,25 @@ const individualChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-					name: t('women'),
+				name: t('women'),
 				data: [
 					{
 						value: deposit.value.individual_women_pct ?? 0,
 						count: deposit.value.individual_women_count ?? 0,
 						sum: deposit.value.individual_women_sum ?? 0,
-								name: t('women'),
+						name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-					name: t('men'),
+				name: t('men'),
 				data: [
 					{
 						value: deposit.value.individual_men_pct ?? 0,
 						count: deposit.value.individual_men_count ?? 0,
 						sum: deposit.value.individual_men_sum ?? 0,
-								name: t('men'),
+						name: t('men'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -659,6 +680,7 @@ const individualChart = computed(() =>
 		barWidth: 40,
 		addGraphic: false,
 		hideYAxisLabels: true,
+		fixedMonth: 'june'
 	})
 )
 
@@ -666,25 +688,25 @@ const legalChart = computed(() =>
 	generate({
 		seriesData: [
 			{
-						name: t('women'),
+				name: t('women'),
 				data: [
 					{
 						value: deposit.value.legal_women_pct ?? 0,
 						count: deposit.value.legal_women_count ?? 0,
 						sum: deposit.value.legal_women_sum ?? 0,
-								name: t('women'),
+						name: t('women'),
 					},
 				],
 				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
 			},
 			{
-					name: t('men'),
+				name: t('men'),
 				data: [
 					{
 						value: deposit.value.legal_men_pct ?? 0,
 						count: deposit.value.legal_men_count ?? 0,
 						sum: deposit.value.legal_men_sum ?? 0,
-								name: t('men'),
+						name: t('men'),
 					},
 				],
 				style: { color: '#3B8FF3' },
@@ -693,6 +715,7 @@ const legalChart = computed(() =>
 		barWidth: 40,
 		addGraphic: false,
 		hideYAxisLabels: true,
+		fixedMonth: 'june'
 	})
 )
 </script>

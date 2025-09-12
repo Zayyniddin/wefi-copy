@@ -100,7 +100,7 @@
 		<div class="flex flex-col gap-4">
 			<ValueIssuedBank />
 			<NumberIssuedBank />
-			<div class="bg-white p-6 rounded-lg shadow">
+			<div id="bottom" class="bg-white p-6 rounded-lg shadow">
 				<div
 					class="border-b pb-2 border-[#E5E5EF] flex items-center justify-between"
 				>

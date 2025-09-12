@@ -6,10 +6,14 @@
 			</p>
 			<!-- Стрелки -->
 			<div class="flex gap-3">
-				<button class="swiper-button-prev-custom text-primary flex items-center justify-center !w-10 !h-10 hover:bg-primary/10 rounded-full transition-all">
+				<button
+					class="swiper-button-prev-custom text-primary flex items-center justify-center !w-10 !h-10 hover:bg-primary/10 rounded-full transition-all"
+				>
 					<Icon name="mdi:chevron-left" class="!w-7 !h-7" />
 				</button>
-					<button class="swiper-button-prev-custom text-primary flex items-center justify-center !w-10 !h-10 hover:bg-primary/10 rounded-full transition-all">
+				<button
+					class="swiper-button-next-custom text-primary flex items-center justify-center !w-10 !h-10 hover:bg-primary/10 rounded-full transition-all"
+				>
 					<Icon name="mdi:chevron-right" class="!w-7 !h-7" />
 				</button>
 			</div>
@@ -54,7 +58,6 @@
 			</SwiperSlide>
 
 			<!-- Слайд 2 -->
-			
 
 			<SwiperSlide>
 				<div class="flex flex-col gap-5 max-w-[450px] h-[450px] w-full">
@@ -87,7 +90,7 @@
 			<SwiperSlide>
 				<div class="flex flex-col gap-5 max-w-[450px] h-[450px] w-full">
 					<iframe
-            class="rounded-[10px] h-[250px] w-full"
+						class="rounded-[10px] h-[250px] w-full"
 						src="https://www.youtube.com/embed/EOmYIXKx3NQ?si=VnoiD_qfmxmZ45ic"
 						title="YouTube video player"
 						frameborder="0"
@@ -112,7 +115,7 @@
 				</div>
 			</SwiperSlide>
 
-      <SwiperSlide>
+			<SwiperSlide>
 				<div class="flex flex-col gap-5 max-w-[450px] h-[450px] w-full">
 					<iframe
 						class="rounded-[10px] h-[250px] w-full"
@@ -175,6 +178,6 @@
 <script setup>
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { Navigation } from 'swiper/modules' 
+import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 </script>

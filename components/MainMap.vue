@@ -46,26 +46,26 @@
 
 				<div class="p-4 rounded-lg shadow-lg flex flex-col gap-4">
 					<p class="text-primary text-xl">MSME</p>
-					<div class="flex items-center justify-between">
-						<p>W MSME</p>
+					<NuxtLink to="/dashboard?tab=first" class="flex items-center justify-between hover:bg-primary/5 p-2 rounded-lg transition-all">
+						<p>W MSME ({{ $t('number') }})</p>
 						<p class="text-primary font-bold text-xl">
-							{{ formatNumber(221611) }}
+							{{ formatNumber(212207) }}
 						</p>
-					</div>
-					<div class="flex items-center justify-between">
+					</NuxtLink>
+					<NuxtLink to="/dashboard?tab=second" class="flex items-center justify-between hover:bg-primary/5 p-2 rounded-lg transition-all">
 						<p>{{ $t('credit') }} (trln {{ $t('uzs') }}) </p>
 						<p class="text-primary font-bold text-xl">65,6</p>
-					</div>
-					<div class="flex items-center justify-between">
+					</NuxtLink>
+					<NuxtLink to="/dashboard?tab=third" class="flex items-center justify-between hover:bg-primary/5 p-2 rounded-lg transition-all">
 						<p>{{ $t('deposit') }} ({{ $t('number') }})</p>
 						<p class="text-primary font-bold text-xl">
 							{{ formatNumber(577281) }}
 						</p>
-					</div>
-					<div class="flex items-center justify-between">
+					</NuxtLink>
+					<NuxtLink to="/dashboard?tab=second&scroll=bottom"  class="flex items-center justify-between hover:bg-primary/5 p-2 rounded-lg transition-all">
 						<p>NPL (%)</p>
 						<p class="text-primary font-bold text-xl">6,3</p>
-					</div>
+					</NuxtLink>
 				</div>
 			</div>
 		</div>
@@ -127,8 +127,6 @@ watch(
 			mahalla: region.mahalla,
 			percent: region.percent,
 		}))
-
-		console.log('option', option.value.series[0].data)
 	},
 	{ immediate: true }
 )
@@ -179,7 +177,7 @@ onMounted(() => {
   visualMap: {
     show: false,
     min: 0,
-    max: 10000,
+    max: 50000,
     text: [t('number_of_entrepreneurs_by_gods')],
     orient: 'horizontal',
     left: 80,

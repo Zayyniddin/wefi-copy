@@ -34,7 +34,7 @@
 	>
 		<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 			<el-tab-pane :label="$t('marketSizeAndShare')" name="first" lazy>
-				<MarketTab @filter-change="onFilterChange" />
+				<MarketTab @filter-change="onFilterChange" :customers='data.customers' />
 			</el-tab-pane>
 
 			<el-tab-pane :label="$t('msmeCredit')" name="second" lazy>

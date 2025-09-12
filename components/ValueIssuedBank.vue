@@ -106,7 +106,7 @@
 				<p
 					class="font-medium text-black text-lg border-b pb-2 border-[#E5E5EF]"
 				>
-					{{ $t('credits') }}
+					{{ $t('loans') }}
 				</p>
 
 				<VChart :option="statsOption" class="!w-[500px] !h-[300px] z-50" />

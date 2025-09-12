@@ -9,11 +9,19 @@
 				<p class="text-3xl font-bold mt-2">
 					{{ formatNumber(customers_total) }}
 				</p>
+				
 				<div class="mt-8">
-					<div class="w-full bg-gray-200 h-4 rounded mt-1">
-						<div class="h-4 rounded gradient-bar" :style="`width: ${data?.women_percent || 0}%`"></div>
-					</div>
-					<p class="text-sm flex items-center gap-2 text-gray-400 mt-5">
+					<VChart
+					:option="businessTypeChart"
+					class="!w-[450px] !h-[30px] z-50"
+				/>
+					<!-- <div class="w-full bg-gray-200 h-4 rounded mt-1">
+						<div
+							class="h-4 rounded gradient-bar"
+							:style="`width: ${data?.women_percent || 0}%`"
+						></div>
+					</div> -->
+					<p class="text-sm flex items-center gap-2 text-gray-400">
 						<span class="text-3xl text-[#1E1B39] font-bold">
 							{{ data?.women_percent || 0 }}%
 						</span>
@@ -56,122 +64,152 @@
 			<!-- Line Chart -->
 			<div class="bg-white rounded-lg shadow">
 				<div class="flex items-start p-6 pb-0 justify-end">
-<div class='flex items-center justify-between w-full'>
-  <p class='text-xl font-bold max-w-[300px]'>
-    {{ $t('msme_title') }}
-  </p>
-  <div class="flex items-center gap-2">
-    <el-select
-      clearable
-      @change="setFilter"
-      v-model="selectedRegion"
-      :placeholder="$t('region')"
-      size="small"
-      style="width: 160px"
-    >
-      <el-option
-        v-for="item in regions"
-        :key="item.id"
-        :label="item.full_name"
-        :value="item.id"
-      />
-    </el-select>
+					<div class="flex items-center justify-between w-full">
+						<p class="text-xl font-bold max-w-[300px]">
+							{{ $t('msme_title') }}
+						</p>
+						<div class="flex items-center gap-2">
+							<el-select
+								clearable
+								@change="setFilter"
+								v-model="selectedRegion"
+								:placeholder="$t('region')"
+								size="small"
+								style="width: 160px"
+							>
+								<el-option
+									v-for="item in regions"
+									:key="item.id"
+									:label="item.full_name"
+									:value="item.id"
+								/>
+							</el-select>
 
-    <el-select
-      clearable
-      @change="setFilter"
-      v-model="selectedBusiness"
-      :placeholder="$t('size')"
-      size="small"
-      style="width: 160px"
-    >
-      <el-option
-        v-for="item in microOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-    </el-select>
+							<el-select
+								clearable
+								@change="setFilter"
+								v-model="selectedBusiness"
+								:placeholder="$t('size')"
+								size="small"
+								style="width: 160px"
+							>
+								<el-option
+									v-for="item in microOptions"
+									:key="item.value"
+									:label="item.label"
+									:value="item.value"
+								/>
+							</el-select>
 
-    <el-select
-      clearable
-      @change="setFilter"
-      v-model="selectedYear"
-      :placeholder="$t('year')"
-      size="small"
-      style="width: 160px"
-    >
-      <el-option
-        v-for="item in yearOptions"
-        :key="item"
-        :label="item"
-        :value="item"
-      />
-    </el-select>
-  </div>
-</div>
-
+							<el-select
+								clearable
+								@change="setFilter"
+								v-model="selectedYear"
+								:placeholder="$t('year')"
+								size="small"
+								style="width: 160px"
+							>
+								<el-option
+									v-for="item in yearOptions"
+									:key="item"
+									:label="item"
+									:value="item"
+								/>
+							</el-select>
+						</div>
+					</div>
 				</div>
-				<VChart v-if="lineData && lineData.length > 0" :option="lineOption" class="!h-[334px] !w-[1000px]" />
-				<div v-else class="min-h-[334px] flex items-center justify-center text-[#615E83] text-sm">
+				<VChart
+					v-if="lineData && lineData.length > 0"
+					:option="lineOption"
+					class="!h-[334px] !w-[1000px]"
+				/>
+				<div
+					v-else
+					class="min-h-[334px] flex items-center justify-center text-[#615E83] text-sm"
+				>
 					{{ lineData === null ? 'Loading...' : 'No data' }}
 				</div>
 			</div>
 
 			<div class="flex items-center gap-4 w-full">
 				<div class="flex items-center w-full gap-4">
-					<div class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center">
+					<div
+						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
+					>
 						<p class="text-left text-xl font-bold">{{ $t('microBusiness') }}</p>
-						<div class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]">
+						<div
+							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
+						>
 							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.micro) }}
 							</p>
 						</div>
-						<VChart :option="gaugeOption(
-							data.micro_men_percent ?? 0,
-							data.micro_women_percent ?? 0,
-							data.micro_percent ?? 0,
-							data.micro_women ?? 0,
-							data.micro_men ?? 0
-						)
-							" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									data.micro_men_percent ?? 0,
+									data.micro_women_percent ?? 0,
+									data.micro_percent ?? 0,
+									data.micro_women ?? 0,
+									data.micro_men ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
-					<div class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center">
+					<div
+						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
+					>
 						<p class="text-left text-xl font-bold">{{ $t('smallBusiness') }}</p>
-						<div class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]">
+						<div
+							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
+						>
 							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.small) }}
 							</p>
 						</div>
-						<VChart :option="gaugeOption(
-							data.small_men_percent ?? 0,
-							data.small_women_percent ?? 0,
-							data.small_percent ?? 0,
-							data.small_women ?? 0,
-							data.small_men ?? 0
-						)
-							" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									data.small_men_percent ?? 0,
+									data.small_women_percent ?? 0,
+									data.small_percent ?? 0,
+									data.small_women ?? 0,
+									data.small_men ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
-					<div class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center">
+					<div
+						class="bg-white p-6 max-w-[335px] h-[310px] w-full rounded-lg shadow text-center"
+					>
 						<p class="text-left text-xl font-bold">
 							{{ $t('mediumBusiness') }}
 						</p>
-						<div class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]">
+						<div
+							class="flex items-center mt-2 justify-between border-b border-[#E5E5EF]"
+						>
 							<p class="text-gray-400 text-sm">{{ $t('count') }}</p>
 							<p class="text-xl font-bold mt-1">
 								{{ formatNumber(data.medium) }}
 							</p>
 						</div>
-						<VChart :option="gaugeOption(
-							data.medium_men_percent ?? 0,
-							data.medium_women_percent ?? 0,
-							data.medium_percent ?? 0,
-							data.medium_women ?? 0,
-							data.medium_men ?? 0
-						)
-							" class="!h-[300px]" />
+						<VChart
+							:option="
+								gaugeOption(
+									data.medium_men_percent ?? 0,
+									data.medium_women_percent ?? 0,
+									data.medium_percent ?? 0,
+									data.medium_women ?? 0,
+									data.medium_men ?? 0
+								)
+							"
+							class="!h-[300px]"
+						/>
 					</div>
 				</div>
 			</div>
@@ -182,7 +220,8 @@
 <script setup>
 import 'echarts'
 const { formatNumber } = useFormatNumber()
-const { t , locale} = useI18n()
+const { t, locale } = useI18n()
+const { generate } = useStackedChart()
 // PROPS
 const props = defineProps({
 	customers: {
@@ -222,6 +261,35 @@ const microOptions = [
 	{ value: 2, label: 'SMALL' },
 	{ value: 3, label: 'MEDIUM' },
 ]
+
+const businessTypeChart = computed(() =>
+	generate({
+		seriesData: [
+			{
+				name: $t('women'),
+				data: [
+					{
+						value: data.value?.women_percent ?? 0,
+						count: data.value?.women_count ?? 0,
+					},
+				],
+				style: { color: '#F29F67', borderRadius: [8, 0, 0, 8] },
+			},
+			{
+				name: $t('men'),
+				data: [
+					{
+						value: data.value?.men_percent ?? 0,
+						count: data.value?.men_count ?? 0,
+					},
+				],
+				style: { color: '#3B8FF3' },
+			},
+		],
+			addGraphic: false,
+			hideYAxisLabels: true,
+	})
+)
 
 // METHODS
 function getRegions() {
@@ -418,7 +486,10 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
 			trigger: 'item',
 			formatter: params => {
 				if (!params || !params.name) return ''
-				if (params.name === t('filledRemainder') || params.name === t('invisible'))
+				if (
+					params.name === t('filledRemainder') ||
+					params.name === t('invisible')
+				)
 					return ''
 
 				const isMen = params.name === t('men')
@@ -436,12 +507,15 @@ const gaugeOption = (menPct, womenPct, sumPct, womenSum, menSum) => {
               <span>• ${t('percentage')}:</span>
               <span style="font-weight:bold;">${originalPct.toFixed(1)}%</span>
             </div>
-            ${sumAmount != null
-						? `<div style="display:flex;gap:6px;"><span>• ${t('sum')}:</span><span style="font-weight:bold;">${Number(
-							sumAmount
-						).toLocaleString()}</span></div>`
-						: ''
-					}
+            ${
+							sumAmount != null
+								? `<div style="display:flex;gap:6px;"><span>• ${t(
+										'sum'
+								  )}:</span><span style="font-weight:bold;">${Number(
+										sumAmount
+								  ).toLocaleString()}</span></div>`
+								: ''
+						}
           </div>
         `
 			},
