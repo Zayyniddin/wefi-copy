@@ -15,10 +15,10 @@
 					<li>{{ $t('genderIndicators') }}</li>
 					<li>{{ $t('blogs') }}</li>
 					<li>{{ $t('faq') }}</li>
-					<li class="text-sm font-bold">
+					<li class="">
 						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
 					</li>
-					<li class="text-sm font-bold">
+					<li class="">
 						<a href="#faq">{{ $t('faq') }}</a>
 					</li>
 				</ul>
