@@ -11,7 +11,7 @@ export function useStackedChart() {
 		addGraphic = true,
 		barWidth = 20,
 		hideYAxisLabels = false,
-		fixedMonth = 'july', // 👈 можно передать любой месяц из словаря
+		fixedMonth = 'july', 
 	}) {
 		const categories = seriesData[0]?.data.map(d => d.name) || []
 		const reversedTotals = [...totalsPercent]
@@ -32,7 +32,6 @@ export function useStackedChart() {
 			may: { ru: 'Май', en: 'May', la: 'May' },
 		}
 
-		// нормализуем ключ
 		const monthKey = fixedMonth.toLowerCase()
 		const translations = monthTranslations[monthKey] || monthTranslations.june
 
@@ -119,14 +118,8 @@ export function useStackedChart() {
 					const now = new Date()
 					const yearValue = filtersStore.period || now.getFullYear()
 
-					// выбираем локаль
-					const currentLocale = locale.value.startsWith('ru')
-						? 'ru'
-						: locale.value.startsWith('la')
-						? 'la'
-						: 'en'
+					const currentLocale = locale.value == 'en' ? 'en' : 'la'
 
-					// берём из словаря перевод месяца
 					const formattedDate = `${translations[currentLocale]} ${yearValue}`
 
 					const value =
@@ -142,12 +135,15 @@ export function useStackedChart() {
 						.map(([key, val]) => {
 							const formatted =
 								typeof val === 'number' ? val.toLocaleString() : val
-							const capitalizedKey = key[0].toUpperCase() + key.slice(1)
+
+							const translatedKey =
+								t(key) !== key ? t(key) : key[0].toUpperCase() + key.slice(1)
+
 							return `
-          <div style="margin-bottom: 2px;">
-            • ${capitalizedKey}: <span style="font-weight: bold;">${formatted}</span>
-          </div>
-        `
+      <div style="margin-bottom: 2px;">
+        • ${translatedKey}: <span style="font-weight: bold;">${formatted}</span>
+      </div>
+    `
 						})
 						.join('')
 

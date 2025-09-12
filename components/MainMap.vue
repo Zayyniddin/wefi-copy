@@ -99,7 +99,7 @@
 import * as echarts from 'echarts'
 import uzGeo from '../assets/data/uzbekistan.json'
 const { formatNumber } = useFormatNumber()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const props = defineProps({
 	orgRegion: {
 		type: Array,
@@ -138,31 +138,42 @@ onMounted(() => {
 		name: region.name,
 		value: region.cc,
 	}))
+	 const monthTranslations = {
+    july: { ru: 'Июль', en: 'July', la: 'Iyul' },
+  }
 
 	option.value = {
-  tooltip: {
-    trigger: 'item',
-    formatter: params => {
-      const data = params.data || {}
+   tooltip: {
+      trigger: 'item',
+      formatter: params => {
+        const data = params.data || {}
 
-      const date = new Date(currentDate.value)
-      const month = date.toLocaleString('en-US', { month: 'long' })
-      const year = date.getFullYear()
-       return `
-      <div style="font-size:16px; line-height:1.4">
-        <b>${data.name} ${t('region')} – ${month} ${year}</b><br/>
-        <div style="margin: 10px 0;">
-          ${t('districts')} – ${(data.area ?? 0).toLocaleString()}<br/>
-          ${t('communities')} – ${(data.mahalla ?? 0).toLocaleString()}<br/>
-          ${t('msme')} – ${(data.msme ?? 0).toLocaleString()} ${t('enterprises')}
-        </div>
-        <div style="font-weight:bold; color:#000">
-          ${t('women_owned')} – ${(data.value ?? 0).toLocaleString()} ${t('enterprises')} (${data.percent ?? 0}%)
-        </div>
-      </div>
-    `
+        const date = new Date(currentDate.value)
+        const year = date.getFullYear()
+
+        // определяем локаль
+        const currentLocale = locale.value == 'en'
+          ? 'en'
+          : 'la'
+
+        // берём перевод июля
+        const monthName = monthTranslations.july[currentLocale]
+
+        return `
+          <div style="font-size:16px; line-height:1.4">
+            <b>${data.name} ${t('region')} – ${monthName} ${year}</b><br/>
+            <div style="margin: 10px 0;">
+              ${t('districts')} – ${(data.area ?? 0).toLocaleString()}<br/>
+              ${t('communities')} – ${(data.mahalla ?? 0).toLocaleString()}<br/>
+              ${t('msme')} – ${(data.msme ?? 0).toLocaleString()} ${t('enterprises')}
+            </div>
+            <div style="font-weight:bold; color:#000">
+              ${t('women_owned')} – ${(data.value ?? 0).toLocaleString()} ${t('enterprises')} (${data.percent ?? 0}%)
+            </div>
+          </div>
+        `
+      },
     },
-  },
   toolbox: {
     show: true,
     orient: 'vertical',
