@@ -86,7 +86,7 @@
 	"men": "Erkaklar",
 	"women": "Ayollar",
 	"percentage": "Foiz",
-	"sum": "summa",
+	"sum": "So'm",
 	"totalParticipants": "Jami ishtirokchilar",
 	"filters": "Filtrlar",
 	"selectPeriod": "Tahlil uchun davrni tanlang",
@@ -99,7 +99,7 @@
 	"services": "Xizmatlar",
 	"construction": "Qurilish",
 	"manufacturing": "Ishlab chiqarish",
-	"agriculture": "Qishloq xo‘jaligi",
+	"agriculture": "Qishloq xo'jaligi",
 	"selectRegion": "Tahlil uchun hudud(lar)ni tanlang",
 	"allRegions": "Hamma viloyatlar",
 	"valueIssuedLoans": "Ajratilgan kredit qiymati",
@@ -157,5 +157,6 @@
 	"credit": "Kredit",
 	"loans": "Kredit",
 	"number": "soni",
-	"uzs": "so'm"
+	"uzs": "so'm",
+	"bln": "mlrd"
 }

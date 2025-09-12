@@ -62,7 +62,7 @@
 								<p class="text-sm text-[#615E83]">{{ $t('men') }}</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(selectedData.men_sum) }} bln
+								{{ formatNumber(selectedData.men_sum) }} {{ $t('bln') }}
 							</p>
 						</div>
 						<div class="flex items-center justify-between">
@@ -71,7 +71,7 @@
 								<p class="text-sm text-[#615E83]">{{ $t('women') }}</p>
 							</div>
 							<p class="text-xl font-bold">
-								{{ formatNumber(selectedData.women_sum) }} bln
+								{{ formatNumber(selectedData.women_sum) }} {{ $t('bln') }}
 							</p>
 						</div>
 					</div>
@@ -289,7 +289,7 @@ const pieOption = computed(() => ({
           <span style="font-weight: 600;">${name}</span>
         </div>
         <div style="margin-left: 16px;">
-          <span style="font-size: 14px; font-weight: 500;">${value} bln</span>
+          <span style="font-size: 14px; font-weight: 500;">${value} ${$t('bln')}</span>
           <span style="font-size: 13px; font-weight: 600;">(${percent}%)</span>
         </div>
       </div>

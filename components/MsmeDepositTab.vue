@@ -140,7 +140,7 @@
 							clearable
 							@change="setFilter"
 							v-model="selectedRegion"
-							placeholder="Region"
+							:placeholder="$t('region')"
 							size="small"
 							style="width: 160px"
 						>
@@ -155,7 +155,7 @@
 							clearable
 							@change="setFilter"
 							v-model="selectedBusiness"
-							placeholder="Size"
+								:placeholder="$t('size')"
 							size="small"
 							style="width: 160px"
 						>
@@ -171,7 +171,7 @@
 							clearable
 							@change="setFilter"
 							v-model="selectedMonth"
-							placeholder="Month"
+							:placeholder="$t('month')"
 							size="small"
 							style="width: 160px"
 						>
