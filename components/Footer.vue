@@ -2,14 +2,14 @@
 	<div class="border-t border-[#E7E9ED] py-20 bg-white text-black">
 		<div class="max-w-7xl mx-auto px-4 flex items-start gap-24">
 			<div>
-				<p class="font-bold text-2xl">
+				<p class="font-bold text-4xl max-w-[400px]">
 					{{ $t('genderInfoUzbekistan') }}
 				</p>
 			</div>
 
 			<!-- Sections -->
 			<div>
-				<h3 class="font-medium text-sm mb-4">{{ $t('sections') }}</h3>
+				<h3 class="font-medium text-2xl mb-4">{{ $t('sections') }}</h3>
 				<ul class="space-y-2 text-sm text-gray-700">
 					<li>{{ $t('regionalOverview') }}</li>
 					<li>{{ $t('genderIndicators') }}</li>
@@ -26,7 +26,7 @@
 
 			<!-- Useful Links -->
 			<div>
-				<h3 class="font-medium text-sm mb-4">{{ $t('usefulLinks') }}</h3>
+				<h3 class="font-medium text-2xl mb-4">{{ $t('usefulLinks') }}</h3>
 				<ul class="space-y-2 text-sm text-primary">
 					<li><a href="#" class="hover:underline">finlit.uz</a></li>
 					<li><a href="#" class="hover:underline">bank-kredit.uz</a></li>

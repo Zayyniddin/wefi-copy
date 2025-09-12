@@ -1,6 +1,6 @@
 <template>
 	<div class="">
-		<p class="text-2xl font-bold text-center mt-42 mb-16">
+		<p class="text-4xl font-bold text-center mt-42 mb-16">
 			{{ $t('questionsAnswers') }}
 		</p>
 		<div class="max-w-[1074px] w-full mx-auto mb-32">

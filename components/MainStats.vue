@@ -44,7 +44,7 @@
 				class="text-5xl font-bold !w-[180px]"
 			/>
 			<p class="text-gray-400 text-sm max-w-[150px] w-full">
-				{{ $t('valueOfOutstandingMsmeLoans') }}
+				{{ $t('valueOfOutstandingMsmeLoans') }} <span class='text-black font-bold'>(UZS)</span>
 			</p>
 		</div>
 	</div>

@@ -29,10 +29,10 @@
 			class="relative z-20 h-full flex items-center justify-center text-white px-4"
 		>
 			<div class="w-full max-w-[980px] text-left">
-				<h1 class="text-5xl font-bold mb-6 leading-tight">
+				<h1 class="text-7xl font-bold mb-6 leading-tight">
 					{{ $t('womenEntrepreneursFinance') }}
 				</h1>
-				<p class="text-lg max-w-[487px]">
+				<p class="text-2xl max-w-[487px]">
 					{{ $t('platformDescription') }}
 				</p>
 			</div>

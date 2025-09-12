@@ -7,13 +7,13 @@
 
 			<nav v-if="!isAbout">
 				<ul class="flex items-center gap-5" :class="navTextColor">
-					<li class="text-sm font-bold">
+					<li class="text-3xl font-bold">
 						<a href="#overview">{{ $t('overview') }}</a>
 					</li>
 					<!-- <li class="text-sm font-bold">
 						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
 					</li> -->
-					<li class="text-sm font-bold">
+					<li class="text-3xl font-bold">
 						<a href="#blog">{{ $t('blog') }}</a>
 					</li>
 					<!-- <li class="text-sm font-bold">

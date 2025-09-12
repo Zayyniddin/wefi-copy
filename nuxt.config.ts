@@ -11,6 +11,7 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'nuxt-aos',
 		'@nuxtjs/i18n',
+		'nuxt-swiper',
 	],
 	css: ['~/assets/css/main.css'],
 	i18n: {

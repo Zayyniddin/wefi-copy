@@ -9,6 +9,7 @@
 					{{ $t('selectPeriod') }}
 				</p>
 				<el-select
+				disabled
 					clearable
 					v-model="filtersStore.period"
 					:placeholder="$t('year')"
@@ -264,7 +265,7 @@ onMounted(() => {
 
 function getData() {
 	$axios
-		.get(`api/v1/resp/regions_lists?locale=${locale.value}`, {
+		.get(`api/v1/resp/regions_lists?lang=${locale.value}`, {
 			headers: {
 				Authorization: 'Basic YXV0aF9hcGlfdXNlcjpGQVJFQ21uS3VXTDB4QW8',
 			},

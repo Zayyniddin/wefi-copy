@@ -8,13 +8,13 @@
 		<div class="flex items-center justify-center gap-12">
 			<!-- Partner 1 -->
 			<div class="flex flex-col items-center">
-				<img class="h-16" src="@/assets/icons/partner1.svg" alt="" />
+				<img class="h-28" src="@/assets/icons/partner1.svg" alt="" />
 			</div>
 
 			<!-- Partner 2 -->
 			<div class="flex flex-col items-center">
 				<img
-					class="h-16 object-contain"
+					class="h-28 object-contain"
 					src="@/assets/icons/partner2.svg"
 					alt=""
 				/>
@@ -23,7 +23,7 @@
 			<!-- Partner 3 -->
 			<div class="flex flex-col items-center">
 				<img
-					class="h-16 object-contain"
+					class="h-28 object-contain"
 					src="@/assets/icons/partner4.png
         "
 					alt=""
@@ -33,7 +33,7 @@
 			<!-- Partner 4 -->
 			<div class="flex flex-col items-center">
 				<img
-					class="h-16 object-contain"
+					class="h-28 object-contain"
 					src="@/assets/icons/parnter3.svg"
 					alt=""
 				/>

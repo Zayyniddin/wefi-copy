@@ -7,13 +7,13 @@
 			<VChart :option="option" class="!w-[915px] !h-[600px]" />
 			<div class="flex flex-col max-w-[400px] w-full gap-4">
 				<div class="rounded-lg shadow-lg p-4">
-					<p class="text-[#013F21] text-xl">{{ $t('republicOfUzbekistan') }}</p>
-					<div class="flex items-center justify-between">
-						<p class="text-[#013F21] text-sm">{{ $t('population') }}</p>
-						<p class="text-primary font-bold text-xl">
+					<div class='flex items-center justify-between'>
+						<p class="text-[#013F21] text-2xl">{{ $t('population') }}</p>
+							<p class="text-primary font-bold text-xl">
 							{{ formatNumber(37657647) }}
 						</p>
 					</div>
+				
 				</div>
 
 				<div class="rounded-lg flex flex-col gap-2 shadow-lg p-4">
@@ -53,18 +53,18 @@
 						</p>
 					</div>
 					<div class="flex items-center justify-between">
-						<p>Credit "trln"</p>
+						<p>{{ $t('credit') }} (trln {{ $t('uzs') }}) </p>
 						<p class="text-primary font-bold text-xl">65,6</p>
 					</div>
 					<div class="flex items-center justify-between">
-						<p>Deposit</p>
+						<p>{{ $t('deposit') }} ({{ $t('number') }})</p>
 						<p class="text-primary font-bold text-xl">
 							{{ formatNumber(577281) }}
 						</p>
 					</div>
 					<div class="flex items-center justify-between">
-						<p>NPL</p>
-						<p class="text-primary font-bold text-xl">6,3 %</p>
+						<p>NPL (%)</p>
+						<p class="text-primary font-bold text-xl">6,3</p>
 					</div>
 				</div>
 			</div>
