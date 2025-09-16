@@ -2,7 +2,7 @@
 	<Hero />
 	<MainStats :data="data.msme" />
 	<MainMap id='overview' :orgRegion="data.org_region" :msme="data.msme" />
-	<GenderStats  />
+	<GenderStats  id='gender' />
 	<MainForm />
 	<Blogs id='blog' />
 	<Questionary id='faq' />

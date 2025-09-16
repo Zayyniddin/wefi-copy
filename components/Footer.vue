@@ -11,15 +11,18 @@
 			<div>
 				<h3 class="font-medium text-2xl mb-4">{{ $t('sections') }}</h3>
 				<ul class="space-y-2 text-sm text-gray-700">
-					<li>{{ $t('regionalOverview') }}</li>
-					<li>{{ $t('genderIndicators') }}</li>
-					<li>{{ $t('blogs') }}</li>
-					<li>{{ $t('faq') }}</li>
+					<li>
+						<a href="#overview">{{ $t('regionalOverview') }}</a>
+					</li>
+					<li>
+						<a href="#gender">{{ $t('genderIndicators') }}</a>
+					</li>
+					<li>
+						<a href="#blog">{{ $t('blogs') }}</a>
+					</li>
+					<li><a href="#faq">{{ $t('faq') }}</a></li>
 					<li class="">
 						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
-					</li>
-					<li class="">
-						<a href="#faq">{{ $t('faq') }}</a>
 					</li>
 				</ul>
 			</div>
@@ -48,7 +51,6 @@
 		</p>
 	</div>
 </template>
-
 
 <script setup>
 const localePath = useLocalePath()
