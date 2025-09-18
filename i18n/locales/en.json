@@ -159,5 +159,6 @@
 	"number": "number",
 	"uzs": "UZS",
 	"bln": "bln",
-  "hero_desc": "The platform is updated based on data sourced from the database of the Central Bank of Uzbekistan."
+  "hero_desc": "The platform is updated based on data sourced from the database of the Central Bank of Uzbekistan.",
+	"filters_desc": "Information as of August 1"
  }

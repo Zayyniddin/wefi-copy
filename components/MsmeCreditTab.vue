@@ -1,7 +1,11 @@
 <template>
 	<div class="flex items-stretch gap-4">
 		<div class="bg-white rounded-xl shadow p-8 w-[350px] h-fit space-y-6">
-			<p class="font-bold text-2xl">{{ $t('filters') }}</p>
+			<div class='flex items-center justify-between w-full'>
+				<p class="font-bold text-2xl">{{ $t('filters') }}</p>
+				<p class='text-sm'>{{ $t('filters_desc') }}</p>	
+			</div>
+			
 
 			<!-- Period -->
 			<div>
