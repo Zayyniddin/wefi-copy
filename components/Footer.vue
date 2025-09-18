@@ -22,7 +22,7 @@
 					</li>
 					<li><a href="#faq">{{ $t('faq') }}</a></li>
 					<li class="">
-						<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
+					<NuxtLink :to="localePath('about')">{{ $t('about') }}</NuxtLink>
 					</li>
 				</ul>
 			</div>

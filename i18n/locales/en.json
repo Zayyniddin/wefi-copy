@@ -158,6 +158,6 @@
 	"loans": "Loans",
 	"number": "number",
 	"uzs": "UZS",
-	"bln": "bln"
-
+	"bln": "bln",
+  "hero_desc": "The platform is updated based on data sourced from the database of the Central Bank of Uzbekistan."
  }

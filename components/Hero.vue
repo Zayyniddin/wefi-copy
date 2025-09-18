@@ -35,6 +35,9 @@
 				<p class="text-2xl max-w-[487px]">
 					{{ $t('platformDescription') }}
 				</p>
+				<p class="text-2xl mt-6 max-w-[600px]">
+					{{ $t('hero_desc') }}
+				</p>
 			</div>
 		</div>
 	</section>
