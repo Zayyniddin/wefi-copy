@@ -160,5 +160,6 @@
 	"uzs": "UZS",
 	"bln": "bln",
   "hero_desc": "The platform is updated based on data sourced from the database of the Central Bank of Uzbekistan.",
-	"filters_desc": "Information as of August 1"
+	"filters_desc": "Information as of August 1",
+  "value_issued_warn": "Please note that the outstanding balances shown here are total and include loans issued in earlier years that remain unpaid as of August 1, 2025."
  }

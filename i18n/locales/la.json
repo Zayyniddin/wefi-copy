@@ -160,5 +160,6 @@
 	"uzs": "so'm",
 	"bln": "mlrd",
 	"hero_desc": "Ma’lumotlar O'zbekiston Respublikasi Markaziy banki tomonidan taqdim etilgan ma’lumotlarga asoslanib muntazam ravishda yangilanib boriladi.",
-	"filters_desc": "Ma'lumotlar 1-avgust holatiga"
+	"filters_desc": "Ma'lumotlar 1-avgust holatiga",
+	"value_issued_warn": "Shuni yodda tutingki, bu yerda ko‘rsatilgan qarzdorlik qoldiqlari umumiy bo‘lib, 2025-yil 1-avgust holatiga qaytarilmagan avvalgi yillarda berilgan kreditlarni ham o‘z ichiga oladi"
 }
