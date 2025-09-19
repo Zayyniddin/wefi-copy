@@ -54,7 +54,7 @@
 					>
 						{{ $t('byGender') }}
 					</p>
-					<p v-if='activeTab == "value_issued"' class='text-sm pt-2'>{{ $t('value_issued_warn') }}</p>
+					<p v-if='activeTab == "value_outstanding"' class='text-sm pt-2'>{{ $t('value_issued_warn') }}</p>
 					<VChart :option="pieOption" class="!h-[350px] mx-auto !w-[400px]" />
 					<div class="text-sm mt-4">
 						<div class="flex items-center justify-between">
